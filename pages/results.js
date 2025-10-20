@@ -281,10 +281,14 @@ const Results = () => {
                         
                         console.log(finalScore[dataNum])
                         console.log(finalScore);
-                        companyname = dataENV[dataNum]['Company Name']
-                        completionText+=" "+ companyname
-                        projectName = dataENV[dataNum]["Project name"]
-                        projectDesc = dataENV[dataNum]["Description of Project"]
+                        
+                        // Only set these values for the first iteration to avoid duplication
+                        if (dataNum === 0) {
+                            companyname = dataENV[dataNum]['Company Name'] || "Resultados"
+                            // completionText remains as "Obrigado por completar o questionário" without company name
+                            projectName = dataENV[dataNum]["Project name"] || "Projeto SAMM"
+                            projectDesc = dataENV[dataNum]["Description of Project"] || "Avaliação de Segurança de Software"
+                        }
                     // }
                 }
                 setDisplay(1)

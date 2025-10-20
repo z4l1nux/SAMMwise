@@ -6,7 +6,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import 'survey-core/defaultV2.min.css';
 import { Model, surveyLocalization } from 'survey-core';
 import { Survey } from 'survey-react-ui';
-import { Flex, Box } from 'reflexbox'
+import { Flex, Box } from '../layout'
 import assert, { strictEqual } from 'assert';
 import { useTranslations } from 'next-intl';
 //local imports

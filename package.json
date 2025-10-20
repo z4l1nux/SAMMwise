@@ -21,8 +21,6 @@
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.3.5",
     "react-to-print": "^3.0.4",
-    "rebass": "^4.0.7",
-    "reflexbox": "^4.0.6",
     "survey-core": "^1.12.16",
     "survey-react-ui": "^1.12.16"
   },
