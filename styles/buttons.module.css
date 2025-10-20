@@ -1,73 +1,77 @@
 
 .dropDown {
-	display:flex;
-	justify-content:space-around;
-	background: #ffffff;
-	border-top:2px solid #1AB394;
-	border-bottom: 2px solid #1AB394;
-	cursor:pointer;
-	color:#777777;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	display: inline-flex;
-	width:100%;
+	display: flex;
+	justify-content: space-between;
 	align-items: center;
+	background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+	border: 2px solid rgba(102, 126, 234, 0.3);
+	border-radius: 10px;
+	cursor: pointer;
+	color: #4a5568;
+	font-family: 'Inter', sans-serif;
+	font-size: 16px;
+	font-weight: 600;
+	width: 100%;
+	padding: 15px 20px;
+	transition: all 0.3s ease;
+	margin: 20px 0;
 }
 
-.dropDownText{
-	padding: 10px 200px;
-
+.dropDown:hover {
+	background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+	border-color: rgba(102, 126, 234, 0.5);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
 }
 
-.dropDownText span{
-	display: block;
-	position: relative;
-	top: 50%;
-	left: -290%;
-	bottom:0%;
+.dropDownText {
+	flex: 1;
+	text-align: center;
+	color: #2d3748;
 }
 
 .dropDownImage {
-	
-	position: relative;
-	font-size: 17px;
-	left: 9.5%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
 }
 .pageNav{
-	display:flex;
-	justify-content:space-around;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
 	height: auto;
-	padding-top: 1%;
-	padding-bottom: 1%;
-	padding-left: 10%;
-	padding-right: 10%;
-	margin-bottom: 0%;
-	background: #ffffff;
-
-   
-	border-top:2px solid #1AB394;
+	padding: 30px 20px;
+	margin: 20px 0;
+	background: transparent;
+	border: none;
   }
 .surveyButton {
-	background-color:#1a61b3;
-	border-radius:3px;
-	border:1px solid #1a61b3;
-	display:inline-block;
-	cursor:pointer;
-	color:#F4F4F4;
-	font-weight:bold;
-	padding:10px 30px;
-
-	width: 150px;
-	text-decoration:none;
-	margin-right: 1px;
+	background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+	border-radius: 10px;
+	border: none;
+	display: inline-block;
+	cursor: pointer;
+	color: #ffffff;
+	font-weight: 700;
+	padding: 14px 30px;
+	min-width: 150px;
+	text-decoration: none;
+	margin-right: 10px;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 15px rgba(229, 62, 62, 0.4);
+	font-size: 16px;
+	font-family: 'Inter', sans-serif;
 }
 .surveyButton:hover {
-	background-color:#138f76;
+	background: linear-gradient(135deg, #c53030 0%, #9b2c2c 100%);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(229, 62, 62, 0.6);
 }
 .surveyButton:active {
-	position:relative;
-	top:1px;
+	transform: translateY(0);
 }
 #btn1{
     float:left;

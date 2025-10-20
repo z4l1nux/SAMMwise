@@ -1,0 +1,125 @@
+{
+  "nav": {
+    "home": "Início",
+    "assessment": "Avaliação",
+    "results": "Resultados",
+    "about": "Sobre"
+  },
+  "home": {
+    "title": "SAMMwise",
+    "subtitle": "Ferramenta de Avaliação OWASP SAMM",
+    "description": "SAMMwise fornece uma interface conveniente baseada em navegador para capturar respostas de avaliação SAMM. Com esta ferramenta, os usuários podem:",
+    "features": {
+      "feature1": "Inserir respostas para uma única avaliação",
+      "feature2": "Visualizar os resultados de maturidade com base nas respostas inseridas",
+      "feature3": "Comparar resultados de maturidade com avaliações anteriores"
+    },
+    "privacy": "As respostas da avaliação podem ser salvas no computador local do usuário, em um arquivo de texto formatado em JSON. As respostas são mantidas apenas no sistema local e não são compartilhadas com nenhum outro sistema ou pessoa.",
+    "aboutSamm": "Sobre o SAMM",
+    "sammDescription": "O Software Assurance Maturity Model (OWASP SAMM) do Open Web Application Security Project é uma estrutura aberta para ajudar as organizações a formular e implementar uma estratégia de segurança de software, adaptada aos riscos específicos que a organização enfrenta.",
+    "sammPurpose": "Os recursos fornecidos pelo SAMM (incluindo esta ferramenta) destinam-se a auxiliar em:",
+    "purposes": {
+      "purpose1": "Avaliar as práticas de segurança de software existentes de uma organização;",
+      "purpose2": "Construir um programa equilibrado de garantia de segurança de software em iterações bem definidas;",
+      "purpose3": "Demonstrar melhorias concretas em um programa de garantia de segurança; e",
+      "purpose4": "Definir e medir atividades relacionadas à segurança em toda a organização."
+    },
+    "sammFlexibility": "O SAMM foi definido com flexibilidade em mente, de modo que pode ser utilizado por organizações pequenas, médias e grandes usando qualquer estilo de desenvolvimento. Além disso, este modelo pode ser aplicado em toda a organização, para uma única linha de negócio ou até mesmo para um projeto individual."
+  },
+  "assessment": {
+    "title": "Avaliação SAMM",
+    "loadPrevious": "Gostaria de usar resultados anteriores para preencher o questionário?",
+    "loadDescription": "Se você tem um arquivo de resultados inacabados que deseja retomar, pode carregá-lo aqui e o questionário será preenchido automaticamente com suas respostas",
+    "loadResults": "Carregar Resultados",
+    "clear": "Limpar",
+    "saveResponses": "Salvar Respostas",
+    "nextPage": "Próxima Página",
+    "complete": "Concluir",
+    "clearConfirm": "Isso irá limpar todas as respostas. Deseja continuar?",
+    "domains": {
+      "governance": "Governança",
+      "design": "Design",
+      "implementation": "Implementação",
+      "verification": "Verificação",
+      "operations": "Operações",
+      "details": "Detalhes"
+    }
+  },
+  "results": {
+    "title": "Resultados da Avaliação",
+    "completionText": "Obrigado por completar o questionário",
+    "mustComplete": "Você deve primeiro completar o questionário para ver os resultados",
+    "overallScore": "Sua pontuação geral é:",
+    "previousScore": "Sua pontuação anterior foi:",
+    "refresh": "Atualizar Gráficos",
+    "totals": "Totais",
+    "responseCount": "Contagem de respostas por valor",
+    "businessFunctions": "Funções de Negócio",
+    "maturityByBusiness": "Maturidade por Função de Negócio",
+    "practices": "Práticas",
+    "maturityByPractice": "Maturidade por Prática",
+    "saveJson": "Deseja salvar seus resultados em formato JSON?",
+    "saveFile": "Salvar arquivo",
+    "loadPrevious": "Deseja carregar seus resultados anteriores para comparar?",
+    "exportPdf": "Deseja imprimir ou salvar os gráficos em PDF?",
+    "exportGraphs": "Exportar gráficos",
+    "projectName": "Nome do Projeto",
+    "projectDescription": "Descrição do Projeto",
+    "companyName": "Nome da Empresa"
+  },
+  "footer": {
+    "copyright": "© 2025 SAMMwise - Fundação OWASP",
+    "madeWith": "Feito com ❤️ pela Comunidade OWASP"
+  },
+  "buttons": {
+    "next": "Próximo",
+    "previous": "Anterior",
+    "save": "Salvar",
+    "load": "Carregar",
+    "export": "Exportar",
+    "print": "Imprimir",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar"
+  },
+  "errors": {
+    "loadError": "Erro ao carregar arquivo",
+    "saveError": "Erro ao salvar arquivo",
+    "genericError": "Ocorreu um erro"
+  },
+  "practices": {
+    "governance": {
+      "strategy": "Estratégia e Métricas",
+      "policy": "Política e Conformidade",
+      "education": "Educação e Orientação"
+    },
+    "design": {
+      "threat": "Avaliação de Ameaças",
+      "security": "Requisitos de Segurança",
+      "architecture": "Arquitetura de Segurança"
+    },
+    "implementation": {
+      "build": "Construção Segura",
+      "deployment": "Implantação Segura",
+      "defect": "Gerenciamento de Defeitos"
+    },
+    "verification": {
+      "architecture": "Avaliação de Arquitetura",
+      "requirements": "Testes Orientados a Requisitos",
+      "security": "Testes de Segurança"
+    },
+    "operations": {
+      "incident": "Gerenciamento de Incidentes",
+      "environment": "Gerenciamento de Ambiente",
+      "operational": "Gerenciamento Operacional"
+    }
+  },
+  "meta": {
+    "homeTitle": "SAMMwise | Início",
+    "assessmentTitle": "SAMMwise | Avaliação",
+    "resultsTitle": "SAMMwise | Resultados",
+    "aboutTitle": "SAMMwise | Sobre",
+    "description": "Ferramenta de Avaliação OWASP SAMM - Avalie a maturidade de segurança de software da sua organização",
+    "keywords": "owasp, samm, segurança, avaliação, modelo de maturidade, segurança de software"
+  }
+}
+

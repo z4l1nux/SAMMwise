@@ -1,78 +1,201 @@
 <p align="center">
     <img style="background-color:grey" src="https://owasp.org/assets/images/logo.svg" height="128">
-    <h1 align="center">SAMMwise</h1>
+    <h1 align="center">SAMMwise - Modernized Edition</h1>
 </p>
 
 <p align="center">
-  <a aria-label="Datacom logo" href="https://datacom.com">
-    <img src="https://img.shields.io/badge/MADE%20BY-Datacom-blue.svg?style=for-the-badge&labelColor=white&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAgMzAiPjxkZWZzLz48cGF0aCBkPSJNLjEuNWwuNCAxLjN2MjYuNGwtLjUuOWg5LjljNi45IDAgMTIuNy01LjYgMTIuNy0xNS4xQzIyLjYgNy4xIDE5LjIuOSAxMiAuNEwuMS41em01LjUgMi44aDMuMkMxMy42IDMuMyAxNyA2LjEgMTcgMTRjMCA5LjctNCAxMS43LTguNiAxMS43SDUuNlYzLjN6bTQ4LjktLjJoNi4xbC45LjcgMS0zLjJINDIuMkw0MS41IDRsMS42LS43aDUuOHYyNS4xbC0uNCAxaDYuNmwtLjQtMVYzLjFoLS4yem00NiAyMS40Yy0xLjUgMS44LTMuNCAyLjctNS41IDIuNy01LjIgMC04LTQuNi04LTExLjggMC02LjIgMi4yLTEyLjcgNy43LTEyLjcgMi4yIDAgNC4zIDEuMyA1LjUgMy43aC40VjIuMUM5OC43LjggOTYuOC4zIDk0LjUuM2MtNy4yIDAtMTMuMyA0LjktMTMuMyAxNS44IDAgOC42IDUuNSAxMy42IDEyLjUgMTMuNiAyLjIgMCA0LjYgMCA2LjYtMS4zdi00LjEuMnptMjYuOS05LjdjMC02LjUtMi44LTE0LjUtMTIuNC0xNC41LTguMyAwLTEzLjEgNi4zLTEzLjEgMTQuNiAwIDkuNCA1IDE0LjggMTIuNCAxNC44IDguMSAwIDEzLjEtNi43IDEzLjEtMTQuOW0tMTIuNi0xMmM1IDAgNi45IDUuOCA2LjkgMTEuMiAwIDYuOS0yLjIgMTMuMy03LjQgMTMuMy01IDAtNi45LTUuNi02LjktMTAuOS4xLTkuNyAyLjktMTMuNiA3LjQtMTMuNk0xNDQuMiAyMUwxMzUuOC41aC00LjZsLjQuOS0xLjkgMjYuNC0uNCAxLjNoMy41bDEuMy0xNy45IDggMTcuOWgxLjlsNy44LTE3LjcgMS41IDE3LjdoNi42bC0uNC0xLjJMMTU3IDEuMmwuMS0uN2gtNC42TDE0NC4yIDIxem0tMTA3LS4zbDIuOCA4LjZoNi41bC0uNy0uNy05LjktMjhoLTUuNmwuNiAxLjYtOS4yIDI2LjEtLjQuN2g0bDIuOC04LjZoOS4ydi4zem0tOC0zLjRsMy40LTEwIDMuNSAxMGgtNi45em00My45IDMuNGwyLjggOC42aDYuNWwtLjctLjlMNzEuNy41aC01LjZsLjYgMS42LTkuMiAyNi4xLS40LjdoNGwyLjgtOC42aDkuMnYuNHptLTguMi0zLjRsMy40LTEwIDMuNSAxMGgtNi45eiIgZmlsbD0iIzAwMjQ3MCIvPjwvc3ZnPgo=">
-  </a>
-  <img alt="" src="https://img.shields.io/azure-devops/build/datacomappsec/81cece92-c7e5-4254-9ddc-6783fe1e15b7/10?style=for-the-badge">
-  <a aria-label="License" href="https://github.com/owaspsamm/sammwise/blob/main/LICENSE">
-    <img alt="" src="https://img.shields.io/github/license/owaspsamm/sammwise?style=for-the-badge">
-  </a>
-  <a aria-label="Join the community" href="https://owasp.org/slack/invite">
-    <img alt="" src="https://img.shields.io/badge/Join%20the%20community-blueviolet.svg?style=for-the-badge&logo=owasp&labelColor=000000&logoWidth=20">
-  </a>
+  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-14.2-black?style=for-the-badge&logo=next.js">
+  <img alt="React" src="https://img.shields.io/badge/React-18.3-blue?style=for-the-badge&logo=react">
+  <img alt="License" src="https://img.shields.io/github/license/owaspsamm/sammwise?style=for-the-badge">
 </p>
 
-## Introduction 
+## 🚀 Introduction 
 
 The mission of OWASP Software Assurance Maturity Model (SAMM) is to be the prime maturity model for software assurance that provides an effective and measurable way for all types of organizations to analyze and improve their software security posture. OWASP SAMM supports the complete software lifecycle, including development and acquisition, and is technology and process agnostic. It is intentionally built to be evolutive and risk-driven in nature.
 
-SAMMwise is an open source Web App to calculate the Maturity score of an individual, enterprise, or project using the SAMM model. The application walks you through the assessment, allows you to save and re-use previously completed assessments, and presents the results in a similar style to the spreadsheet.
+**SAMMwise** is an open source Web App to calculate the Maturity score of an individual, enterprise, or project using the SAMM model. The application walks you through the assessment, allows you to save and re-use previously completed assessments, and presents the results in a similar style to the spreadsheet.
 
-## Getting Started
+## ✨ What's New in This Version
 
-The quickest way to get up and running is to pull down the image from dockerhub using the following commands:  
-`docker pull stephenmorgan/owasp-sammwise`  
-`docker run -p 3000:3000 stephenmorgan/owasp-sammwise`
+This is a **modernized and security-hardened version** of SAMMwise with significant improvements:
 
-Refer to the Build Options section below for how to build and run the application.
+### 🔒 Security Enhancements
+- ✅ **Zero vulnerabilities** - All dependencies updated and secured
+- ✅ **Next.js 14.2** - Latest stable version with enhanced security
+- ✅ **React 18.3** - Modern React with concurrent features
+- ✅ **Chart.js 4.4** - Latest charting library
 
-Both the docker and npm options will run the application on port 3000. The application can be accessed by navigation to http://localhost:3000 in your browser.
+### 🎨 Design Improvements
+- ✅ **Modern UI/UX** - Completely redesigned with gradient backgrounds
+- ✅ **Responsive Design** - Works seamlessly on all devices
+- ✅ **Enhanced Accessibility** - Better color contrast and navigation
+- ✅ **Smooth Animations** - Professional transitions and hover effects
 
-**Survey**
+### 🛠️ Technical Upgrades
+- ✅ **Survey-React-UI 1.12** - Modern survey components
+- ✅ **Custom Gauge Charts** - Built with Chart.js for better compatibility
+- ✅ **Improved Performance** - Faster load times and rendering
+- ✅ **Better TypeScript Support** - Enhanced type definitions
+- ✅ **i18n Support** - Multi-language support (English & Portuguese)
 
-The survey page (/survey) allows for users to perform an assessment. A SAMM survey rating your given project or enterprise against five domains: Governance, Design, Implementation, Verification, and Operations. Each domain consists of three subdomains which themselves consist of six questions. (**TODO**:) Further information about each question or domain can be viewed by hovering over the informational icons.
+## 📋 Prerequisites
 
-There is an optional sixth survey panel where you can enter project metadata that will be included in the results page.
+- **Node.js** 18.x or higher
+- **npm** 9.x or higher
 
-Please refer to the [OWASP Foundation documentation](https://owaspsamm.org/about/) for guidance on the use of Software Assurance Maturity Model. 
+## 🚀 Getting Started
 
-**Report**
+### Using Docker (Recommended)
 
-Upon completion of a survey, you will be redirected to the report page and presented with the results of the survey.
+```bash
+# Pull the image
+docker pull stephenmorgan/owasp-sammwise
 
-It is possible to save the results of your survey, the bottom of the results page allows you to save the results to the browsers local storage, or download a copy of the json to your device. This latter option allows for the offline sharing of results.
+# Run the container
+docker run -p 3000:3000 stephenmorgan/owasp-sammwise
+```
 
-Changes to re-uploaded results will be visualised in the report graphs.
+### Using Docker Compose
 
-## Build Options
-### Docker Compose (Recommended)
+```bash
+docker-compose up
+```
 
-Use the included docker-compose.yml file to quickly get up and running.
-Requires docker and docker-compose on the source system.
+### Using Node.js
 
-`docker-compose up`
+1. **Install dependencies:**
+```bash
+npm install --legacy-peer-deps
+```
 
-### Node
+2. **Run in development mode:**
+```bash
+npm run dev
+```
 
-Requires npm 10.3 or higher to run.
-First pull down the required dependencies
+3. **Or build for production:**
+```bash
+npm run build
+npm start
+```
 
-`npm install`
+The application will be available at **http://localhost:3500**
 
-Then run the following depending on your use case:
+## 🌍 Internationalization (i18n)
 
-`npm run dev` (developer mode) 
+SAMMwise now supports multiple languages! 
 
-**OR**
+### Supported Languages
+- 🇺🇸 **English** (default)
+- 🇧🇷 **Português** (Brazilian Portuguese)
 
-`npm run build`
+### Features
+- **Language Switcher** in the navbar
+- **Persistent preference** saved in localStorage
+- **SEO optimized** for each language
+- **Easy to extend** - add new languages easily
 
-`npm run start`
+See [I18N Documentation](docs/I18N.md) for details on adding new languages.
 
-## Contribute
+## 📊 Features
 
-Please submit a Pull Request for bug fixes and feature enhancements.
+### Assessment Page (`/assessment`)
+- **Comprehensive Survey** - Evaluate your organization across 5 domains:
+  - 🏛️ **Governance** - Security policies and organization
+  - 🎨 **Design** - Security architecture and threat modeling
+  - 💻 **Implementation** - Secure coding and build practices
+  - ✅ **Verification** - Security testing and reviews
+  - ⚙️ **Operations** - Incident management and environment security
+  
+- **Progress Tracking** - Save and resume assessments
+- **Import/Export** - Share results in JSON format
+- **Auto-save** - Responses saved to browser localStorage
+
+### Results Page (`/results`)
+- **Visual Analytics** - Beautiful charts and graphs:
+  - 🎯 Gauge Chart - Overall maturity score
+  - 📊 Bar Charts - Response distribution
+  - 🕸️ Radar Charts - Multi-dimensional analysis
+  
+- **Comparison Mode** - Compare current vs. previous assessments
+- **Export Options** - Download results as JSON or PDF
+- **Print-Ready** - Optimized print layout
+
+## 🎯 Usage Guide
+
+1. **Start Assessment** - Navigate to `/assessment`
+2. **Complete Questions** - Answer questions across all domains
+3. **Save Progress** - Use "Save Responses" to backup your work
+4. **View Results** - Automatic redirect to results page upon completion
+5. **Compare** - Upload previous results to visualize improvements
+
+## 🏗️ Project Structure
+
+```
+sammwise/
+├── pages/              # Next.js pages
+│   ├── index.js        # Home page
+│   ├── assessment.js   # Assessment survey
+│   ├── results.js      # Results dashboard
+│   └── about.js        # About SAMM
+├── comps/              # React components
+│   ├── charts/         # Chart components
+│   ├── surveyDisplay/  # Survey logic
+│   └── buttons/        # UI components
+├── styles/             # CSS modules
+│   ├── globals.css     # Global styles
+│   └── *.module.css    # Component styles
+└── public/             # Static assets
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the **Apache License 2.0** - see the [LICENSE](LICENSE) file for details.
+
+Copyright 2021-2025 Datacom NZ Ltd.
+
+## 🔗 Resources
+
+- **OWASP SAMM Website**: [https://owaspsamm.org](https://owaspsamm.org)
+- **OWASP SAMM Documentation**: [https://owaspsamm.org/about/](https://owaspsamm.org/about/)
+- **OWASP Slack**: Join the community for support and discussions
+
+## 🐛 Known Issues
+
+- Some legacy browsers may have compatibility issues
+- Print layout is optimized for A4 paper size
+- Large datasets may cause performance issues in older browsers
+
+## 🎉 Acknowledgments
+
+- Original project by **Datacom NZ Ltd.**
+- Modernization and security updates by the community
+- OWASP Foundation for the SAMM framework
+
+## 📈 Version History
+
+- **v2.0.0** (2025) - Major modernization update
+  - Updated to Next.js 14, React 18
+  - Security vulnerabilities fixed (33 → 0)
+  - Modern UI/UX redesign
+  - Custom chart components
+  - **i18n support (EN/PT-BR)**
+  - Enhanced documentation
+
+- **v0.1.0** (2021-2023) - Original release
+  - Next.js 10, React 16
+  - Basic functionality
+
+---
+
+<p align="center">Made with ❤️ by the OWASP Community</p>

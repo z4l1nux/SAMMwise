@@ -3,10 +3,12 @@
 //TODO: make the panels buttons part of an outside function
 
 import React, {useState, useEffect, useRef} from 'react';
-import 'survey-react/survey.css';
-import * as Survey from 'survey-react';
+import 'survey-core/defaultV2.min.css';
+import { Model, surveyLocalization } from 'survey-core';
+import { Survey } from 'survey-react-ui';
 import { Flex, Box } from 'reflexbox'
 import assert, { strictEqual } from 'assert';
+import { useTranslations } from 'next-intl';
 //local imports
 import Json from  '../surveys/totalsurvey';
 import InputFile from '../inputfile';
@@ -15,11 +17,12 @@ import DropButton from '../buttons/dropdownbutton';
 import SurveyButton from '../buttons/surveybuttons';
 import router, {useRouter} from 'next/router'
 import question_desc from '../surveys/question_desc';
+import '../surveys/survey-pt';  // Import Portuguese translations
 
 // import saveText from '../saveResponses';
 
-
-const survey = new Survey.Model(Json());
+// Survey will be initialized in component with locale
+let survey;
 var isDropDownButtonClicked = false;
 
 function formatDate(date) {
@@ -50,9 +53,55 @@ function formatDate(date) {
 
 
 const Mysurvey = (prop) => {
+    const t = useTranslations('assessment');
+    const router = useRouter();
+    const currentLocale = router.locale || 'en';
+    
+    // Initialize survey with current locale - preserve existing data
+    if (!survey || survey.locale !== currentLocale) {
+        // Save current data before recreating survey
+        const currentData = survey ? survey.data : {};
+        
+        // Also try to get data from sessionStorage (only on client-side)
+        let assessmentState = null;
+        if (typeof window !== 'undefined' && sessionStorage.getItem('assessmentState')) {
+            try {
+                assessmentState = JSON.parse(sessionStorage.getItem('assessmentState'));
+            } catch (e) {
+                console.error('Failed to parse assessmentState:', e);
+            }
+        }
+        
+        survey = new Model(Json(currentLocale));
+        survey.locale = currentLocale;
+        
+        // Restore data after locale change - prioritize sessionStorage
+        if (assessmentState && Object.keys(assessmentState).length > 0) {
+            for (const key in assessmentState) {   
+                survey.setValue(key, assessmentState[key]);
+            }
+        } else if (Object.keys(currentData).length > 0) {
+            survey.data = currentData;
+        }
+    } else if (typeof window !== 'undefined') {
+        // Even if survey exists, restore from sessionStorage on every render (client-side only)
+        try {
+            const assessmentState = JSON.parse(sessionStorage.getItem('assessmentState'));
+            if (assessmentState && Object.keys(assessmentState).length > 0) {
+                for (const key in assessmentState) {
+                    // Only set if current value is empty/null
+                    const currentValue = survey.getValue(key);
+                    if (currentValue === undefined || currentValue === null || currentValue === '') {
+                        survey.setValue(key, assessmentState[key]);
+                    }
+                }
+            }
+        } catch (e) {
+            console.error('Failed to restore from sessionStorage:', e);
+        }
+    }
     
     const [surveyState,setSurvey] = useState(survey);
-    const router = useRouter();
     const [display, setDisplay] = useState(false);
     const [populateState,setPopulateState] = useState(false);
     const [pageState, setPageState] = useState("Governance"); 
@@ -62,10 +111,18 @@ const Mysurvey = (prop) => {
     
     //Use Effect for populating the Survey with predefined answerd from a file or from previously answered survey
     useEffect(() => {
+        // Skip SSR - only run on client
+        if (typeof window === 'undefined') return;
         
-        var loadedResults = JSON.parse(sessionStorage.getItem('loadedResults'));
-        var assessmentState = JSON.parse(sessionStorage.getItem('assessmentState'))
-        var userState = JSON.parse(sessionStorage.getItem('userState'));
+        var loadedResults = sessionStorage.getItem('loadedResults') ? JSON.parse(sessionStorage.getItem('loadedResults')) : null;
+        var assessmentState = sessionStorage.getItem('assessmentState') ? JSON.parse(sessionStorage.getItem('assessmentState')) : null;
+        var userState = sessionStorage.getItem('userState') ? JSON.parse(sessionStorage.getItem('userState')) : null;
+        
+        if (!userState) {
+            userState = { page: 'assessmentPage', has_switched_page: false };
+            sessionStorage.setItem('userState', JSON.stringify(userState));
+        }
+        
         userState['page'] = 'assessmentPage';
         userState['has_switched_page'] = false;
 
@@ -83,6 +140,8 @@ const Mysurvey = (prop) => {
             }
             sessionStorage.removeItem('loadedResults')
         }
+        
+        // Always restore from sessionStorage to ensure data persistence
         if(assessmentState){ 
             for (const key in assessmentState) {   
                 survey.setValue(key,assessmentState[key])
@@ -264,8 +323,9 @@ const Mysurvey = (prop) => {
         var firstRender = false;
         var currentPanel = panels[index];
         var curr_page_no = survey.currentPageNo + 1;
-        if (curr_page_no < all_pages.length){
-            var nextPageName = all_pages[curr_page_no + 1].name;  
+        var nextPageName;
+        if (curr_page_no + 1 < all_pages.length){
+            nextPageName = all_pages[curr_page_no + 1].name;  
         }
 
         function panelInPage(checkPanel){
@@ -286,9 +346,12 @@ const Mysurvey = (prop) => {
                 }
             }
             
-            found.scrollIntoView({
-                behavior: "smooth"
-            });
+            // Only scroll if element was found
+            if (found && typeof found.scrollIntoView === 'function') {
+                found.scrollIntoView({
+                    behavior: "smooth"
+                });
+            }
         }
 
         function isFirstPanel(index){
@@ -430,16 +493,25 @@ const Mysurvey = (prop) => {
     });
 
     survey.onValueChanged.add(function(survey, options){
-        const assessmentStateData = JSON.parse(sessionStorage.getItem('assessmentState'));
+        // Only run on client-side
+        if (typeof window === 'undefined') return;
+        
+        let assessmentStateData = sessionStorage.getItem('assessmentState') ? JSON.parse(sessionStorage.getItem('assessmentState')) : {};
+        
         var question_answered = String(options.name);
         var answer_value = options.value;         
         assessmentStateData[question_answered] = answer_value;
+        
+        // Save to sessionStorage
         sessionStorage.setItem('assessmentState', JSON.stringify(assessmentStateData));
+        
+        // Also sync with survey.data for redundancy
+        console.log(`Saved: ${question_answered} = ${answer_value}`);
     })
 
 
     function clearAnswers(){
-        let isOK = confirm('This will clear all answers do you wish to continue?')
+        let isOK = confirm(t('clearConfirm'))
         
         if (isOK){
             
@@ -474,22 +546,25 @@ const Mysurvey = (prop) => {
 // return a page full of the Survey.JS json that was built in the "surveys" Folder 
     return (
         <>
-            <h2>Would you like to use previous results to populate the questionnaire?</h2>
-            <p>If you have a file of unfinished results that you wish to go back to you can upload them here and the questionnaire will autopopulate with your answers</p>
-            <DropButton name = "Load Results" state ={dropDownState} onClick= {value =>handleDropDownButton(value)}/>
+            <div style={{ marginBottom: '30px' }}>
+                <h2 style={{ color: '#2d3748', fontSize: '24px', fontWeight: '700', marginBottom: '10px' }}>
+                    {t('loadPrevious')}
+                </h2>
+                <p style={{ color: '#4a5568', fontSize: '16px', lineHeight: '1.6', marginBottom: '20px' }}>
+                    {t('loadDescription')}
+                </p>
+                <DropButton name={t('loadResults')} state ={dropDownState} onClick= {value =>handleDropDownButton(value)}/>
                 {dropDownState? <InputFile fileName="loadedResults" pageName="assesment"/>:null}
+            </div>
 
             <div className = "pageNav">
-            
-                    <SurveyButton name="Clear" boolean ={false} onClick={() => clearAnswers(true)}/>
-
-                    <button className="SaveResponses" onClick={()=> saveResponses()}> Save Responses </button>
-                        
+                <SurveyButton name={t('clear')} boolean ={false} onClick={() => clearAnswers(true)}/>
+                <button className="SaveResponses" onClick={()=> saveResponses()}> {t('saveResponses')} </button>
             </div>
             
                     
             <SurveyNav button = {pageState} onClick = {value => changePage(value)}/>
-            <Survey.Survey  showCompletedPage={false}
+            <Survey showCompletedPage={false}
                 onComplete = {data => prop.showCompletedPage(data.valuesHash)}
                 model = {surveyState} 
                 />
@@ -497,11 +572,11 @@ const Mysurvey = (prop) => {
             <div className="pageNav">
                 {isDetailsPage?
                     <>
-                        <button className="NextPage" onClick={()=> changePage("next")}> Complete </button>
+                        <button className="NextPage" onClick={()=> changePage("next")}> {t('complete')} </button>
                     </>
                 :
                 <>
-                        <button className="NextPage" onClick={()=> changePage("next")}> Next Page </button>
+                        <button className="NextPage" onClick={()=> changePage("next")}> {t('nextPage')} </button>
                 </>       
                 }
             </div>

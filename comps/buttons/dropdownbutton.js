@@ -11,13 +11,14 @@ const DropButton = (props) => {
     
 
     return ( 
-        <a className = {styles.dropDown} onClick={()=> props.onClick(!props.state)}> 
-            <span className = {styles.dropDownText}><span>{props.name}</span></span>
-            <span className = {styles.dropDownImage}>
-            <Image src={props.state?"/uparrow.png":"/downarrow.png"} width={50} height = {50}/>
-        
+        <div className = {styles.dropDown} onClick={()=> props.onClick(!props.state)}> 
+            <span className = {styles.dropDownText}>
+                {props.name}
             </span>
-        </a>
+            <span className = {styles.dropDownImage}>
+                <Image src={props.state?"/uparrow.png":"/downarrow.png"} width={30} height = {30} alt={props.state ? "Collapse" : "Expand"} />
+            </span>
+        </div>
      );
 }
  

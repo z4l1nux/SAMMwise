@@ -2,7 +2,7 @@ import InputFile from '../comps/inputfile';
 import Dataset from '../comps/surveyDisplay/graphs/datasetprops';
 import {Radar, Doughnut, Bar} from 'react-chartjs-2';
 import { Flex, Box } from 'reflexbox'
-import GaugeChart from 'react-gauge-chart'
+import GaugeChart from '../comps/charts/GaugeChart'
 import React from 'react';
 //This component is for refactoring results page so the print button can be added. 
 

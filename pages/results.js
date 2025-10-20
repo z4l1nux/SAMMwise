@@ -1,11 +1,46 @@
 // react imports
-import {Radar, Doughnut, Bar} from 'react-chartjs-2';
-import { Flex, Box } from 'reflexbox'
-import GaugeChart from 'react-gauge-chart'
 import React, {useState,useEffect, useRef} from 'react';
 import Head from 'next/head'
-import ReactToPrint, {PrintContextConsumer} from 'react-to-print';
-import {useRouter} from 'next/router'
+import dynamic from 'next/dynamic';
+import {Radar, Bar} from 'react-chartjs-2';
+import {useTranslations} from 'next-intl';
+import {useRouter} from 'next/router';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+} from 'chart.js';
+import GaugeChart from '../comps/charts/GaugeChart';
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
+
+// Import ReactToPrint dynamically to avoid SSR issues
+const ReactToPrint = dynamic(
+  () => import('react-to-print').then((mod) => mod.default),
+  { ssr: false }
+);
 
 //local imports
 import surveyCalculatorJSON from '../comps/surveyDisplay/calculator';
@@ -14,7 +49,7 @@ import SpiderGraph from '../comps/surveyDisplay/graphs/spidergraph';
 import Bargraph from '../comps/surveyDisplay/graphs/bargraph';
 import InputFile from '../comps/inputfile';
 import Dataset from '../comps/surveyDisplay/graphs/datasetprops';
-import ComponentToPrint from '../comps/ComponentToPrint';
+// import ComponentToPrint from '../comps/ComponentToPrint'; // Not currently used
 import assessmentCalculator from '../comps/surveyDisplay/graphs/testCalculator';
 import SurveyButton from '../comps/buttons/surveybuttons';
 
@@ -62,9 +97,29 @@ function saveText(text, filename){
 
 
 
-const results = () => {
-
+const Results = () => {
+    const t = useTranslations('results');
+    const router = useRouter();
     
+    // Simple Flex/Box components to replace reflexbox
+    const Flex = ({ children, flexWrap, ...props }) => (
+        <div style={{ display: 'flex', flexWrap: flexWrap || 'nowrap', ...props.style }} {...props}>
+            {children}
+        </div>
+    );
+
+    const Box = ({ children, width, p, className, ...props }) => {
+        const padding = p ? `${p * 8}px` : '0';
+        const widthStyle = Array.isArray(width) 
+            ? { width: width[0] === 1 ? '100%' : width[0] === 1/2 ? '50%' : `${width[0] * 100}%` }
+            : { width: '100%' };
+        
+        return (
+            <div style={{ ...widthStyle, padding, boxSizing: 'border-box' }} className={className} {...props}>
+                {children}
+            </div>
+        );
+    };
     
     const[display,setDisplay] = useState(0)
     const[showPrevious, setShowPrevious] = useState(false)
@@ -109,7 +164,7 @@ const results = () => {
                     }
                     
                 }
-                completionText = 'Thank you for completing the questionnaire'   
+                completionText = t('completionText');
                 
                 // put all relevant data in to the JSON for the Charts
                 // surveyCalculator JSON returns the sorted scores from the survey where Pages
@@ -236,7 +291,7 @@ const results = () => {
             } 
         else{
                 
-                completionText = 'You must first complete the questionnaire to see results'
+                completionText = t('mustComplete');
             }
         }, [])
             
@@ -244,7 +299,7 @@ const results = () => {
            return(
             <>
                 <Head>
-                    <title>SAMMWise | Results </title>
+                    <title>{t('title')}</title>
                     <meta name = "keywords" content = "owassp-calc"/>
                 </Head>
                 <h1>{completionText}</h1>
@@ -252,16 +307,16 @@ const results = () => {
                 <p>{projectDesc}</p>
                 <div ref={componentRef}>
                     <div>
-                        <SurveyButton name="Refresh Graphs" onClick={()=> reloadPage()} />
+                        <SurveyButton name={t('refresh')} onClick={()=> reloadPage()} />
                     </div>
                     <div label='TOTALS' id="totalsDiv">
                         <Flex flexWrap = 'wrap'>
                             <Box width ={[1]} p = {3} id="box1" className="totalGraphs">
                                 {/* <h2 id="finalscore">{showPrevious? 'Your overall score is: '+ finalScore[0] + ' Your score last time was: ' +finalScore[1]:'Your overall score is: '+ finalScore[0]}</h2>
                                 <GaugeChart id="gauge-chart2" nrOfLevels={4}   textColor ={"#000000"} colors={[" #ff6384","#ff9f40","#ffcd56","#4bc0c0"]} className="gauge"/> */}
-                                <h2 id="finalscore">{showPrevious? 'Your overall score is: '+ finalScore[0]+'/3' + ' Your score last time was: ' +finalScore[1] +'/3':'Your overall score is: '+ finalScore[0] +'/3'}</h2>
+                                <h2 id="finalscore">{showPrevious? `${t('overallScore')} ${finalScore[0]}/3 ${t('previousScore')} ${finalScore[1]}/3`:`${t('overallScore')} ${finalScore[0]}/3`}</h2>
                                 <GaugeChart id="gauge-chart2" nrOfLevels={4}  percent={percentageScore} textColor ={"#000000"} colors={[" #ff6384","#ff9f40","#ffcd56","#4bc0c0"]} className="gauge"/>
-                                <h2 id="totalsbargraph" className="totalsBarHeader"> Response count by value </h2>
+                                <h2 id="totalsbargraph" className="totalsBarHeader">{t('responseCount')}</h2>
                                 <Bar data = {totalsBarGraph.metaData} options = {totalsBarGraph.layout_props} className='totalsBar' />
                             </Box> 
                         </Flex>
@@ -269,11 +324,11 @@ const results = () => {
                     <div label='Business Functions'>
                         <Flex flexWrap = 'wrap'>
                             <Box width ={[1,1/2]} p = {3} className="bussFuncRadarBox" >
-                                <h2 id = "busfuncradargraph"> Maturity by Business Function </h2>
+                                <h2 id = "busfuncradargraph">{t('maturityByBusiness')}</h2>
                                 <Radar data = {bussFuncRadar.metaData}  options = {bussFuncRadar.layout_props} className='bussFuncRadar'/>
                             </Box>
                             <Box width ={[1,1/2]} p = {3} className="bussFuncBarBox">
-                                <h2> Maturity by Business Function </h2>
+                                <h2>{t('maturityByBusiness')}</h2>
                                 <Bar data = {bussFuncBarGraph.metaData} options = {bussFuncBarGraph.layout_props} className='bussFuncBar'/>
                             </Box>                  
                         </Flex>
@@ -281,32 +336,32 @@ const results = () => {
                     <div label='Practices' className="practices">
                         <Flex flexWrap = 'wrap'>
                             <Box width ={[1,1/2]} p = {3} className="practiceRadarBox">
-                                <h2 id = "pracradargraph"> Maturity by Practice </h2>
+                                <h2 id = "pracradargraph">{t('maturityByPractice')}</h2>
                                 <Radar  data = {practiceRadar.metaData}  options = {practiceRadar.layout_props} className='practiceRadar'/>
                             </Box>
                             <Box width ={[1,1/2]} p = {3} className="practicesBarBox">
-                                <h2 id ="pracbargraph"> Maturity by Practice </h2>
+                                <h2 id ="pracbargraph">{t('maturityByPractice')}</h2>
                                 <Bar data = {practiceBarGraph.metaData} options = {practiceBarGraph.layout_props} className='practiceBar'/>
                             </Box>
                         </Flex> 
                     </div>
                 </div>
                     <div className="jsonDownload">     
-                        <h2 className="jsonDownload">Do you wish to save your results file in JSON?</h2>
+                        <h2 className="jsonDownload">{t('saveJson')}</h2>
                         <button className = 'btn'
                             onClick={()=> saveText(JSON.stringify(dataENV[0]), JSON.stringify(companyname)+JSON.stringify(projectName)+".json")}>
-                                Save file
+                                {t('saveFile')}
                         </button>
-                        <h2 className="jsonDownload">Do you wish to load your previous results to compare?</h2>
+                        <h2 className="jsonDownload">{t('loadPrevious')}</h2>
                         <InputFile fileName = 'prevResults' className="jsonDownload"/>
                     </div>
                 
                 {/* <ComponentToPrint completionText = {completionText} projectName = {projectName} projectDesc = {projectDesc} finalScore = {finalScore} graphObjects={graphObjects}/> */}
             
             <div>
-                <h2 className='jsonDownload'> Do you wish to print or save the graphs as a pdf?</h2>
+                <h2 className='jsonDownload'>{t('exportPdf')}</h2>
                     <ReactToPrint 
-                    trigger={() => <button className='btn'>Export graphs</button>}
+                    trigger={() => <button className='btn'>{t('exportGraphs')}</button>}
                     content={()=>  componentRef.current}
                     />
             </div>
@@ -315,5 +370,14 @@ const results = () => {
             </>
         );
 }
+
+// Disable static generation for this page as it requires client-side session storage
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../messages/${locale}.json`)).default
+    },
+  };
+}
  
-export default results;
+export default Results;

@@ -70,7 +70,7 @@ const InputFile = (props) => {
           <input {...getInputProps()} />
           <p className="middle" style={{uploadColour,fontSize: "20px"}} >{uploadMessage}</p>
           <div className = "middle">
-             <Image src = {uploadState? "/uploadSuccessful.png":"/dragndrop.png"} width={75} height = {75} className="middle"/>
+             <Image src = {uploadState? "/uploadSuccessful.png":"/dragndrop.png"} width={75} height = {75} className="middle" alt={uploadState ? "Upload successful" : "Drag and drop file"}/>
             
           </div>
 

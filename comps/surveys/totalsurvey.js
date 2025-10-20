@@ -4,6 +4,7 @@ import governanceJSON from "./surveypages/governance"
 import implementationJSON from "./surveypages/implementation"
 import operationsJSON from "./surveypages/operations"
 import verificationJSON from "./surveypages/verfication"
+import { translateSurvey } from "./translations-pt"
 
 
 
@@ -31,9 +32,7 @@ import verificationJSON from "./surveypages/verfication"
 
 
 
- const Json = () => {
-    return(
-       tosend
-    )
+ const Json = (locale = 'en') => {
+    return translateSurvey(tosend, locale);
 }; 
 export default Json;

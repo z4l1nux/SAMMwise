@@ -1,33 +1,40 @@
 {
-  "name": "samm-calc",
-  "version": "0.1.0",
+  "name": "sammwise",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3500",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p 3500",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@progress/kendo-drawing": "^1.10.1",
-    "@progress/kendo-licensing": "^1.1.4",
-    "@progress/kendo-react-pdf": "^4.7.0",
-    "chart.js": "^3.3.2",
-    "chartjs-gauge": "^0.3.0",
-    "next": "10.2.0",
-    "react": "^16.14.0",
-    "react-advanced-gauge-chart": "^0.2.7",
-    "react-chartjs-2": "^3.0.3",
-    "react-dom": "^16.14.0",
-    "react-dropzone": "^11.3.2",
-    "react-file-drop": "^3.1.2",
-    "react-gauge-chart": "^0.3.0",
-    "react-to-print": "^2.12.6",
+    "@progress/kendo-drawing": "^1.20.0",
+    "@progress/kendo-licensing": "^1.3.5",
+    "@progress/kendo-react-pdf": "^12.1.0",
+    "chart.js": "^4.4.7",
+    "lodash": "^4.17.21",
+    "next": "^14.2.21",
+    "next-intl": "^4.3.12",
+    "react": "^18.3.1",
+    "react-chartjs-2": "^5.3.0",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.5",
+    "react-to-print": "^3.0.4",
     "rebass": "^4.0.7",
     "reflexbox": "^4.0.6",
-    "survey-react": "^1.8.48"
+    "survey-core": "^1.12.16",
+    "survey-react-ui": "^1.12.16"
   },
   "devDependencies": {
-    "@types/react-gauge-chart": "^0.3.0",
-    "style-loader": "^2.0.0"
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/react-gauge-chart": "^0.4.3",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.21",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^10.4.0",
+    "typescript": "^5.7.2"
   }
 }
