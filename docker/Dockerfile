@@ -26,9 +26,13 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./
 
+# Configurar permissões
+RUN chown -R nextjs:nodejs /app
+
 USER nextjs
 
 EXPOSE 3000
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
 
 CMD ["npm", "run", "start"]
