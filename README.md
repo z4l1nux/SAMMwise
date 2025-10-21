@@ -51,8 +51,11 @@ This is a **modernized and security-hardened version** of SAMMwise with signific
 # Pull the image
 docker pull z4l1nux/sammwise:latest
 
-# Run the container
-docker run -p 3000:3000 z4l1nux/sammwise:latest
+# Run the container with custom name
+docker run -d -p 3500:3500 --name sammwise-app z4l1nux/sammwise:latest
+
+# Or run without custom name (will get random name like "sweet_hugle")
+docker run -d -p 3500:3500 z4l1nux/sammwise:latest
 ```
 
 ### Using Docker Compose
