@@ -2,6 +2,7 @@ version: "3.7"
 
 services:
     nextjs:
+        container_name: sammwise-app
         build:
             context: .
             dockerfile: docker/Dockerfile
