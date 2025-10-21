@@ -215,50 +215,44 @@ const Mysurvey = (prop) => {
             survey.currentPage = pageName
         }
         else{
-            // Use SurveyJS built-in navigation
-            const currentPageName = survey.currentPage.name;
-            console.log("=== NAVIGATION DEBUG ===");
-            console.log("Current page name:", currentPageName);
-            console.log("Available pages:", survey.pages.map(p => p.name));
-            console.log("Current pageNo:", survey.currentPageNo);
-            console.log("Can go to next page:", survey.canGoNextPage);
-            console.log("Is current page valid:", survey.isCurrentPageHasErrors);
+            // Use pageState instead of survey.currentPage.name
+            const currentPageName = pageState;
+            console.log("Current page from state:", currentPageName);
             
-            // Check if we're on the last page (Details)
-            if(currentPageName === "Details"){
-                console.log("Completing survey, redirecting to results");
-                router.push('/results');
-                return;
+            // Direct page mapping
+            let nextPageName;
+            switch(currentPageName) {
+                case "Governance":
+                    nextPageName = "Design";
+                    break;
+                case "Design":
+                    nextPageName = "Implementation";
+                    break;
+                case "Implementation":
+                    nextPageName = "Verification";
+                    break;
+                case "Verification":
+                    nextPageName = "Operations";
+                    break;
+                case "Operations":
+                    nextPageName = "Details";
+                    setDetailsPage(true);
+                    break;
+                case "Details":
+                    router.push('/results');
+                    return;
+                default:
+                    console.log("Unknown page:", currentPageName);
+                    return;
             }
             
-            // Try SurveyJS nextPage() first
-            console.log("Attempting SurveyJS nextPage()");
-            try {
-                survey.nextPage();
-                console.log("SurveyJS nextPage() succeeded");
-            } catch (error) {
-                console.log("SurveyJS nextPage() failed:", error);
-            }
-            
-            // If that didn't work, try manual navigation
-            setTimeout(() => {
-                if(survey.currentPage.name === currentPageName){
-                    console.log("SurveyJS navigation failed, trying manual approach");
-                    const currentIndex = survey.pages.findIndex(p => p.name === currentPageName);
-                    if(currentIndex !== -1 && currentIndex < survey.pages.length - 1){
-                        const nextPage = survey.pages[currentIndex + 1];
-                        console.log("Manually navigating to:", nextPage.name);
-                        survey.currentPage = nextPage;
-                        
-                        // Update state after manual navigation
-                        setPageState(nextPage.name);
-                        var navBarState = sessionStorage.getItem('navbarState');
-                        navBarState = nextPage.name;
-                        sessionStorage.setItem('navbarState', navBarState);
-                        setSurvey(survey);
-                    }
-                }
-            }, 100); 
+            console.log("Navigating to:", nextPageName);
+            survey.currentPage = survey.getPageByName(nextPageName);
+            setPageState(nextPageName);
+            var navBarState = sessionStorage.getItem('navbarState');
+            navBarState = nextPageName;
+            sessionStorage.setItem('navbarState', navBarState);
+            setSurvey(survey); 
         }
         
         // Update page state and navbar
