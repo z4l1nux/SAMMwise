@@ -49,10 +49,10 @@ This is a **modernized and security-hardened version** of SAMMwise with signific
 
 ```bash
 # Pull the image
-docker pull stephenmorgan/owasp-sammwise
+docker pull z4l1nux/owasp-sammwise
 
 # Run the container
-docker run -p 3000:3000 stephenmorgan/owasp-sammwise
+docker run -p 3000:3000 z4l1nux/owasp-sammwise
 ```
 
 ### Using Docker Compose

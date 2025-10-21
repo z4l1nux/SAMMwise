@@ -215,52 +215,65 @@ const Mysurvey = (prop) => {
             survey.currentPage = pageName
         }
         else{
-           
-                if(survey.currentPageNo == 0){
-                    pageName = "Design";
-                    
+            // Use SurveyJS built-in navigation
+            const currentPageName = survey.currentPage.name;
+            console.log("=== NAVIGATION DEBUG ===");
+            console.log("Current page name:", currentPageName);
+            console.log("Available pages:", survey.pages.map(p => p.name));
+            console.log("Current pageNo:", survey.currentPageNo);
+            console.log("Can go to next page:", survey.canGoNextPage);
+            console.log("Is current page valid:", survey.isCurrentPageHasErrors);
+            
+            // Check if we're on the last page (Details)
+            if(currentPageName === "Details"){
+                console.log("Completing survey, redirecting to results");
+                router.push('/results');
+                return;
+            }
+            
+            // Try SurveyJS nextPage() first
+            console.log("Attempting SurveyJS nextPage()");
+            try {
+                survey.nextPage();
+                console.log("SurveyJS nextPage() succeeded");
+            } catch (error) {
+                console.log("SurveyJS nextPage() failed:", error);
+            }
+            
+            // If that didn't work, try manual navigation
+            setTimeout(() => {
+                if(survey.currentPage.name === currentPageName){
+                    console.log("SurveyJS navigation failed, trying manual approach");
+                    const currentIndex = survey.pages.findIndex(p => p.name === currentPageName);
+                    if(currentIndex !== -1 && currentIndex < survey.pages.length - 1){
+                        const nextPage = survey.pages[currentIndex + 1];
+                        console.log("Manually navigating to:", nextPage.name);
+                        survey.currentPage = nextPage;
+                        
+                        // Update state after manual navigation
+                        setPageState(nextPage.name);
+                        var navBarState = sessionStorage.getItem('navbarState');
+                        navBarState = nextPage.name;
+                        sessionStorage.setItem('navbarState', navBarState);
+                        setSurvey(survey);
+                    }
                 }
-                else if(survey.currentPageNo == 1){
-                    pageName = "Implementation";
-                }
-                else if(survey.currentPageNo == 2){
-                    pageName = "Verification";
-                    
-                }
-                else if(survey.currentPageNo == 3){  
-                    pageName = "Operations";
-
-                }
-                else if(survey.currentPageNo == 4){
-                    
-                    
-                    pageName = "Details";
-                    setDetailsPage(true)
-                    
-                }else if(survey.currentPageNo == 5){
-                    
-                    // setSurvey(survey);
-                    // setDisplay(!display);
-                    pageName = "Details";
-                    setDetailsPage(true)
-                    router.push('/results');
-                    // survey.completeLastPage();
-                    
-                }else{
-                    setDetailsPage(true);
-                }
-            survey.currentPage = pageName; 
+            }, 100); 
         }
-        if(pageName == "Details"){
-            setDetailsPage(true)
-        } else{
-            setDetailsPage(false)
+        
+        // Update page state and navbar
+        if(pageName != "next"){
+            if(pageName == "Details"){
+                setDetailsPage(true)
+            } else{
+                setDetailsPage(false)
+            }
+            setPageState(pageName);
+            var navBarState = sessionStorage.getItem('navbarState');
+            navBarState = pageName;
+            sessionStorage.setItem('navbarState', navBarState);
+            setSurvey(survey);
         }
-        setPageState(pageName);
-        var navBarState = sessionStorage.getItem('navbarState');
-        navBarState = pageName;
-        sessionStorage.setItem('navbarState', navBarState);
-        setSurvey(survey);
         
     }
 
