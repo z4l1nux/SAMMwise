@@ -14,11 +14,41 @@ const GaugeChart = ({ percent, nrOfLevels = 4, colors = ["#ff6384", "#ff9f40", "
   const percentValue = typeof percent === 'number' ? percent : parseFloat(percent) || 0;
   const angle = Math.min(Math.max(percentValue, 0), 1) * 180 - 90; // -90 to 90 degrees
   
-  // Create data for the gauge (semi-circle)
+  // Create data for the gauge (semi-circle) based on actual score
+  const scorePercentage = percentValue * 100;
+  const filledSections = Math.floor(scorePercentage / 25); // How many sections should be filled
+  const remainingPercentage = scorePercentage % 25; // Remaining percentage for partial fill
+  
+  // Create data array: filled sections + partial section + empty sections + bottom half
+  const dataArray = [];
+  const backgroundColors = [];
+  
+  // Add filled complete sections
+  for (let i = 0; i < filledSections; i++) {
+    dataArray.push(25);
+    backgroundColors.push(colors[i]);
+  }
+  
+  // Add partial section if needed
+  if (remainingPercentage > 0 && filledSections < 4) {
+    dataArray.push(remainingPercentage);
+    backgroundColors.push(colors[filledSections]);
+  }
+  
+  // Add empty sections
+  for (let i = filledSections + (remainingPercentage > 0 ? 1 : 0); i < 4; i++) {
+    dataArray.push(0);
+    backgroundColors.push(colors[i]);
+  }
+  
+  // Add bottom half (always empty)
+  dataArray.push(100);
+  backgroundColors.push('transparent');
+  
   const data = {
     datasets: [{
-      data: [25, 25, 25, 25, 100], // 4 sections + empty bottom half
-      backgroundColor: [...colors, 'transparent'],
+      data: dataArray,
+      backgroundColor: backgroundColors,
       borderWidth: 0,
       circumference: 180,
       rotation: 270,
