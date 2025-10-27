@@ -38,6 +38,12 @@ jobs:
           # Required for writing pull request comment
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install vet CLI
+        run: |
+          curl -sSfL https://github.com/safedep/vet/releases/latest/download/vet-linux-amd64.tar.gz | tar -xz
+          sudo mv vet /usr/local/bin/
+          vet --version
+
       - name: Fail on critical vulnerabilities
         run: |
           echo "Checking for critical or high vulnerabilities..."
