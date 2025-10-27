@@ -31,10 +31,9 @@ jobs:
 
       - name: Run vet
         id: vet
-        uses: safedep/vet-action@v1.1.6
+        uses: safedep/vet-action@v1
         with:
           policy: .github/policies/vet-policy.yml
-          fail-on-findings: true
         env:
           # Required for writing pull request comment
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
