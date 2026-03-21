@@ -25,11 +25,11 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Run vet
         id: vet
-        uses: safedep/vet-action@v1
+        uses: safedep/vet-action@v2
         with:
           # Path to the policy file.
           # Remove following line to use the default policy
