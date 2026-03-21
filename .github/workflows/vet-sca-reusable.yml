@@ -17,6 +17,9 @@ permissions:
   # Required for uploading findings to Github security tab
   security-events: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   vet:
     name: vet
