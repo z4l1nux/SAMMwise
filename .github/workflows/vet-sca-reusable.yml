@@ -29,7 +29,7 @@ jobs:
 
       - name: Run vet
         id: vet
-        uses: safedep/vet-action@v2
+        uses: safedep/vet-action@v1.1.11
         with:
           # Path to the policy file.
           # Remove following line to use the default policy
