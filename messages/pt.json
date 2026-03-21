@@ -34,6 +34,8 @@
     "clear": "Limpar",
     "saveResponses": "Salvar Respostas",
     "nextPage": "Próxima Página",
+    "nextPractice": "Próxima Prática",
+    "previousPractice": "Prática Anterior",
     "complete": "Concluir",
     "clearConfirm": "Isso irá limpar todas as respostas. Deseja continuar?",
     "domains": {
@@ -56,8 +58,13 @@
     "responseCount": "Contagem de respostas por valor",
     "businessFunctions": "Funções de Negócio",
     "maturityByBusiness": "Maturidade por Função de Negócio",
+    "maturityByBusinessRadar": "Radar — Funções de Negócio",
+    "maturityByBusinessBar": "Barras — Funções de Negócio",
     "practices": "Práticas",
     "maturityByPractice": "Maturidade por Prática",
+    "maturityByPracticeRadar": "Radar — Práticas",
+    "maturityByPracticeBar": "Barras — Práticas",
+    "totalsSection": "Totais",
     "saveJson": "Deseja salvar seus resultados em formato JSON?",
     "saveFile": "Salvar arquivo",
     "loadPrevious": "Deseja carregar seus resultados anteriores para comparar?",
@@ -65,7 +72,68 @@
     "exportGraphs": "Exportar gráficos",
     "projectName": "Nome do Projeto",
     "projectDescription": "Descrição do Projeto",
-    "companyName": "Nome da Empresa"
+    "companyName": "Nome da Empresa",
+    "scoreInitial": "Práticas raramente ou nunca aplicadas.",
+    "scoreManaged": "Implementação ad-hoc, sem consistência.",
+    "scoreDefined": "Processos definidos, aplicação consistente.",
+    "scoreOptimized": "Otimizado, medido e em melhoria contínua.",
+    "practiceBreakdown": "Detalhamento por Prática",
+    "businessFunction": "Função de Negócio",
+    "practice": "Prática",
+    "score": "Pontuação",
+    "maturityLevel": "Nível de Maturidade"
+  },
+  "charts": {
+    "currentAssessment": "Avaliação Atual",
+    "previousAssessment": "Avaliação Anterior",
+    "previousDataset": "Conjunto de Dados Anterior",
+    "scoreForEach": "Pontuação por Função de Negócio",
+    "practiceScore": "Pontuação por Prática",
+    "responseLabels": {
+      "no": "Não",
+      "yesForSome": "Sim, para alguns",
+      "yesForMost": "Sim, para a maioria",
+      "yesForAll": "Sim, para todos"
+    },
+    "maturityLabels": {
+      "bad": "Ruim",
+      "lessThanIdeal": "Abaixo do ideal",
+      "okay": "Razoável",
+      "good": "Bom"
+    },
+    "businessFunctions": {
+      "Governance": "Governança",
+      "Design": "Design",
+      "Implementation": "Implementação",
+      "Verification": "Verificação",
+      "Operations": "Operações"
+    },
+    "practices": {
+      "Strategy and Metrics": "Estratégia e Métricas",
+      "Policy and Compliance": "Política e Conformidade",
+      "Education and Guidance": "Educação e Orientação",
+      "Threat Assessment": "Avaliação de Ameaças",
+      "Security Requirements": "Requisitos de Segurança",
+      "Security Architecture": "Arquitetura de Segurança",
+      "Secure Build": "Construção Segura",
+      "Secure Deployment": "Implantação Segura",
+      "Defect Management": "Gerenciamento de Defeitos",
+      "Architecture Assessment": "Avaliação de Arquitetura",
+      "Requirements Testing": "Testes Orientados a Requisitos",
+      "Security Testing": "Testes de Segurança",
+      "Incident Management": "Gerenciamento de Incidentes",
+      "Environment Management": "Gerenciamento de Ambiente",
+      "Operations Management": "Gerenciamento Operacional"
+    }
+  },
+  "upload": {
+    "dropzone": "Arraste e solte arquivos aqui, ou clique para selecionar",
+    "errorFormat": "O(s) arquivo(s) enviado(s) não estão no formato JSON. Use apenas arquivos JSON gerados por esta ferramenta"
+  },
+  "notFound": {
+    "title": "404 - Ops!",
+    "subtitle": "Esta página não foi encontrada",
+    "redirect": "Voltando para a"
   },
   "footer": {
     "copyright": "© 2025 SAMMwise - Fundação OWASP",
@@ -113,6 +181,33 @@
       "operational": "Gerenciamento Operacional"
     }
   },
+  "llm": {
+    "settingsTitle": "Configurações de Análise por IA",
+    "provider": "Provedor",
+    "apiKey": "Chave de API",
+    "apiKeyPlaceholder": "Digite sua chave de API",
+    "apiKeyNote": "Sua chave é criptografada com AES-GCM e armazenada apenas neste dispositivo.",
+    "model": "Modelo",
+    "ollamaUrl": "URL do Ollama",
+    "autoAnalysis": "Análise Automática",
+    "autoAnalysisDesc": "Gerar análise de IA automaticamente ao visualizar resultados.",
+    "save": "Salvar Configurações",
+    "saving": "Salvando…",
+    "clear": "Limpar",
+    "settingsSaved": "Configurações salvas!",
+    "settingsCleared": "Configurações removidas.",
+    "settingsError": "Erro ao salvar configurações.",
+    "analysisTitle": "Análise por Inteligência Artificial",
+    "analyzePrompt": "Clique abaixo para obter uma análise detalhada dos seus resultados SAMM com sugestões de melhoria.",
+    "analyze": "Analisar Resultados",
+    "reanalyze": "Re-analisar",
+    "analyzing": "Analisando seus resultados…",
+    "notConfigured": "Configure um provedor de IA nas configurações para habilitar a análise.",
+    "decryptError": "Não foi possível descriptografar a chave. Por favor, insira-a novamente nas configurações.",
+    "genericError": "Ocorreu um erro durante a análise.",
+    "configureButton": "Configurar IA",
+    "comparisonNote": "A análise inclui comparação com sua avaliação anterior."
+  },
   "meta": {
     "homeTitle": "SAMMwise | Início",
     "assessmentTitle": "SAMMwise | Avaliação",
@@ -122,4 +217,3 @@
     "keywords": "owasp, samm, segurança, avaliação, modelo de maturidade, segurança de software"
   }
 }
-

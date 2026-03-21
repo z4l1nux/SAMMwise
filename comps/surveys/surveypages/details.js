@@ -1,20 +1,22 @@
 var tosend = {
   name: "Details",
   elements: [{
-    
       "type": "text",
       "name": "Company Name",
+      "title": "Company Name"
      },
      {
       "type": "text",
-      "name": "Project name"
+      "name": "Project name",
+      "title": "Project name"
      },
      {
       "type": "text",
-      "name": "Description of Project"
+      "name": "Description of Project",
+      "title": "Description of Project"
      }
     ],
-    "description": "These are optional, the only use for these will be to help categorize the results you receive, eg: title of results document ETC "
+    "description": "These are optional fields. They will help categorize your results, e.g., the title of the results document."
 
 }
 

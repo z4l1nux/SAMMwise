@@ -1,9 +1,6 @@
-
-
 export default class DonutGraph{
     constructor(){
         this.metaData = {
-    
             labels: [
               "Bad",
               "Less than ideal",
@@ -52,25 +49,15 @@ export default class DonutGraph{
                   ]
             }]
         }
-        this.options = {
-    
-            elements: {
-              center: {
-                text: 'Red is 2/3 of the total numbers',
-                color: '#FF6384', // Default is #000000
-                fontStyle: 'Arial', // Default is Arial
-                sidePadding: 20, // Default is 20 (as a percentage)
-                minFontSize: 25, // Default is 20 (in px), set to false and text will not wrap.
-                lineHeight: 25 // Default is 25 (in px), used for when text wraps
-              }
-            }
-            
-        }
+        this.options = {}
         this.buss_func_data = [0,0,0,0]
     }
 
+    setLabels(labels){
+        this.metaData.labels = labels;
+    }
+
     set_buss_func_scores(data_in, i, j){
-        //TODO: Change data_in variable name accordingly (currently a test)
         for(let g = 0; g<5;g++){
             if(surveyCalculatorJSON(data_in).Pages[i].panels[j].answers[g] == 0){
                 this.buss_func_data[0]++

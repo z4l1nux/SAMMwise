@@ -5,8 +5,9 @@ import { useTranslations } from 'next-intl'
 
 const NotFound = () => {
   const router = useRouter();
-  const t = useTranslations('nav');
-  
+  const t = useTranslations('notFound');
+  const tNav = useTranslations('nav');
+
   useEffect(() => {
     setTimeout(() => {
       router.push('/');
@@ -15,9 +16,9 @@ const NotFound = () => {
 
   return (
     <div className="not-found">
-      <h1>404 - Oops!</h1>
-      <h2>That page cannot be found</h2>
-      <p>Going back to the <Link href="/">{t('home')}</Link> in 3 seconds...</p>
+      <h1>{t('title')}</h1>
+      <h2>{t('subtitle')}</h2>
+      <p>{t('redirect')} <Link href="/">{tNav('home')}</Link> in 3 seconds...</p>
     </div>
   );
 }

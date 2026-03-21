@@ -6,7 +6,10 @@
     "dev": "next dev -p 3500",
     "build": "next build",
     "start": "next start -p 3500",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@progress/kendo-drawing": "^1.20.0",
@@ -14,7 +17,7 @@
     "@progress/kendo-react-pdf": "^12.1.0",
     "chart.js": "^4.4.7",
     "lodash": "^4.17.21",
-    "next": "^14.2.21",
+    "next": "^15.5.14",
     "next-intl": "^4.3.12",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.3.0",
@@ -25,13 +28,26 @@
     "survey-core": "^1.12.16",
     "survey-react-ui": "^1.12.16"
   },
+  "overrides": {
+    "glob": "^11.0.0"
+  },
   "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "@babel/preset-react": "^7.28.5",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@types/react-gauge-chart": "^0.4.3",
+    "babel-jest": "^30.3.0",
     "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.21",
+    "eslint-config-next": "^15.5.14",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "postcss": "^8.5.8",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^10.4.0",
     "typescript": "^5.7.2"

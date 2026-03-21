@@ -19,7 +19,6 @@ import { translateSurvey } from "./translations-pt"
             ],
             
             
-            startSurveyText: "Start Survey",
             questionStartIndex: "1"
         }
     //appending to the pages category

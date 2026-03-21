@@ -7,7 +7,6 @@ import 'survey-core/defaultV2.min.css';
 import { Model, surveyLocalization } from 'survey-core';
 import { Survey } from 'survey-react-ui';
 import { Flex, Box } from '../layout'
-import assert, { strictEqual } from 'assert';
 import { useTranslations } from 'next-intl';
 //local imports
 import Json from  '../surveys/totalsurvey';
@@ -55,6 +54,9 @@ function formatDate(date) {
 const Mysurvey = (prop) => {
     const t = useTranslations('assessment');
     const router = useRouter();
+    const nextPracticeText = t('nextPractice');
+    const previousPracticeText = t('previousPractice');
+    const nextPageText = t('nextPage');
     const currentLocale = router.locale || 'en';
     
     // Initialize survey with current locale - preserve existing data
@@ -108,6 +110,7 @@ const Mysurvey = (prop) => {
     const [dropDownState, setDropDownState] = useState(false);
     const [isDetailsPage, setDetailsPage] = useState(false);
     const [reloadSurvey, setReloadSurvey] = useState(false);
+    const registeredSurveyRef = useRef(null)
     
     //Use Effect for populating the Survey with predefined answerd from a file or from previously answered survey
     useEffect(() => {
@@ -298,7 +301,10 @@ const Mysurvey = (prop) => {
     survey.showNavigationButtons = "none";
     
 
-    survey.onCurrentPageChanged.add(function(survey, option){
+    if (registeredSurveyRef.current !== survey) {
+      registeredSurveyRef.current = survey
+
+      survey.onCurrentPageChanged.add(function(survey, option){
         if (panels.length > 0 && curr_panel_names.length > 0){
             panels.length= 0;
             curr_panel_names.length = 0;
@@ -306,24 +312,24 @@ const Mysurvey = (prop) => {
         }
         pageChanged = true;
         var currPage = option.newCurrentPage;
-        
+
         append_panel_data(currPage.getPanels());
        // currPageIndex = page_names.indexOf(currPage.name);
-      
-    });
-    
-    var page;
-    if(!(pageChanged)){
-        page = survey.currentPage;
-        append_panel_data(page.getPanels())
-    }
-    
-    function getPanelHeaders(panelName){
-        var panelHeaderMap = JSON.parse(sessionStorage.getItem('practiceHeaders'));
-        return panelHeaderMap[panelName];
-    }
 
-    survey.onAfterRenderPanel.add(function(survey, options){
+      });
+
+      var page;
+      if(!(pageChanged)){
+          page = survey.currentPage;
+          append_panel_data(page.getPanels())
+      }
+
+      function getPanelHeaders(panelName){
+          var panelHeaderMap = JSON.parse(sessionStorage.getItem('practiceHeaders'));
+          return panelHeaderMap[panelName];
+      }
+
+      survey.onAfterRenderPanel.add(function(survey, options){
         var rendered_panel = options.panel.name;
         
         var index = curr_panel_names.indexOf(rendered_panel);
@@ -437,15 +443,15 @@ const Mysurvey = (prop) => {
                     var nextbtnText;
                     
                     if(isLastPanel(index)){
-                        nextbtnText = "Next Page";
+                        nextbtnText = nextPageText;
                     } else{
-                        nextbtnText = "Next Practice";
+                        nextbtnText = nextPracticeText;
                     }
-                    
+
                     var prevPanel = index - 1;
                     if (!(isFirstPanel(index))){
                         if(document.getElementById(prevID) == null){
-                            var prevbtn = createPanelButton("Previous Practice", prevID);
+                            var prevbtn = createPanelButton(previousPracticeText, prevID);
                             prevbtn.onclick = function () {
                                 panels[index].collapse();
                                 panels[prevPanel].expand();
@@ -478,8 +484,9 @@ const Mysurvey = (prop) => {
         if(isLastPanel(index) && isDropDownButtonClicked){
             isDropDownButtonClicked = false
         }
-    
+
     });
+    } // end if (registeredSurveyRef.current !== survey)
 
     survey.onUpdateQuestionCssClasses.add(function(survey, options) {
         var classes = options.cssClasses

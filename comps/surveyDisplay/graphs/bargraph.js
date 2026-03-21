@@ -43,6 +43,10 @@ export default class Bargraph{
         this.layout_props.aspectRatio = ratio
     }
 
+    setDatasetLabel(label){
+        this.metaData.datasets[0].label = label;
+    }
+
     set_labels(label_array){
         this.metaData.labels = this.metaData.labels.concat(label_array)
     }

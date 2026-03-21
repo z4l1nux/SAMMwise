@@ -11,7 +11,7 @@ export default class SpiderGraph{
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: 'rgba(255, 99, 132, 0.2)',
-                    data: [] 
+                    data: []
                 },
                 {
                     label: 'Previous Assessment',
@@ -21,10 +21,10 @@ export default class SpiderGraph{
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
                     pointHoverBorderColor: 'rgba(179,181,198,1)',
-                    data: [] 
+                    data: []
                 }
             ]
-        
+
         }
         this.layout_props = {
             scales: {
@@ -44,12 +44,20 @@ export default class SpiderGraph{
                 }
             }
         }
-        
+
     }
+
     set_title_text(text){
-        this.layout_props.plugins.text += text
+        this.layout_props.plugins.title.text = text
     }
+
+    setDatasetLabels(currentLabel, previousLabel){
+        this.metaData.datasets[0].label = currentLabel;
+        this.metaData.datasets[1].label = previousLabel;
+    }
+
     reset_data(){
-        this.metaData.datasets.data = [];
+        this.metaData.datasets[0].data = [];
+        this.metaData.datasets[1].data = [];
     }
 }
