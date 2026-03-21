@@ -75,7 +75,7 @@ docker-compose up
 
 1. **Install dependencies:**
 ```bash
-npm install --legacy-peer-deps
+npm install
 ```
 
 2. **Run in development mode:**
