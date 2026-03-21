@@ -15,6 +15,7 @@ const Navbar = () => {
             <Link href="/about">{t('about')}</Link>
             <Link href="/assessment">{t('assessment')}</Link>
             <Link href="/results">{t('results')}</Link>
+            <Link href="/ai">{t('ai')}</Link>
             <LanguageSwitcher />
         </nav>
     );

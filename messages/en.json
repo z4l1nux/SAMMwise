@@ -3,7 +3,8 @@
     "home": "Home",
     "assessment": "Assessment",
     "results": "Results",
-    "about": "About"
+    "about": "About",
+    "ai": "AI"
   },
   "home": {
     "title": "SAMMwise",
@@ -206,13 +207,30 @@
     "decryptError": "Could not decrypt API key. Please re-enter it in settings.",
     "genericError": "An error occurred during analysis.",
     "configureButton": "Configure AI",
-    "comparisonNote": "Analysis includes comparison with your previous assessment."
+    "comparisonNote": "Analysis includes comparison with your previous assessment.",
+    "providerChanged": "new provider active — re-analyze to update",
+    "pageTitle": "AI Analysis Settings",
+    "pageSubtitle": "Connect an LLM provider to get detailed analysis and improvement suggestions for your SAMM results.",
+    "pageDescription": "Configure your LLM provider for AI-powered SAMM assessment analysis.",
+    "fetchModels": "Fetch Models",
+    "fetchingModels": "Loading…",
+    "modelFetchFirst": "— enter key and fetch models —",
+    "noModelsFound": "No models found for this provider.",
+    "modelsLoaded": "models available",
+    "apiKeySaved": "API key saved (click to replace)",
+    "infoSecurityTitle": "Your keys stay local",
+    "infoSecurityBody": "API keys are encrypted with AES-GCM and stored only on this device. They are never sent to SAMMwise servers.",
+    "infoProvidersTitle": "4 providers supported",
+    "infoProvidersBody": "Anthropic (Claude), OpenAI (GPT), Google Gemini, and Ollama for fully local inference.",
+    "infoPersistTitle": "Analysis saved with report",
+    "infoPersistBody": "Generated analysis is embedded in the JSON report file so it reappears when you import the report for comparison."
   },
   "meta": {
     "homeTitle": "SAMMwise | Home",
     "assessmentTitle": "SAMMwise | Assessment",
     "resultsTitle": "SAMMwise | Results",
     "aboutTitle": "SAMMwise | About",
+    "aiTitle": "SAMMwise | AI Settings",
     "description": "OWASP SAMM Assessment Tool - Evaluate your organization's software security maturity",
     "keywords": "owasp, samm, security, assessment, maturity model, software security"
   }

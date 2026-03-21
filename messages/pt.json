@@ -3,7 +3,8 @@
     "home": "Início",
     "assessment": "Avaliação",
     "results": "Resultados",
-    "about": "Sobre"
+    "about": "Sobre",
+    "ai": "IA"
   },
   "home": {
     "title": "SAMMwise",
@@ -206,13 +207,30 @@
     "decryptError": "Não foi possível descriptografar a chave. Por favor, insira-a novamente nas configurações.",
     "genericError": "Ocorreu um erro durante a análise.",
     "configureButton": "Configurar IA",
-    "comparisonNote": "A análise inclui comparação com sua avaliação anterior."
+    "comparisonNote": "A análise inclui comparação com sua avaliação anterior.",
+    "providerChanged": "novo provider ativo — re-analise para atualizar",
+    "pageTitle": "Configurações de Análise por IA",
+    "pageSubtitle": "Conecte um provedor de LLM para obter análises detalhadas e sugestões de melhoria dos seus resultados SAMM.",
+    "pageDescription": "Configure seu provedor de LLM para análise de avaliação SAMM com inteligência artificial.",
+    "fetchModels": "Buscar Modelos",
+    "fetchingModels": "Carregando…",
+    "modelFetchFirst": "— insira a chave e busque os modelos —",
+    "noModelsFound": "Nenhum modelo encontrado para este provedor.",
+    "modelsLoaded": "modelos disponíveis",
+    "apiKeySaved": "Chave de API salva (clique para substituir)",
+    "infoSecurityTitle": "Suas chaves ficam locais",
+    "infoSecurityBody": "As chaves de API são criptografadas com AES-GCM e armazenadas apenas neste dispositivo. Nunca são enviadas para os servidores do SAMMwise.",
+    "infoProvidersTitle": "4 provedores suportados",
+    "infoProvidersBody": "Anthropic (Claude), OpenAI (GPT), Google Gemini e Ollama para inferência totalmente local.",
+    "infoPersistTitle": "Análise salva com o relatório",
+    "infoPersistBody": "A análise gerada é embutida no arquivo JSON do relatório e reaparece ao importar o relatório para comparação."
   },
   "meta": {
     "homeTitle": "SAMMwise | Início",
     "assessmentTitle": "SAMMwise | Avaliação",
     "resultsTitle": "SAMMwise | Resultados",
     "aboutTitle": "SAMMwise | Sobre",
+    "aiTitle": "SAMMwise | Configurações de IA",
     "description": "Ferramenta de Avaliação OWASP SAMM - Avalie a maturidade de segurança de software da sua organização",
     "keywords": "owasp, samm, segurança, avaliação, modelo de maturidade, segurança de software"
   }

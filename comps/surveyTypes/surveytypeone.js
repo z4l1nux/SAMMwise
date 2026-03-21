@@ -459,23 +459,20 @@ const Mysurvey = (prop) => {
                             }
                         }
                     }
-                    var nextPanel = panels[index + 1];
-                    
-                    // Next Panel button logic -> applied based on panel index. If last panel => go to next page. 
+                    var nextbtn = createPanelButton(nextbtnText, nextID);
                     if(index < 2){
-                        var nextbtn = createPanelButton(nextbtnText, nextID);
+                        var nextPanel = panels[index + 1];
                         nextbtn.onclick = function () {
                             nextPanel.expand();
                             currentPanel.collapse();
                             panelScroll(nextPanel.name);
                         }
+                    } else {
+                        // Last panel: advance to next domain page (or results on Details)
+                        nextbtn.onclick = function () {
+                            changePage("next");
+                        }
                     }
-                    // } else{
-                    //     nextbtn.onclick = function () {
-                    //         // nextPage(nextPageName);
-                    //         changePage(nextPageName);
-                    //     }
-                    // }
                     // Set panel "open" state to true 
                     panelStateMap.set(rendered_panel, true)
                 }
@@ -583,17 +580,6 @@ const Mysurvey = (prop) => {
                 model = {surveyState} 
                 />
             
-            <div className="pageNav">
-                {isDetailsPage?
-                    <>
-                        <button className="NextPage" onClick={()=> changePage("next")}> {t('complete')} </button>
-                    </>
-                :
-                <>
-                        <button className="NextPage" onClick={()=> changePage("next")}> {t('nextPage')} </button>
-                </>       
-                }
-            </div>
         </>
        
     );

@@ -21,8 +21,12 @@ export default function LLMAnalysis({ scorePayload, previous, locale, storedAnal
     const [error,      setError]      = useState('');
     const [collapsed,  setCollapsed]  = useState(false);
 
-    const settings = loadLLMSettings();
-    const isConfigured = !!settings?.encryptedKey || settings?.provider === 'ollama';
+    // Read settings fresh on every render so provider changes are always picked up
+    const getSettings = () => loadLLMSettings();
+    const isConfigured = (() => {
+        const s = getSettings();
+        return !!s?.encryptedKey || s?.provider === 'ollama';
+    })();
 
     // Auto-trigger analysis on mount if requested
     useEffect(() => {
@@ -33,6 +37,8 @@ export default function LLMAnalysis({ scorePayload, previous, locale, storedAnal
     }, [autoTrigger]);
 
     const runAnalysis = async () => {
+        // Always read fresh settings so provider/model changes are picked up immediately
+        const settings = getSettings();
         if (!settings) { setError(t('notConfigured')); return; }
         setLoading(true);
         setError('');
@@ -150,11 +156,27 @@ export default function LLMAnalysis({ scorePayload, previous, locale, storedAnal
                         <h2 style={{ margin: 0, fontSize: '17px', fontWeight: 700, color: '#2d3748', fontFamily: 'Poppins, sans-serif' }}>
                             {t('analysisTitle')}
                         </h2>
-                        {analysis && (
-                            <p style={{ margin: 0, fontSize: '12px', color: '#718096' }}>
-                                {analysis.provider} · {analysis.model} · {new Date(analysis.timestamp).toLocaleString()}
-                            </p>
-                        )}
+                        {analysis && (() => {
+                            const currentSettings = getSettings();
+                            const providerChanged = currentSettings && (
+                                currentSettings.provider !== analysis.provider ||
+                                currentSettings.model !== analysis.model
+                            );
+                            return (
+                                <p style={{ margin: 0, fontSize: '12px', color: '#718096' }}>
+                                    {analysis.provider} · {analysis.model} · {new Date(analysis.timestamp).toLocaleString()}
+                                    {providerChanged && (
+                                        <span style={{
+                                            marginLeft: '8px', background: '#fefcbf',
+                                            color: '#744210', borderRadius: '4px',
+                                            padding: '1px 6px', fontSize: '11px', fontWeight: 600,
+                                        }}>
+                                            {t('providerChanged', { provider: currentSettings.provider })}
+                                        </span>
+                                    )}
+                                </p>
+                            );
+                        })()}
                     </div>
                 </div>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>

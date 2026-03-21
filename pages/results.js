@@ -20,8 +20,8 @@ import {
   Filler
 } from 'chart.js';
 import GaugeChart from '../comps/charts/GaugeChart';
+import Link from 'next/link';
 import LLMAnalysis from '../comps/llm/LLMAnalysis';
-import LLMSettings from '../comps/llm/LLMSettings';
 import { loadLLMSettings } from '../comps/llm/LLMSettings';
 
 ChartJS.register(
@@ -140,7 +140,6 @@ const Results = () => {
     const [showPrevious,   setShowPrevious]   = useState(false)
     const [scoreData,      setScoreData]      = useState(null)
     const [completionText, setCompletionText] = useState('')
-    const [showLLMSettings, setShowLLMSettings] = useState(false)
     const [llmSettings,    setLLMSettings]    = useState(null)
     // scorePayload and previousPayload for LLM
     const [scorePayload,   setScorePayload]   = useState(null)
@@ -313,13 +312,6 @@ const Results = () => {
                 <meta name="keywords" content="owasp, samm, assessment" />
             </Head>
 
-            {showLLMSettings && (
-                <LLMSettings
-                    onClose={() => setShowLLMSettings(false)}
-                    onSaved={(cfg) => { setLLMSettings(cfg); setShowLLMSettings(false); }}
-                />
-            )}
-
             {/* ── Header card ── */}
             {completionText && (
                 <div style={{
@@ -348,22 +340,20 @@ const Results = () => {
                             )}
                         </>
                     )}
-                    {/* AI Config button */}
-                    <button
-                        onClick={() => setShowLLMSettings(true)}
-                        style={{
-                            position: 'absolute', top: '20px', right: '20px',
-                            padding: '8px 16px', borderRadius: '8px',
-                            background: 'rgba(255,255,255,0.2)',
-                            border: '1px solid rgba(255,255,255,0.4)',
-                            color: '#fff', fontSize: '13px', fontWeight: 600, cursor: 'pointer',
-                        }}
-                    >
+                    {/* AI Config link */}
+                    <Link href="/ai" style={{
+                        position: 'absolute', top: '20px', right: '20px',
+                        padding: '8px 16px', borderRadius: '8px',
+                        background: 'rgba(255,255,255,0.2)',
+                        border: '1px solid rgba(255,255,255,0.4)',
+                        color: '#fff', fontSize: '13px', fontWeight: 600,
+                        textDecoration: 'none', display: 'inline-block',
+                    }}>
                         🤖 {tLLM('configureButton')}
                         {llmIsConfigured && llmSettings?.autoAnalysis && (
                             <span style={{ marginLeft: '6px', background: '#48bb78', borderRadius: '999px', padding: '1px 6px', fontSize: '11px' }}>ON</span>
                         )}
-                    </button>
+                    </Link>
                 </div>
             )}
 

@@ -27,7 +27,7 @@ export default async function handler(req, res) {
                 },
                 body: JSON.stringify({
                     model: model || 'claude-haiku-4-5-20251001',
-                    max_tokens: 2048,
+                    max_tokens: 8192,
                     messages: [{ role: 'user', content: prompt }],
                 }),
             });
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
                 body: JSON.stringify({
                     model: model || 'gpt-4o-mini',
                     messages: [{ role: 'user', content: prompt }],
-                    max_tokens: 2048,
+                    max_tokens: 8192,
                 }),
             });
             if (!r.ok) {
@@ -67,7 +67,7 @@ export default async function handler(req, res) {
                     headers: { 'content-type': 'application/json' },
                     body: JSON.stringify({
                         contents: [{ parts: [{ text: prompt }] }],
-                        generationConfig: { maxOutputTokens: 2048 },
+                        generationConfig: { maxOutputTokens: 8192 },
                     }),
                 }
             );
