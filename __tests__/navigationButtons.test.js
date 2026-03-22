@@ -7,8 +7,8 @@
 // surveytypeone.js uses DOM manipulation via survey.onAfterRenderPanel.
 // We test the logic in isolation rather than rendering the full component.
 
-const en = require('../messages/en.json')
-const pt = require('../messages/pt.json')
+const en = require('../src/messages/en.json')
+const pt = require('../src/messages/pt.json')
 
 describe('Panel navigation button i18n values', () => {
   describe('English locale', () => {

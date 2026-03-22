@@ -1,4 +1,4 @@
-import assessmentCalculator from '../comps/surveyDisplay/graphs/testCalculator'
+import assessmentCalculator from '../src/features/assessment/graphs/testCalculator'
 
 // Build a complete assessment state with all 90 questions answered
 function buildAnswerValues(defaultValue = 0) {

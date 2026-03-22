@@ -16,7 +16,10 @@
     "@progress/kendo-licensing": "^1.3.5",
     "@progress/kendo-react-pdf": "^12.1.0",
     "chart.js": "^4.4.7",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.38.0",
     "lodash": "^4.17.21",
+    "lucide-react": "^0.577.0",
     "next": "^15.5.14",
     "next-intl": "^4.3.12",
     "react": "^18.3.1",
@@ -26,7 +29,8 @@
     "react-to-print": "^3.0.4",
     "sharp": "^0.34.4",
     "survey-core": "^1.12.16",
-    "survey-react-ui": "^1.12.16"
+    "survey-react-ui": "^1.12.16",
+    "tailwind-merge": "^3.5.0"
   },
   "overrides": {
     "glob": "^11.0.0"
@@ -35,6 +39,7 @@
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.2",
     "@babel/preset-react": "^7.28.5",
+    "@tailwindcss/postcss": "^4.2.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -42,6 +47,7 @@
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@types/react-gauge-chart": "^0.4.3",
+    "autoprefixer": "^10.4.27",
     "babel-jest": "^30.3.0",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.5.14",
@@ -50,6 +56,7 @@
     "postcss": "^8.5.8",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^10.4.0",
+    "tailwindcss": "^4.2.2",
     "typescript": "^5.7.2"
   }
 }

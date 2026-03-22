@@ -3,8 +3,8 @@
  * and validates critical translation keys exist.
  */
 
-const en = require('../messages/en.json')
-const pt = require('../messages/pt.json')
+const en = require('../src/messages/en.json')
+const pt = require('../src/messages/pt.json')
 
 function flattenKeys(obj, prefix = '') {
   return Object.entries(obj).reduce((acc, [key, value]) => {

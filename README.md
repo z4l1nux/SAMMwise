@@ -17,33 +17,42 @@ The mission of OWASP Software Assurance Maturity Model (SAMM) is to be the prime
 
 ## ✨ What's New in This Version
 
-This is a **modernized and security-hardened version** of SAMMwise with significant improvements:
+This is a **modernized, redesigned, and security-hardened version** of SAMMwise with significant improvements:
 
 ### 🔒 Security Enhancements
 - ✅ **Zero vulnerabilities** - All dependencies updated and secured
 - ✅ **Next.js 15.5** - Latest stable version with enhanced security
 - ✅ **React 18.3** - Modern React with concurrent features
 - ✅ **Chart.js 4.4** - Latest charting library
+- ✅ **GitHub Actions** - Automated security scanning: Semgrep, TruffleHog, Vet
 
-### 🎨 Design Improvements
-- ✅ **Modern UI/UX** - Completely redesigned with gradient backgrounds
-- ✅ **Responsive Design** - Works seamlessly on all devices
-- ✅ **Enhanced Accessibility** - Better color contrast and navigation
-- ✅ **Smooth Animations** - Professional transitions and hover effects
+### 🎨 Design & UI — Dark Glassmorphism Theme
+- ✅ **Dark theme** — consistent `#0f111a` background with glassmorphism cards across all pages
+- ✅ **Tailwind CSS v4** — CSS-first configuration, zero legacy CSS modules
+- ✅ **Feature Slices architecture** — code organized by domain (`features/assessment/`, `features/results/`, `features/ai-analysis/`)
+- ✅ **Framer Motion** — smooth animations on buttons, navbar, and interactive elements
+- ✅ **Ambient background glows** — fixed cyan/purple decorative glows clipped to viewport
+- ✅ **Sticky glassmorphism navbar** — `backdrop-blur-md` with proper scroll offset for all pages
+- ✅ **Responsive design** — works on desktop and mobile
+- ✅ **SurveyJS dark theme** — survey questions inherit the dark palette via CSS variable overrides
+- ✅ **Chart dark theme** — radar, bar, and donut charts styled for dark backgrounds
 
 ### 🛠️ Technical Upgrades
 - ✅ **Survey-React-UI 1.12** - Modern survey components
 - ✅ **Custom Gauge Charts** - Built with Chart.js for better compatibility
 - ✅ **Improved Performance** - Faster load times and rendering
-- ✅ **i18n Support** - Multi-language support (English & Portuguese)
+- ✅ **i18n Support** - Multi-language support (English & Portuguese) via next-intl v4
 - ✅ **Unit Tests** - Jest 30 + React Testing Library (78 tests)
+- ✅ **scroll-padding-top** — global CSS offset ensures sticky navbar never overlaps scrollIntoView targets
 
 ### 🤖 AI-Powered Analysis
-- ✅ **Multi-provider LLM** - Anthropic, OpenAI, Gemini, and Ollama support
-- ✅ **Encrypted API keys** - AES-GCM encryption stored only on your device
-- ✅ **Auto or manual analysis** - Toggle automatic analysis per report
-- ✅ **Persisted with report** - AI analysis saved inside the JSON report file
-- ✅ **Comparison support** - Analysis reloaded when importing previous reports
+- ✅ **Multi-provider LLM** — Anthropic, OpenAI, Gemini, and Ollama support
+- ✅ **Encrypted API keys** — AES-GCM encryption stored only on your device
+- ✅ **Auto or manual analysis** — Toggle automatic analysis per report
+- ✅ **Fresh-completion guard** — AI auto-trigger only fires after completing a new assessment, not on page reload
+- ✅ **Persisted with report** — AI analysis saved inside the JSON report file
+- ✅ **Comparison support** — Analysis reloaded when importing previous reports
+- ✅ **Dark-themed analysis card** — Markdown rendering with proper contrast on dark backgrounds
 
 ## 📋 Prerequisites
 
@@ -100,10 +109,10 @@ SAMMwise supports multiple languages!
 - 🇧🇷 **Português** (Brazilian Portuguese)
 
 ### Features
-- **Language Switcher** in the navbar
+- **Language Switcher** in the navbar with animated dropdown (Framer Motion)
 - **Persistent preference** saved in localStorage
 - **SEO optimized** for each language
-- **Easy to extend** - add new languages by creating a new file in `messages/`
+- **Easy to extend** - add new languages by creating a new file in `src/messages/`
 
 See [I18N Documentation](docs/I18N.md) for details on adding new languages.
 
@@ -119,13 +128,14 @@ See [I18N Documentation](docs/I18N.md) for details on adding new languages.
 
 - **Progress Tracking** - Save and resume assessments
 - **Import/Export** - Share results in JSON format
-- **Auto-save** - Responses saved automatically on every answer
+- **Panel navigation** - Previous/Next Practice buttons within each domain
+- **Domain navigation** - Dot-based navbar to jump between domains with scroll-to-top
 
 ### Results Page (`/results`)
 - **Visual Analytics** - Beautiful charts and graphs:
   - 🎯 Gauge Chart - Overall maturity score (0–3 scale)
-  - 📊 Bar Charts - Response distribution and domain scores
-  - 🕸️ Radar Charts - Multi-dimensional analysis
+  - 📊 Bar Charts - Response distribution and domain scores (dark-themed)
+  - 🕸️ Radar Charts - Multi-dimensional analysis (dark-themed, visible grid lines)
   - 📋 Practice Breakdown Table - Color-coded maturity levels per practice
 
 - **Score Interpretation** - Maturity band legend (Initial / Managed / Defined / Optimized)
@@ -137,7 +147,7 @@ See [I18N Documentation](docs/I18N.md) for details on adding new languages.
 - **Provider Selection** - Choose from Anthropic, OpenAI, Gemini, or Ollama
 - **Dynamic Model Fetching** - Models are fetched live from the provider API
 - **Encrypted Storage** - API keys encrypted with AES-GCM, stored only on device
-- **Auto-Analysis Toggle** - Optionally generate analysis on every report view
+- **Auto-Analysis Toggle** - Optionally generate analysis only on fresh assessment completion
 
 ## 🎯 Usage Guide
 
@@ -152,22 +162,31 @@ See [I18N Documentation](docs/I18N.md) for details on adding new languages.
 
 ```
 sammwise/
-├── pages/              # Next.js pages
-│   ├── index.js        # Home page
-│   ├── assessment.js   # Assessment survey
-│   ├── results.js      # Results dashboard
-│   ├── ai.js           # AI settings
-│   ├── about.js        # About SAMM
-│   └── api/            # API proxy routes (LLM)
-├── comps/              # React components
-│   ├── charts/         # Chart components
-│   ├── llm/            # LLM integration (settings, analysis, crypto, prompt)
-│   ├── surveyDisplay/  # Survey logic and graph classes
-│   └── buttons/        # UI components
-├── messages/           # i18n translation files (en.json, pt.json)
-├── styles/             # CSS modules and global styles
-├── __tests__/          # Jest unit tests (78 tests)
-└── public/             # Static assets
+├── src/
+│   ├── pages/                  # Next.js pages
+│   │   ├── index.js            # Home page
+│   │   ├── assessment.js       # Assessment survey
+│   │   ├── results.js          # Results dashboard
+│   │   ├── ai.js               # AI settings
+│   │   ├── about.js            # About SAMM
+│   │   └── api/                # API proxy routes (LLM)
+│   ├── features/               # Feature slices (domain logic)
+│   │   ├── assessment/         # Survey engine, panels, navigation
+│   │   │   ├── graphs/         # Chart class definitions
+│   │   │   └── surveys/        # Survey JSON (panels, pages, translations)
+│   │   ├── results/            # GaugeChart component
+│   │   └── ai-analysis/        # LLM integration (settings, analysis, crypto, prompt)
+│   ├── components/             # Shared UI components
+│   │   ├── layout.js           # App shell (navbar + footer + glows)
+│   │   ├── navbar.js           # Sticky glassmorphism navbar
+│   │   ├── footer.js           # OWASP footer
+│   │   ├── LanguageSwitcher.js # Animated language dropdown
+│   │   ├── inputfile.js        # Drag-and-drop file upload
+│   │   └── buttons/            # NavButton, SurveyButton, DropdownButton
+│   ├── messages/               # i18n translation files (en.json, pt.json)
+│   └── styles/                 # Global CSS (Tailwind v4, SurveyJS dark overrides)
+├── __tests__/                  # Jest unit tests (78 tests)
+└── public/                     # Static assets
 ```
 
 ## 🤝 Contributing
@@ -200,10 +219,23 @@ Copyright 2021-2026 Datacom NZ Ltd.
 ## 🎉 Acknowledgments
 
 - Original project by **Datacom NZ Ltd.**
-- Modernization and security updates by the community
+- Modernization, redesign and AI integration by the community
 - OWASP Foundation for the SAMM framework
 
 ## 📈 Version History
+
+- **v2.2.0** (2026) - Dark glassmorphism redesign & architecture refactor
+  - Full dark theme with Tailwind CSS v4 across all pages
+  - Feature Slices architecture (`features/assessment/`, `features/results/`, `features/ai-analysis/`)
+  - SurveyJS dark theme via CSS variable overrides (`--sjs-*`)
+  - Radar and bar charts with dark-compatible Chart.js options
+  - AI analysis card migrated from light to dark theme
+  - `scroll-padding-top` for sticky navbar compatibility
+  - Survey domain navigation with automatic scroll-to-top
+  - AI auto-trigger guard (`freshCompletion` flag) — only fires after completing a new assessment
+  - Removed `titleLocation: "left"` from all 90 survey questions (fixes two-column layout)
+  - Ambient background glows clipped to viewport (no extra scroll space below footer)
+  - Global `routeChangeComplete` scroll-to-top for client-side navigation
 
 - **v2.1.0** (2026) - AI integration and quality improvements
   - Multi-provider LLM analysis (Anthropic, OpenAI, Gemini, Ollama)
@@ -215,7 +247,7 @@ Copyright 2021-2026 Datacom NZ Ltd.
   - 78 unit tests (Jest 30 + React Testing Library)
   - Panel navigation buttons unified inside survey panels
 
-- **v2.0.0** (2025) - Major modernization update
+- **v2.0.0** (2026) - Major modernization update
   - Updated to Next.js 15, React 18
   - Security vulnerabilities fixed
   - Modern UI/UX redesign

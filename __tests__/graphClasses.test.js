@@ -1,7 +1,7 @@
-import SpiderGraph from '../comps/surveyDisplay/graphs/spidergraph'
-import DonutGraph from '../comps/surveyDisplay/graphs/donutgraph'
-import Bargraph from '../comps/surveyDisplay/graphs/bargraph'
-import Dataset from '../comps/surveyDisplay/graphs/datasetprops'
+import SpiderGraph from '../src/features/assessment/graphs/spidergraph'
+import DonutGraph from '../src/features/assessment/graphs/donutgraph'
+import Bargraph from '../src/features/assessment/graphs/bargraph'
+import Dataset from '../src/features/assessment/graphs/datasetprops'
 
 describe('SpiderGraph', () => {
   it('has two datasets by default (current and previous)', () => {
