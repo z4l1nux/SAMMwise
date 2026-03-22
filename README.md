@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-15.5-black?style=for-the-badge&logo=next.js">
+  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16.2.1-black?style=for-the-badge&logo=next.js">
   <img alt="React" src="https://img.shields.io/badge/React-18.3-blue?style=for-the-badge&logo=react">
   <img alt="License" src="https://img.shields.io/github/license/owaspsamm/sammwise?style=for-the-badge">
 </p>
@@ -21,7 +21,7 @@ This is a **modernized, redesigned, and security-hardened version** of SAMMwise 
 
 ### 🔒 Security Enhancements
 - ✅ **Zero vulnerabilities** - All dependencies updated and secured
-- ✅ **Next.js 15.5** - Latest stable version with enhanced security
+- ✅ **Next.js 16.2** - Turbopack enabled with enhanced performance and cache APIs
 - ✅ **React 18.3** - Modern React with concurrent features
 - ✅ **Chart.js 4.4** - Latest charting library
 - ✅ **GitHub Actions** - Automated security scanning: Semgrep, TruffleHog, Vet
@@ -56,8 +56,8 @@ This is a **modernized, redesigned, and security-hardened version** of SAMMwise 
 
 ## 📋 Prerequisites
 
-- **Node.js** 18.x or higher
-- **npm** 9.x or higher
+- **Node.js** 20.9.0 or higher
+- **npm** 10.x or higher
 
 ## 🚀 Getting Started
 
@@ -223,6 +223,12 @@ Copyright 2021-2026 Datacom NZ Ltd.
 - OWASP Foundation for the SAMM framework
 
 ## 📈 Version History
+
+- **v2.3.0** (2026) - Framework Upgrade & Turbopack
+  - Upgraded Next.js from 15.5 to 16.2.1 and enabled Turbopack for ultra-fast builds
+  - Bumped ESLint to 9.0 and removed deprecated `next lint` CLI command
+  - Node.js minimum requirement bumped to v20.9.0
+  - Refactored `react-to-print` logic to `useReactToPrint` hook to prevent React #130 client-side crash
 
 - **v2.2.0** (2026) - Dark glassmorphism redesign & architecture refactor
   - Full dark theme with Tailwind CSS v4 across all pages

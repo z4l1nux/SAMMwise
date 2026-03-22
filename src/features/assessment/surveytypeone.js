@@ -106,11 +106,13 @@ const Mysurvey = (prop) => {
     const [surveyState,setSurvey] = useState(survey);
     const [display, setDisplay] = useState(false);
     const [populateState,setPopulateState] = useState(false);
-    const [pageState, setPageState] = useState("Governance"); 
+    const [pageState, setPageState] = useState("Governance");
     const [dropDownState, setDropDownState] = useState(false);
     const [isDetailsPage, setDetailsPage] = useState(false);
     const [reloadSurvey, setReloadSurvey] = useState(false);
-    const registeredSurveyRef = useRef(null)
+    const registeredSurveyRef = useRef(null);
+    const pageStateRef = useRef(pageState);
+    pageStateRef.current = pageState;
     
     //Use Effect for populating the Survey with predefined answerd from a file or from previously answered survey
     useEffect(() => {
@@ -218,8 +220,8 @@ const Mysurvey = (prop) => {
             survey.currentPage = survey.getPageByName(pageName)
         }
         else{
-            // Use pageState instead of survey.currentPage.name
-            const currentPageName = pageState;
+            // Use ref to get current page state (avoids stale closure in onAfterRenderPanel)
+            const currentPageName = pageStateRef.current;
             console.log("Current page from state:", currentPageName);
             
             // Direct page mapping

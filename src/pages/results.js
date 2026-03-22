@@ -39,10 +39,7 @@ ChartJS.register(
   Filler
 );
 
-const ReactToPrint = dynamic(
-  () => import('react-to-print').then((mod) => mod.default),
-  { ssr: false }
-);
+import { useReactToPrint } from 'react-to-print';
 
 import DonutGraph from '../features/assessment/graphs/donutgraph';
 import SpiderGraph from '../features/assessment/graphs/spidergraph';
@@ -137,7 +134,11 @@ const Results = () => {
     // stored LLM analysis (from json or generated)
     const [storedAnalysis, setStoredAnalysis] = useState(null)
     const [isFreshCompletion, setIsFreshCompletion] = useState(false)
-    const componentRef = useRef();
+    const componentRef = useRef(null);
+    
+    const handlePrint = useReactToPrint({
+        contentRef: componentRef,
+    });
 
     function reloadPage(){ location.reload(); }
 
@@ -507,10 +508,7 @@ const Results = () => {
                         </div>
                         <div className="text-center">
                             <p className="font-semibold mb-3 text-slate-200">{t('exportPdf')}</p>
-                            <ReactToPrint
-                                trigger={() => <button className="btn">{t('exportGraphs')}</button>}
-                                content={() => componentRef.current}
-                            />
+                            <button className="btn" onClick={() => handlePrint()}>{t('exportGraphs')}</button>
                         </div>
                     </div>
                 </SectionCard>
