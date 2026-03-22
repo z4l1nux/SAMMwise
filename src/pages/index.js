@@ -83,11 +83,11 @@ export default function Home() {
       
       <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-6 mb-24">
          <Link href="/assessment" className="group relative px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(0,229,255,0.4)] hover:shadow-[0_0_30px_rgba(0,229,255,0.6)] flex items-center gap-2">
-            Iniciar Assessment
+            {t('startAssessment')}
             <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
          </Link>
          <Link href="/results" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl border border-white/10 transition-all flex items-center gap-2">
-            Ver Resultados
+            {t('viewResults')}
             <BarChart3 className="w-5 h-5" />
          </Link>
       </motion.div>
@@ -99,15 +99,15 @@ export default function Home() {
             <Shield className="w-6 h-6 text-cyan-400" />
           </div>
           <h3 className="text-xl font-bold text-slate-200 mb-3">{t('features.feature1')}</h3>
-          <p className="text-slate-400 leading-relaxed text-sm">Organização e designação das posturas de Segurança em Software no seu ciclo de desenvolvimento.</p>
+          <p className="text-slate-400 leading-relaxed text-sm">{t('features.feature1Desc')}</p>
         </div>
-        
+
         <div className="p-8 rounded-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 backdrop-blur-sm hover:border-purple-500/30 transition-all hover:-translate-y-1">
           <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
             <BarChart3 className="w-6 h-6 text-purple-400" />
           </div>
           <h3 className="text-xl font-bold text-slate-200 mb-3">{t('features.feature2')}</h3>
-          <p className="text-slate-400 leading-relaxed text-sm">Geração de gráficos dinâmicos para visualização compreensiva da sua maturidade e progresso.</p>
+          <p className="text-slate-400 leading-relaxed text-sm">{t('features.feature2Desc')}</p>
         </div>
 
         <div className="p-8 rounded-2xl bg-gradient-to-b from-white/5 to-transparent border border-white/10 backdrop-blur-sm hover:border-pink-500/30 transition-all hover:-translate-y-1">
@@ -115,7 +115,7 @@ export default function Home() {
             <Lock className="w-6 h-6 text-pink-400" />
           </div>
           <h3 className="text-xl font-bold text-slate-200 mb-3">{t('features.feature3')}</h3>
-          <p className="text-slate-400 leading-relaxed text-sm">Suporte inteligente para armazenamento (JSON localmente) promovendo privacidade nas avaliações.</p>
+          <p className="text-slate-400 leading-relaxed text-sm">{t('features.feature3Desc')}</p>
         </div>
       </motion.div>
 

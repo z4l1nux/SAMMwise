@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { Bot, ChevronDown, ChevronUp, RefreshCw, Loader } from 'lucide-react';
 import { decryptApiKey } from './llmCrypto';
 import { loadLLMSettings } from './LLMSettings';
 import { buildPrompt } from './llmPrompt';
@@ -152,7 +153,7 @@ export default function LLMAnalysis({ scorePayload, previous, locale, storedAnal
         <div style={cardStyle}>
             <div style={headerStyle} onClick={() => analysis && setCollapsed(c => !c)}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ fontSize: '22px' }}>🤖</span>
+                    <Bot style={{ width: '22px', height: '22px', color: '#00e5ff', flexShrink: 0 }} />
                     <div>
                         <h2 style={{ margin: 0, fontSize: '17px', fontWeight: 700, color: '#e2e8f0', fontFamily: 'Poppins, sans-serif' }}>
                             {t('analysisTitle')}
@@ -189,7 +190,10 @@ export default function LLMAnalysis({ scorePayload, previous, locale, storedAnal
                             {t('reanalyze')}
                         </button>
                     )}
-                    {analysis && <span style={{ fontSize: '16px', color: '#64748b' }}>{collapsed ? '▼' : '▲'}</span>}
+                    {analysis && (collapsed
+                        ? <ChevronDown style={{ width: '18px', height: '18px', color: '#64748b' }} />
+                        : <ChevronUp   style={{ width: '18px', height: '18px', color: '#64748b' }} />
+                    )}
                 </div>
             </div>
 
@@ -219,7 +223,7 @@ export default function LLMAnalysis({ scorePayload, previous, locale, storedAnal
 
                     {loading && (
                         <div style={{ textAlign: 'center', padding: '24px 0' }}>
-                            <div style={{ fontSize: '32px', animation: 'spin 1s linear infinite' }}>⟳</div>
+                            <Loader style={{ width: '32px', height: '32px', color: '#00e5ff', margin: '0 auto', animation: 'spin 1s linear infinite' }} />
                             <p style={{ color: '#00e5ff', fontSize: '14px', marginTop: '12px' }}>{t('analyzing')}</p>
                             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
                         </div>

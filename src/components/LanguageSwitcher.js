@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, Check } from 'lucide-react';
 
 const LanguageSwitcher = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const LanguageSwitcher = () => {
       >
         <span className="text-lg leading-none">{currentLanguage.flag}</span>
         <span className="font-bold tracking-wide text-sm">{currentLanguage.code.toUpperCase()}</span>
-        <span className={`text-xs text-cyan-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
+        <ChevronDown className={`w-3.5 h-3.5 text-cyan-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       <AnimatePresence>
@@ -56,7 +57,7 @@ const LanguageSwitcher = () => {
                 <span className="text-lg leading-none">{language.flag}</span>
                 <span className="flex-1 font-medium">{language.name}</span>
                 {currentLocale === language.code && (
-                  <span className="text-cyan-400 font-bold text-sm">✓</span>
+                  <Check className="w-4 h-4 text-cyan-400" />
                 )}
               </button>
             ))}

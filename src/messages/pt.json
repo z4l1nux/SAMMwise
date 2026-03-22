@@ -13,8 +13,13 @@
     "features": {
       "feature1": "Inserir respostas para uma única avaliação",
       "feature2": "Visualizar os resultados de maturidade com base nas respostas inseridas",
-      "feature3": "Comparar resultados de maturidade com avaliações anteriores"
+      "feature3": "Comparar resultados de maturidade com avaliações anteriores",
+      "feature1Desc": "Organização e designação das posturas de Segurança em Software no seu ciclo de desenvolvimento.",
+      "feature2Desc": "Geração de gráficos dinâmicos para visualização compreensiva da sua maturidade e progresso.",
+      "feature3Desc": "Suporte inteligente para armazenamento local em JSON, promovendo privacidade nas avaliações."
     },
+    "startAssessment": "Iniciar Assessment",
+    "viewResults": "Ver Resultados",
     "privacy": "As respostas da avaliação podem ser salvas no computador local do usuário, em um arquivo de texto formatado em JSON. As respostas são mantidas apenas no sistema local e não são compartilhadas com nenhum outro sistema ou pessoa.",
     "aboutSamm": "Sobre o SAMM",
     "sammDescription": "O Software Assurance Maturity Model (OWASP SAMM) do Open Web Application Security Project é uma estrutura aberta para ajudar as organizações a formular e implementar uma estratégia de segurança de software, adaptada aos riscos específicos que a organização enfrenta.",
@@ -82,7 +87,13 @@
     "businessFunction": "Função de Negócio",
     "practice": "Prática",
     "score": "Pontuação",
-    "maturityLevel": "Nível de Maturidade"
+    "maturityLevel": "Nível de Maturidade",
+    "maturityBands": {
+      "initial": "Inicial",
+      "managed": "Gerenciado",
+      "defined": "Definido",
+      "optimized": "Otimizado"
+    }
   },
   "charts": {
     "currentAssessment": "Avaliação Atual",

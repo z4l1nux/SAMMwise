@@ -21,6 +21,7 @@ import {
 } from 'chart.js';
 import GaugeChart from '../features/results/GaugeChart';
 import Link from 'next/link';
+import { Bot } from 'lucide-react';
 import LLMAnalysis from '../features/ai-analysis/LLMAnalysis';
 import { loadLLMSettings } from '../features/ai-analysis/LLMSettings';
 
@@ -84,10 +85,10 @@ const SectionCard = ({ title, children, id }) => (
 
 // Score band: returns { label, color } for a 0–3 SAMM score
 function scoreBand(score) {
-    if (score < 0.5)  return { label: 'Initial',  color: '#fc8181' };
-    if (score < 1.5)  return { label: 'Managed',  color: '#f6ad55' };
-    if (score < 2.5)  return { label: 'Defined',  color: '#68d391' };
-    return               { label: 'Optimized', color: '#4299e1' };
+    if (score < 0.5)  return { labelKey: 'initial',   color: '#fc8181' };
+    if (score < 1.5)  return { labelKey: 'managed',   color: '#f6ad55' };
+    if (score < 2.5)  return { labelKey: 'defined',   color: '#68d391' };
+    return               { labelKey: 'optimized', color: '#4299e1' };
 }
 
 const Results = () => {
@@ -157,7 +158,11 @@ const Results = () => {
         userStateUpdate['has_switched_page'] = true;
         sessionStorage.setItem('userState', JSON.stringify(userStateUpdate));
 
-        if (!assessmentSessionState) {
+        const hasAnswers = assessmentSessionState &&
+            Object.keys(assessmentSessionState).some(
+                k => k.startsWith('question') && assessmentSessionState[k] !== null
+            );
+        if (!hasAnswers) {
             setCompletionText(t('mustComplete'));
             return;
         }
@@ -327,7 +332,7 @@ const Results = () => {
                     )}
                     {/* AI Config link */}
                     <Link href="/ai" className="absolute top-5 right-5 px-4 py-2 rounded-xl bg-white/10 border border-white/30 text-white text-sm font-semibold hover:bg-white/20 transition-all duration-200 no-underline">
-                        🤖 {tLLM('configureButton')}
+                        <Bot className="w-4 h-4 inline mr-1.5" /> {tLLM('configureButton')}
                         {llmIsConfigured && llmSettings?.autoAnalysis && (
                             <span className="ml-1.5 bg-green-500 rounded-full px-1.5 py-0.5 text-xs">ON</span>
                         )}
@@ -361,16 +366,16 @@ const Results = () => {
                         {/* Score interpretation legend */}
                         <div className="flex justify-center gap-3 flex-wrap mt-4 mb-2">
                             {[
-                                { range: '0.0 – 0.5', label: 'Initial',   color: '#fc8181', desc: t('scoreInitial') },
-                                { range: '0.5 – 1.5', label: 'Managed',   color: '#f6ad55', desc: t('scoreManaged') },
-                                { range: '1.5 – 2.5', label: 'Defined',   color: '#68d391', desc: t('scoreDefined') },
-                                { range: '2.5 – 3.0', label: 'Optimized', color: '#4299e1', desc: t('scoreOptimized') },
+                                { range: '0.0 – 0.5', labelKey: 'initial',   color: '#fc8181', desc: t('scoreInitial') },
+                                { range: '0.5 – 1.5', labelKey: 'managed',   color: '#f6ad55', desc: t('scoreManaged') },
+                                { range: '1.5 – 2.5', labelKey: 'defined',   color: '#68d391', desc: t('scoreDefined') },
+                                { range: '2.5 – 3.0', labelKey: 'optimized', color: '#4299e1', desc: t('scoreOptimized') },
                             ].map(b => (
-                                <div key={b.label} className="flex items-start gap-2 bg-white/5 rounded-lg p-2.5 px-3.5 border-2 min-w-[160px]"
+                                <div key={b.labelKey} className="flex items-start gap-2 bg-white/5 rounded-lg p-2.5 px-3.5 border-2 min-w-[160px]"
                                     style={{ borderColor: scoreData.score >= parseFloat(b.range.split('–')[0]) && scoreData.score < parseFloat(b.range.split('–')[1]) ? b.color : 'transparent' }}>
                                     <div className="w-3 h-3 rounded-full mt-0.5 shrink-0" style={{ background: b.color }} />
                                     <div>
-                                        <div className="font-bold text-sm text-slate-200">{b.label} <span className="font-normal text-slate-500">({b.range})</span></div>
+                                        <div className="font-bold text-sm text-slate-200">{t(`maturityBands.${b.labelKey}`)} <span className="font-normal text-slate-500">({b.range})</span></div>
                                         <div className="text-xs text-slate-400 mt-0.5">{b.desc}</div>
                                     </div>
                                 </div>
@@ -415,7 +420,7 @@ const Results = () => {
                                                 </td>
                                                 <td className="px-3.5 py-2 border-b border-white/5">
                                                     <span className="text-xs font-semibold" style={{ color: band.color }}>
-                                                        {band.label}
+                                                        {t(`maturityBands.${band.labelKey}`)}
                                                     </span>
                                                 </td>
                                             </tr>
