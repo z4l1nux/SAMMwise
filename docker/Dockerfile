@@ -1,19 +1,20 @@
 # Etapa 1: Instalar dependências
-FROM node:18-alpine AS deps
+FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
 # Etapa 2: Construir o projeto
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build && npm prune --production
+ENV NODE_OPTIONS=--max-old-space-size=4096
+RUN npm run build && npm prune --omit=dev
 
 # Etapa 3: Imagem de produção
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
@@ -26,7 +27,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/messages ./messages
+COPY --from=builder /app/src/messages ./src/messages
 
 # Configurar permissões
 RUN chown -R nextjs:nodejs /app

@@ -1,8 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:github.com)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "Bash(docker build:*)",
+      "Bash(npm --version)",
+      "Bash(ls /home/z4l1nux/Documents/SAMMwise/*.json)",
+      "Bash(cat /home/z4l1nux/Documents/SAMMwise/.eslintrc*)",
+      "Bash(ls /home/z4l1nux/Documents/SAMMwise/.eslint*)",
+      "Bash(grep -n \"getStaticProps\\\\|getServerSideProps\" /home/z4l1nux/Documents/SAMMwise/src/pages/*.js)"
     ]
   }
 }
