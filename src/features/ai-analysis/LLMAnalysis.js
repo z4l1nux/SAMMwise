@@ -94,9 +94,9 @@ export default function LLMAnalysis({ scorePayload, previous, locale, storedAnal
         const lines = text.split('\n');
         const els = [];
         let listBuffer = [];
-        const flushList = () => {
+        const flushList = (flushIdx) => {
             if (listBuffer.length) {
-                els.push(<ul key={els.length} style={{ paddingLeft: '20px', margin: '4px 0 10px' }}>
+                els.push(<ul key={`list-${flushIdx}`} style={{ paddingLeft: '20px', margin: '4px 0 10px' }}>
                     {listBuffer.map((item, i) => <li key={i} style={{ marginBottom: '4px', fontSize: '14px', lineHeight: 1.6, color: '#cbd5e0' }} dangerouslySetInnerHTML={{ __html: item }} />)}
                 </ul>);
                 listBuffer = [];
@@ -104,25 +104,25 @@ export default function LLMAnalysis({ scorePayload, previous, locale, storedAnal
         };
         lines.forEach((line, idx) => {
             if (line.startsWith('## ')) {
-                flushList();
-                els.push(<h3 key={idx} style={{ fontSize: '16px', fontWeight: 700, color: '#e2e8f0', margin: '16px 0 6px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '4px' }}>{line.slice(3)}</h3>);
+                flushList(idx);
+                els.push(<h3 key={`line-${idx}`} style={{ fontSize: '16px', fontWeight: 700, color: '#e2e8f0', margin: '16px 0 6px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '4px' }}>{line.slice(3)}</h3>);
             } else if (line.startsWith('### ') || line.startsWith('#### ')) {
-                flushList();
+                flushList(idx);
                 const level = line.startsWith('#### ') ? 5 : 4;
-                els.push(<h4 key={idx} style={{ fontSize: '14px', fontWeight: 700, color: '#00e5ff', margin: '12px 0 4px' }}>{line.slice(level)}</h4>);
+                els.push(<h4 key={`line-${idx}`} style={{ fontSize: '14px', fontWeight: 700, color: '#00e5ff', margin: '12px 0 4px' }}>{line.slice(level)}</h4>);
             } else if (line.startsWith('**') && line.endsWith('**')) {
-                flushList();
-                els.push(<p key={idx} style={{ fontWeight: 700, fontSize: '14px', color: '#e2e8f0', margin: '10px 0 2px' }}>{line.slice(2, -2)}</p>);
+                flushList(idx);
+                els.push(<p key={`line-${idx}`} style={{ fontWeight: 700, fontSize: '14px', color: '#e2e8f0', margin: '10px 0 2px' }}>{line.slice(2, -2)}</p>);
             } else if (/^[\-\*] /.test(line)) {
                 listBuffer.push(applyInline(line.slice(2)));
             } else if (line.trim() === '' || line.startsWith('---')) {
-                flushList();
+                flushList(idx);
             } else if (line.trim()) {
-                flushList();
-                els.push(<p key={idx} style={{ fontSize: '14px', lineHeight: 1.7, color: '#cbd5e0', margin: '4px 0' }} dangerouslySetInnerHTML={{ __html: applyInline(line) }} />);
+                flushList(idx);
+                els.push(<p key={`line-${idx}`} style={{ fontSize: '14px', lineHeight: 1.7, color: '#cbd5e0', margin: '4px 0' }} dangerouslySetInnerHTML={{ __html: applyInline(line) }} />);
             }
         });
-        flushList();
+        flushList('end');
         return els;
     };
 
