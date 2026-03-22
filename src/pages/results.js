@@ -351,7 +351,7 @@ const Results = () => {
                         </div>
                         <h2 id="finalscore" className="text-center text-xl text-slate-200 m-0 mb-4">
                             {showPrevious
-                                ? `${t('overallScore')} ${scoreData.score}/3  ·  ${t('previousScore')} —/3`
+                                ? `${t('overallScore')} ${scoreData.score}/3  ·  ${t('previousScore')} ${prevPayload?.overallScore ?? '—'}/3`
                                 : scoreLabel}
                         </h2>
                         <GaugeChart

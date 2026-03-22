@@ -9,7 +9,7 @@ const Footer = () => {
             <div className="flex flex-col items-center justify-center space-y-6">
                 <a href="https://owasp.org/" target="_blank" rel="noopener noreferrer" className="opacity-80 hover:opacity-100 transition-opacity">
                     {/* Adding invert filter to make the black text OWASP logo visible on dark background */}
-                    <Image src="/Footer.png" width={200} height={66} alt="OWASP Logo" className="invert brightness-0 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"/>
+                    <Image src="/Footer.png" width={200} height={66} alt="OWASP Logo" priority style={{ width: 'auto', height: 'auto' }} className="invert brightness-0 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"/>
                 </a>
                 <div className="space-y-2">
                   <p className="text-slate-400 text-sm font-medium">

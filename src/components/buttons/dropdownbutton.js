@@ -17,6 +17,7 @@ const DropButton = (props) => {
           src={props.state ? '/uparrow.png' : '/downarrow.png'}
           width={30}
           height={30}
+          style={{ width: 'auto', height: 'auto' }}
           alt={props.state ? 'Collapse' : 'Expand'}
         />
       </span>

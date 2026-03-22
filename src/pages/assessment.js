@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import 'survey-core/defaultV2.min.css';
 import Head from 'next/head'
 import { useTranslations } from 'next-intl'
+import dynamic from 'next/dynamic'
+
 //local imports 
-import Mysurvey from '../features/assessment/surveyone'
+const Mysurvey = dynamic(() => import('../features/assessment/surveyone'), { ssr: false })
 
 
 export default function SAMMsurvey({ messages }){
