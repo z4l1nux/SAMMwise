@@ -76,6 +76,8 @@
     "loadPrevious": "Deseja carregar seus resultados anteriores para comparar?",
     "exportPdf": "Deseja imprimir ou salvar os gráficos em PDF?",
     "exportGraphs": "Exportar gráficos",
+    "exportGenerating": "Gerando PDF…",
+    "exportError": "Falha ao gerar o PDF. Tente novamente.",
     "projectName": "Nome do Projeto",
     "projectDescription": "Descrição do Projeto",
     "companyName": "Nome da Empresa",

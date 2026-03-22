@@ -150,8 +150,8 @@ export default function LLMAnalysis({ scorePayload, previous, locale, storedAnal
     };
 
     return (
-        <div style={cardStyle}>
-            <div style={headerStyle} onClick={() => analysis && setCollapsed(c => !c)}>
+        <div className="llm-analysis-card" style={cardStyle}>
+            <div className="llm-analysis-header" style={headerStyle} onClick={() => analysis && setCollapsed(c => !c)}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <Bot style={{ width: '22px', height: '22px', color: '#00e5ff', flexShrink: 0 }} />
                     <div>
@@ -236,7 +236,7 @@ export default function LLMAnalysis({ scorePayload, previous, locale, storedAnal
                     )}
 
                     {analysis && !loading && (
-                        <div style={{ maxHeight: '600px', overflowY: 'auto', paddingRight: '8px' }}>
+                        <div className="llm-analysis-scroll" style={{ paddingRight: '8px' }}>
                             {renderMarkdown(analysis.analysis)}
                         </div>
                     )}

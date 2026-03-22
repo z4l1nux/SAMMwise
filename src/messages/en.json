@@ -76,6 +76,8 @@
     "loadPrevious": "Do you wish to load your previous results to compare?",
     "exportPdf": "Do you wish to print or save the graphs as a pdf?",
     "exportGraphs": "Export graphs",
+    "exportGenerating": "Generating PDF…",
+    "exportError": "Failed to generate PDF. Please try again.",
     "projectName": "Project Name",
     "projectDescription": "Project Description",
     "companyName": "Company Name",
