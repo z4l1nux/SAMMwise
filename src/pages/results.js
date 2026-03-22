@@ -39,7 +39,7 @@ ChartJS.register(
   Filler
 );
 
-import { useReactToPrint } from 'react-to-print';
+import { exportReportToPdf } from '../lib/exportPdf';
 
 import DonutGraph from '../features/assessment/graphs/donutgraph';
 import SpiderGraph from '../features/assessment/graphs/spidergraph';
@@ -134,11 +134,25 @@ const Results = () => {
     // stored LLM analysis (from json or generated)
     const [storedAnalysis, setStoredAnalysis] = useState(null)
     const [isFreshCompletion, setIsFreshCompletion] = useState(false)
+    const [isExporting,       setIsExporting]       = useState(false)
+    const [exportError,       setExportError]       = useState('')
     const componentRef = useRef(null);
-    
-    const handlePrint = useReactToPrint({
-        contentRef: componentRef,
-    });
+
+    const handleExport = async () => {
+        if (!componentRef.current) return;
+        setIsExporting(true);
+        setExportError('');
+        try {
+            const company = scoreData?.company || 'SAMM';
+            const project = scoreData?.project || new Date().toLocaleDateString();
+            await exportReportToPdf(componentRef.current, `${company}-${project}.pdf`);
+        } catch (err) {
+            console.error('PDF export failed:', err);
+            setExportError(t('exportError'));
+        } finally {
+            setIsExporting(false);
+        }
+    };
 
     function reloadPage(){ location.reload(); }
 
@@ -311,9 +325,11 @@ const Results = () => {
                 <meta name="keywords" content="owasp, samm, assessment" />
             </Head>
 
+            <div ref={componentRef}>
+
             {/* ── Header card ── */}
             {completionText && (
-                <div className="bg-gradient-to-br from-cyan-500/20 to-purple-600/20 border border-cyan-400/20 backdrop-blur-md rounded-2xl p-8 mb-7 shadow-[0_8px_32px_rgba(0,229,255,0.15)] relative">
+                <div className="results-header-card bg-gradient-to-br from-cyan-500/20 to-purple-600/20 border border-cyan-400/20 backdrop-blur-md rounded-2xl p-8 mb-7 shadow-[0_8px_32px_rgba(0,229,255,0.15)] relative">
                     <h1 className="text-white m-0 font-[Poppins] text-2xl font-semibold">
                         {completionText}
                     </h1>
@@ -331,8 +347,8 @@ const Results = () => {
                             )}
                         </>
                     )}
-                    {/* AI Config link */}
-                    <Link href="/ai" className="absolute top-5 right-5 px-4 py-2 rounded-xl bg-white/10 border border-white/30 text-white text-sm font-semibold hover:bg-white/20 transition-all duration-200 no-underline">
+                    {/* AI Config link — hidden in print */}
+                    <Link href="/ai" className="no-print absolute top-5 right-5 px-4 py-2 rounded-xl bg-white/10 border border-white/30 text-white text-sm font-semibold hover:bg-white/20 transition-all duration-200 no-underline">
                         <Bot className="w-4 h-4 inline mr-1.5" /> {tLLM('configureButton')}
                         {llmIsConfigured && llmSettings?.autoAnalysis && (
                             <span className="ml-1.5 bg-green-500 rounded-full px-1.5 py-0.5 text-xs">ON</span>
@@ -341,12 +357,10 @@ const Results = () => {
                 </div>
             )}
 
-            <div ref={componentRef}>
-
                 {/* ── Score + Gauge ── */}
                 {display && scoreData && (
                     <SectionCard id="totalsDiv" title={t('totalsSection')}>
-                        <div className="text-center mb-3">
+                        <div className="no-print text-center mb-3">
                             <SurveyButton name={t('refresh')} onClick={reloadPage} />
                         </div>
                         <h2 id="finalscore" className="text-center text-xl text-slate-200 m-0 mb-4">
@@ -473,7 +487,6 @@ const Results = () => {
                     </SectionCard>
                 )}
 
-            </div>
 
             {/* ── AI Analysis ── */}
             {display && scorePayload && (
@@ -487,7 +500,9 @@ const Results = () => {
                 />
             )}
 
-            {/* ── Actions ── */}
+            </div>{/* end componentRef */}
+
+            {/* ── Actions (fora do print) ── */}
             {display && (
                 <SectionCard>
                     <div className="flex flex-wrap gap-8 justify-center">
@@ -508,7 +523,16 @@ const Results = () => {
                         </div>
                         <div className="text-center">
                             <p className="font-semibold mb-3 text-slate-200">{t('exportPdf')}</p>
-                            <button className="btn" onClick={() => handlePrint()}>{t('exportGraphs')}</button>
+                            <button
+                                className="btn"
+                                onClick={handleExport}
+                                disabled={isExporting}
+                            >
+                                {isExporting ? t('exportGenerating') : t('exportGraphs')}
+                            </button>
+                            {exportError && (
+                                <p className="text-red-400 text-sm mt-2">{exportError}</p>
+                            )}
                         </div>
                     </div>
                 </SectionCard>

@@ -200,40 +200,113 @@ a {
 
 /* ── Print styles ── */
 @media print {
-  body {
-    background: white;
-    color: #000;
+  @page {
+    margin: 15mm;
+    size: A4;
   }
 
+  /* ── Base ── */
+  body {
+    background: white !important;
+    color: #1a202c !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Hide interactive elements ── */
   nav,
   footer,
   .btn,
   .SaveResponses,
   .NextPage,
-  .pageNav {
+  .pageNav,
+  .no-print {
     display: none !important;
   }
 
-  .gauge {
-    align-items: center;
-    page-break-after: always;
-    float: none;
+  /* ── SectionCard glass → white card ── */
+  .bg-white\/5,
+  .bg-white\/3 {
+    background: white !important;
   }
 
-  .totalsbar {
-    float: none !important;
-    break-after: page !important;
-    margin-left: 2cm;
-    margin-bottom: 5cm;
-    padding-top: 4cm;
-    padding-bottom: 3cm !important;
-    display: inline-block;
-    width: 80% !important;
-    height: 20cm !important;
+  [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
-  @page {
-    margin: 10mm;
+  /* ── Header card ── */
+  .results-header-card {
+    background: #f0f9ff !important;
+    border: 1px solid #bae6fd !important;
+    box-shadow: none !important;
+    padding-right: 28px !important; /* remove space that was for the AI button */
+  }
+
+  /* ── Text colors ── */
+  .text-white,
+  .text-slate-200,
+  .text-slate-300 {
+    color: #1a202c !important;
+  }
+
+  .text-slate-400,
+  .text-slate-500 {
+    color: #4a5568 !important;
+  }
+
+  /* ── Borders ── */
+  [class*="border-white"] {
+    border-color: #e2e8f0 !important;
+  }
+
+  /* ── Table ── */
+  table th,
+  table td {
+    color: #1a202c !important;
+    border-color: #e2e8f0 !important;
+  }
+
+  /* ── LLM Analysis card ── */
+  .llm-analysis-card {
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+  }
+
+  .llm-analysis-header {
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+  }
+
+  /* Remove scroll constraint so the full analysis is printed */
+  .llm-analysis-scroll {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Fix LLM analysis text colors rendered with inline styles */
+  .llm-analysis-card h2,
+  .llm-analysis-card h3,
+  .llm-analysis-card h4,
+  .llm-analysis-card p,
+  .llm-analysis-card li,
+  .llm-analysis-card strong {
+    color: #1a202c !important;
+  }
+
+  .llm-analysis-card h4 {
+    color: #2b6cb0 !important; /* was cyan, use blue for print */
+  }
+
+  .llm-analysis-card code {
+    background: #ebf8ff !important;
+    color: #2b6cb0 !important;
+  }
+
+  /* ── Page break hints ── */
+  .mb-7 {
+    page-break-inside: avoid;
   }
 }
 
