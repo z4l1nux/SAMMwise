@@ -6,6 +6,7 @@
 <p align="center">
   <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16.2.1-black?style=for-the-badge&logo=next.js">
   <img alt="React" src="https://img.shields.io/badge/React-18.3-blue?style=for-the-badge&logo=react">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.7-3178c6?style=for-the-badge&logo=typescript">
   <img alt="License" src="https://img.shields.io/github/license/owaspsamm/sammwise?style=for-the-badge">
 </p>
 
@@ -38,11 +39,12 @@ This is a **modernized, redesigned, and security-hardened version** of SAMMwise 
 - ✅ **Chart dark theme** — radar, bar, and donut charts styled for dark backgrounds
 
 ### 🛠️ Technical Upgrades
+- ✅ **TypeScript 5.7** - Full codebase migration (62 files: `.ts`/`.tsx`)
 - ✅ **Survey-React-UI 1.12** - Modern survey components
 - ✅ **Custom Gauge Charts** - Built with Chart.js for better compatibility
 - ✅ **Improved Performance** - Faster load times and rendering
 - ✅ **i18n Support** - Multi-language support (English & Portuguese) via next-intl v4
-- ✅ **Unit Tests** - Jest 30 + React Testing Library (78 tests)
+- ✅ **Unit Tests** - Jest 30 + React Testing Library (123 tests)
 - ✅ **scroll-padding-top** — global CSS offset ensures sticky navbar never overlaps scrollIntoView targets
 
 ### 🤖 AI-Powered Analysis
@@ -163,29 +165,30 @@ See [I18N Documentation](docs/I18N.md) for details on adding new languages.
 ```
 sammwise/
 ├── src/
-│   ├── pages/                  # Next.js pages
-│   │   ├── index.js            # Home page
-│   │   ├── assessment.js       # Assessment survey
-│   │   ├── results.js          # Results dashboard
-│   │   ├── ai.js               # AI settings
-│   │   ├── about.js            # About SAMM
+│   ├── pages/                  # Next.js pages (TypeScript)
+│   │   ├── index.tsx           # Home page
+│   │   ├── assessment.tsx      # Assessment survey
+│   │   ├── results.tsx         # Results dashboard
+│   │   ├── ai.tsx              # AI settings
+│   │   ├── about.tsx           # About SAMM
 │   │   └── api/                # API proxy routes (LLM)
 │   ├── features/               # Feature slices (domain logic)
 │   │   ├── assessment/         # Survey engine, panels, navigation
-│   │   │   ├── graphs/         # Chart class definitions
+│   │   │   ├── graphs/         # Chart class definitions (.ts)
 │   │   │   └── surveys/        # Survey JSON (panels, pages, translations)
-│   │   ├── results/            # GaugeChart component
+│   │   ├── results/            # GaugeChart component (.tsx)
 │   │   └── ai-analysis/        # LLM integration (settings, analysis, crypto, prompt)
-│   ├── components/             # Shared UI components
-│   │   ├── layout.js           # App shell (navbar + footer + glows)
-│   │   ├── navbar.js           # Sticky glassmorphism navbar
-│   │   ├── footer.js           # OWASP footer
-│   │   ├── LanguageSwitcher.js # Animated language dropdown
-│   │   ├── inputfile.js        # Drag-and-drop file upload
+│   ├── components/             # Shared UI components (TypeScript)
+│   │   ├── layout.tsx          # App shell (navbar + footer + glows)
+│   │   ├── navbar.tsx          # Sticky glassmorphism navbar
+│   │   ├── footer.tsx          # OWASP footer
+│   │   ├── LanguageSwitcher.tsx# Animated language dropdown
+│   │   ├── inputfile.tsx       # Drag-and-drop file upload
 │   │   └── buttons/            # NavButton, SurveyButton, DropdownButton
+│   ├── types/                  # Shared TypeScript types (index.ts)
 │   ├── messages/               # i18n translation files (en.json, pt.json)
 │   └── styles/                 # Global CSS (Tailwind v4, SurveyJS dark overrides)
-├── __tests__/                  # Jest unit tests (78 tests)
+├── __tests__/                  # Jest unit tests (123 tests)
 └── public/                     # Static assets
 ```
 
@@ -223,6 +226,13 @@ Copyright 2021-2026 Datacom NZ Ltd.
 - OWASP Foundation for the SAMM framework
 
 ## 📈 Version History
+
+- **v2.4.0** (2026) - Full TypeScript Migration
+  - Migrated all 62 source files from `.js`/`.jsx` to `.ts`/`.tsx`
+  - Added `tsconfig.json` with `strict: false`, `allowJs: true`, `moduleResolution: bundler`
+  - Created `src/types/index.ts` with shared domain types (LLM, scores, survey, charts)
+  - Expanded test suite from 78 to 123 tests (all `.test.ts`)
+  - Fixed framer-motion, react-dropzone, and next-intl v4 type compatibility issues
 
 - **v2.3.0** (2026) - Framework Upgrade & Turbopack
   - Upgraded Next.js from 15.5 to 16.2.1 and enabled Turbopack for ultra-fast builds
