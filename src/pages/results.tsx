@@ -80,6 +80,7 @@ const Results = () => {
     const t       = useTranslations('results');
     const tCharts = useTranslations('charts');
     const tLLM    = useTranslations('llm');
+    const tMeta   = useTranslations('meta');
     const router  = useRouter();
     const locale  = router.locale || 'en';
 
@@ -235,11 +236,11 @@ const Results = () => {
                     project:        dataENV[0]['Project name'] || '',
                 });
                 builtTable = [];
-                let pIdx = 0;
                 for (const bf of testCalc.businessFunctionNames) {
-                    for (let pi = 0; pi < 3; pi++) {
-                        builtTable.push({ bf, practice: testCalc.practiceNames[pIdx], score: testCalc.practiceScores[pIdx] });
-                        pIdx++;
+                    const practicesObj = testCalc.sammModel[bf].practices;
+                    const practiceKeys = Object.keys(practicesObj);
+                    for (const practice of practiceKeys) {
+                        builtTable.push({ bf, practice, score: practicesObj[practice].score });
                     }
                 }
                 setPracticeTable(builtTable);
@@ -289,8 +290,9 @@ const Results = () => {
     return (
         <>
             <Head>
-                <title>{t('title')}</title>
-                <meta name="keywords" content="owasp, samm, assessment" />
+                <title>{tMeta('resultsTitle')}</title>
+                <meta name="description" content={tMeta('description')} />
+                <meta name="keywords" content={tMeta('keywords')} />
             </Head>
 
             <div ref={componentRef}>

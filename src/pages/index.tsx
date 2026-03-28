@@ -21,7 +21,7 @@ export default function Home() {
                 has_switched_page: true,
             };
             sessionStorage.setItem('userState', JSON.stringify(userState));
-            sessionStorage.setItem('navbarState', 'Governance');
+            sessionStorage.setItem('navbarState', 'Control 1');
         } else {
             const uState = JSON.parse(sessionStorage.getItem('userState')!);
             uState['has_switched_page'] = true;
@@ -63,7 +63,7 @@ export default function Home() {
                 className="flex flex-col items-center justify-center pt-20 pb-16 text-center"
             >
                 <motion.div variants={itemVariants} className="inline-block mb-4 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-sm font-semibold tracking-wide shadow-[0_0_15px_rgba(0,229,255,0.2)]">
-                    OWASP Security Assurance Maturity Model
+                    {t('badge')}
                 </motion.div>
 
                 <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8">

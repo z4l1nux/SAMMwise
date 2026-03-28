@@ -3,14 +3,9 @@ import { useTranslations } from 'next-intl';
 import { encryptApiKey, decryptApiKey } from './llmCrypto';
 import type { LLMProvider, LLMSettingsType } from '../../types';
 
-const SETTINGS_KEY = 'sammwise_llm_settings';
+const SETTINGS_KEY = 'AISVSwise_llm_settings';
 
-const PROVIDERS: { id: LLMProvider; label: string }[] = [
-    { id: 'anthropic', label: 'Anthropic (Claude)' },
-    { id: 'openai',    label: 'OpenAI (GPT)' },
-    { id: 'gemini',    label: 'Google Gemini' },
-    { id: 'ollama',    label: 'Ollama (local)' },
-];
+const PROVIDER_IDS: LLMProvider[] = ['anthropic', 'openai', 'gemini', 'ollama'];
 
 export function loadLLMSettings(): LLMSettingsType | null {
     try {
@@ -30,18 +25,20 @@ interface LLMSettingsProps {
 
 export default function LLMSettings({ onSaved }: LLMSettingsProps) {
     const t = useTranslations('llm');
+    const tProviders = useTranslations('providers');
+    const tA11y = useTranslations('a11y');
 
-    const [provider,       setProvider]       = useState<LLMProvider>('anthropic');
-    const [apiKey,         setApiKey]         = useState('');
-    const [apiKeyMasked,   setApiKeyMasked]   = useState(false);
-    const [ollamaUrl,      setOllamaUrl]      = useState('http://localhost:11434');
-    const [autoAnalysis,   setAutoAnalysis]   = useState(false);
-    const [models,         setModels]         = useState<string[]>([]);
-    const [model,          setModel]          = useState('');
+    const [provider, setProvider] = useState<LLMProvider>('anthropic');
+    const [apiKey, setApiKey] = useState('');
+    const [apiKeyMasked, setApiKeyMasked] = useState(false);
+    const [ollamaUrl, setOllamaUrl] = useState('http://localhost:11434');
+    const [autoAnalysis, setAutoAnalysis] = useState(false);
+    const [models, setModels] = useState<string[]>([]);
+    const [model, setModel] = useState('');
     const [fetchingModels, setFetchingModels] = useState(false);
-    const [modelError,     setModelError]     = useState('');
-    const [saving,         setSaving]         = useState(false);
-    const [status,         setStatus]         = useState('');
+    const [modelError, setModelError] = useState('');
+    const [saving, setSaving] = useState(false);
+    const [status, setStatus] = useState('');
 
     useEffect(() => {
         const stored = loadLLMSettings();
@@ -170,7 +167,7 @@ export default function LLMSettings({ onSaved }: LLMSettingsProps) {
                 </div>
                 <button
                     onClick={() => setAutoAnalysis(v => !v)}
-                    aria-label="Toggle auto analysis"
+                    aria-label={tA11y('toggleAutoAnalysis')}
                     style={{
                         width: '52px', height: '28px', borderRadius: '14px', border: 'none',
                         cursor: 'pointer', flexShrink: 0,
@@ -192,7 +189,7 @@ export default function LLMSettings({ onSaved }: LLMSettingsProps) {
             <div style={sectionStyle}>
                 <label style={labelStyle}>{t('provider')}</label>
                 <select style={inputStyle} value={provider} onChange={e => handleProviderChange(e.target.value as LLMProvider)}>
-                    {PROVIDERS.map(p => <option key={p.id} value={p.id}>{p.label}</option>)}
+                    {PROVIDER_IDS.map(id => <option key={id} value={id}>{tProviders(id)}</option>)}
                 </select>
             </div>
 
@@ -293,9 +290,9 @@ export default function LLMSettings({ onSaved }: LLMSettingsProps) {
                 </button>
             </div>
 
-            {status === 'saved'   && <p style={{ color: '#38a169', marginTop: '14px', fontSize: '14px', textAlign: 'center' }}>{t('settingsSaved')}</p>}
+            {status === 'saved' && <p style={{ color: '#38a169', marginTop: '14px', fontSize: '14px', textAlign: 'center' }}>{t('settingsSaved')}</p>}
             {status === 'cleared' && <p style={{ color: '#718096', marginTop: '14px', fontSize: '14px', textAlign: 'center' }}>{t('settingsCleared')}</p>}
-            {status === 'error'   && <p style={{ color: '#e53e3e', marginTop: '14px', fontSize: '14px', textAlign: 'center' }}>{t('settingsError')}</p>}
+            {status === 'error' && <p style={{ color: '#e53e3e', marginTop: '14px', fontSize: '14px', textAlign: 'center' }}>{t('settingsError')}</p>}
         </div>
     );
 }

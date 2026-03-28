@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Check } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface Language {
   code: string;
@@ -12,6 +13,7 @@ interface Language {
 const LanguageSwitcher = () => {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
+    const tA11y = useTranslations('a11y');
 
     const currentLocale = router.locale || 'en';
 
@@ -34,7 +36,7 @@ const LanguageSwitcher = () => {
             <button
                 className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm text-slate-200 text-sm font-semibold cursor-pointer hover:border-cyan-400/50 hover:bg-white/10 transition-all duration-200"
                 onClick={() => setIsOpen(!isOpen)}
-                aria-label="Select language"
+                aria-label={tA11y('selectLanguage')}
             >
                 <span className="text-lg leading-none">{currentLanguage.flag}</span>
                 <span className="font-bold tracking-wide text-sm">{currentLanguage.code.toUpperCase()}</span>

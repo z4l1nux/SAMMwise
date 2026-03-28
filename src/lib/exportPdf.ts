@@ -2,12 +2,12 @@ import { toCanvas } from 'html-to-image';
 import { jsPDF } from 'jspdf';
 
 const PAGE_MARGIN_MM = 10;
-const PIXEL_RATIO    = 2;
+const PIXEL_RATIO = 2;
 
 /** Background colour of the report (#0f111a). */
 const BG = { r: 15, g: 17, b: 26 };
-const BG_TOLERANCE   = 30;
-const BREAK_SEARCH   = 0.08; // search ±8 % of page height for a clean break row
+const BG_TOLERANCE = 30;
+const BREAK_SEARCH = 0.08; // search ±8 % of page height for a clean break row
 
 // ── DOM pre-processing ────────────────────────────────────────────────────────
 
@@ -33,7 +33,7 @@ export function prepareForCapture(element: HTMLElement): () => void {
 
     [element, ...element.querySelectorAll('*')].forEach(node => {
         if (!(node instanceof HTMLElement)) return;
-        const cs  = window.getComputedStyle(node);
+        const cs = window.getComputedStyle(node);
         const orig: Record<string, string> = {};
 
         const color = cs.color;
@@ -44,9 +44,9 @@ export function prepareForCapture(element: HTMLElement): () => void {
 
         const bf = cs.backdropFilter || (cs as any).webkitBackdropFilter;
         if (bf && bf !== 'none') {
-            orig.backdropFilter       = node.style.backdropFilter;
+            orig.backdropFilter = node.style.backdropFilter;
             orig.webkitBackdropFilter = (node.style as any).webkitBackdropFilter;
-            node.style.backdropFilter       = 'none';
+            node.style.backdropFilter = 'none';
             (node.style as any).webkitBackdropFilter = 'none';
         }
 
@@ -87,12 +87,12 @@ export function collectChartSnapshots(element: HTMLElement): ChartSnapshot[] {
     element.querySelectorAll('canvas').forEach(canvas => {
         try {
             const dataUrl = canvas.toDataURL('image/png', 1.0);
-            const rect    = canvas.getBoundingClientRect();
+            const rect = canvas.getBoundingClientRect();
             snapshots.push({
                 dataUrl,
                 x: (rect.left - parentRect.left) * PIXEL_RATIO,
-                y: (rect.top  - parentRect.top)  * PIXEL_RATIO,
-                w: rect.width  * PIXEL_RATIO,
+                y: (rect.top - parentRect.top) * PIXEL_RATIO,
+                w: rect.width * PIXEL_RATIO,
                 h: rect.height * PIXEL_RATIO,
             });
         } catch (_) {
@@ -111,10 +111,10 @@ export function compositeCharts(
     return Promise.all(
         snapshots.map(({ dataUrl, x, y, w, h }) =>
             new Promise<void>(resolve => {
-                const img   = new Image();
-                img.onload  = () => { ctx.drawImage(img, x, y, w, h); resolve(); };
+                const img = new Image();
+                img.onload = () => { ctx.drawImage(img, x, y, w, h); resolve(); };
                 img.onerror = () => resolve();
-                img.src     = dataUrl;
+                img.src = dataUrl;
             })
         )
     );
@@ -130,9 +130,9 @@ function isBackgroundRow(
     try {
         const { data } = ctx.getImageData(0, y, canvasWidth, 1);
         for (let i = 0; i < data.length; i += 4) {
-            if (Math.abs(data[i]   - BG.r) > BG_TOLERANCE ||
-                Math.abs(data[i+1] - BG.g) > BG_TOLERANCE ||
-                Math.abs(data[i+2] - BG.b) > BG_TOLERANCE) {
+            if (Math.abs(data[i] - BG.r) > BG_TOLERANCE ||
+                Math.abs(data[i + 1] - BG.g) > BG_TOLERANCE ||
+                Math.abs(data[i + 2] - BG.b) > BG_TOLERANCE) {
                 return false;
             }
         }
@@ -165,8 +165,8 @@ export function calculatePageBreaks(
     canvas: HTMLCanvasElement,
     pageHeightPx: number
 ): number[] {
-    const ctx    = canvas.getContext('2d')!;
-    const width  = canvas.width;
+    const ctx = canvas.getContext('2d')!;
+    const width = canvas.width;
     const height = canvas.height;
     const search = Math.round(pageHeightPx * BREAK_SEARCH);
     const breaks: number[] = [];
@@ -185,9 +185,9 @@ export function calculatePageBreaks(
 
 export async function exportReportToPdf(
     element: HTMLElement,
-    filename = 'SAMMwise-Report.pdf'
+    filename = 'AISVSwise-Report.pdf'
 ): Promise<void> {
-    const elementW = element.scrollWidth  || element.offsetWidth;
+    const elementW = element.scrollWidth || element.offsetWidth;
     const elementH = element.scrollHeight || element.offsetHeight;
 
     const restoreColors = prepareForCapture(element);
@@ -197,24 +197,24 @@ export async function exportReportToPdf(
     try {
         pageCanvas = await toCanvas(element, {
             backgroundColor: '#0f111a',
-            pixelRatio:      PIXEL_RATIO,
-            width:           elementW,
-            height:          elementH,
+            pixelRatio: PIXEL_RATIO,
+            width: elementW,
+            height: elementH,
         });
     } finally {
         restoreColors();
         restoreHidden();
     }
 
-    const pdf      = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    const pageW    = pdf.internal.pageSize.getWidth();
-    const pageH    = pdf.internal.pageSize.getHeight();
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
     const contentW = pageW - PAGE_MARGIN_MM * 2;
     const contentH = pageH - PAGE_MARGIN_MM * 2;
-    const ratio    = contentW / pageCanvas.width;
+    const ratio = contentW / pageCanvas.width;
 
     const pageHeightPx = Math.round(contentH / ratio);
-    const breakPoints  = calculatePageBreaks(pageCanvas, pageHeightPx);
+    const breakPoints = calculatePageBreaks(pageCanvas, pageHeightPx);
 
     const sections: [number, number][] = [];
     let start = 0;
@@ -232,12 +232,12 @@ export async function exportReportToPdf(
         if (i > 0) pdf.addPage();
 
         const slice = document.createElement('canvas');
-        slice.width  = pageCanvas.width;
+        slice.width = pageCanvas.width;
         slice.height = sectionH;
         slice.getContext('2d')!.drawImage(
             pageCanvas,
             0, startY, pageCanvas.width, sectionH,
-            0, 0,      pageCanvas.width, sectionH,
+            0, 0, pageCanvas.width, sectionH,
         );
 
         pdf.addImage(

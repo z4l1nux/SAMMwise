@@ -1,60 +1,55 @@
 <p align="center">
     <img style="background-color:grey" src="https://owasp.org/assets/images/logo.svg" height="128">
-    <h1 align="center">SAMMwise - Modernized Edition</h1>
+    <h1 align="center">AISVSwise</h1>
 </p>
 
 <p align="center">
   <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16.2.1-black?style=for-the-badge&logo=next.js">
   <img alt="React" src="https://img.shields.io/badge/React-18.3-blue?style=for-the-badge&logo=react">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.7-3178c6?style=for-the-badge&logo=typescript">
-  <img alt="License" src="https://img.shields.io/github/license/owaspsamm/sammwise?style=for-the-badge">
+  <img alt="License" src="https://img.shields.io/github/license/owaspsamm/AISVSwise?style=for-the-badge">
 </p>
 
 ## 🚀 Introduction
 
-The mission of OWASP Software Assurance Maturity Model (SAMM) is to be the prime maturity model for software assurance that provides an effective and measurable way for all types of organizations to analyze and improve their software security posture. OWASP SAMM supports the complete software lifecycle, including development and acquisition, and is technology and process agnostic. It is intentionally built to be evolutive and risk-driven in nature.
+**AISVSwise** is an open-source, browser-based assessment tool for the [OWASP Artificial Intelligence Security Verification Standard (AISVS)](https://owasp.org/www-project-artificial-intelligence-security-verification-standard/).
 
-**SAMMwise** is an open source Web App to calculate the Maturity score of an individual, enterprise, or project using the SAMM model. The application walks you through the assessment, allows you to save and re-use previously completed assessments, and presents the results in a similar style to the spreadsheet.
+OWASP AISVS is an open framework for verifying the security of AI systems — including LLMs, agents, RAG pipelines, and model infrastructure. AISVSwise walks your organization through all 14 AISVS controls, scores your maturity across 97 sub-controls, and provides AI-powered improvement recommendations — all without uploading any data to a server.
 
 ## ✨ What's New in This Version
 
-This is a **modernized, redesigned, and security-hardened version** of SAMMwise with significant improvements:
-
 ### 🔒 Security Enhancements
-- ✅ **Zero vulnerabilities** - All dependencies updated and secured
-- ✅ **Next.js 16.2** - Turbopack enabled with enhanced performance and cache APIs
-- ✅ **React 18.3** - Modern React with concurrent features
-- ✅ **Chart.js 4.4** - Latest charting library
-- ✅ **GitHub Actions** - Automated security scanning: Semgrep, TruffleHog, Vet
+- ✅ **XSS protection** — LLM output sanitized with HTML escaping before markdown rendering
+- ✅ **Zero vulnerabilities** — All dependencies updated and secured
+- ✅ **Next.js 16.2** — Turbopack enabled with enhanced performance
+- ✅ **GitHub Actions** — Automated security scanning: Semgrep, TruffleHog, Vet
+- ✅ **AES-GCM encrypted API keys** — Stored only on your device, never transmitted to our servers
+
+### 🌍 Internationalization (i18n)
+- ✅ **Full Portuguese (PT-BR) survey** — All 14 control pages, 97 panel names, and answer choices translated
+- ✅ **Complete i18n parity** — `en.json` and `pt.json` fully in sync (validated by CI tests)
+- ✅ **Accessibility strings** — Alt text and `aria-label` attributes fully translated (`a11y` namespace)
+- ✅ **LLM provider labels** — Provider names translated via `providers` namespace
 
 ### 🎨 Design & UI — Dark Glassmorphism Theme
-- ✅ **Dark theme** — consistent `#0f111a` background with glassmorphism cards across all pages
+- ✅ **Dark theme** — consistent `#0f111a` background with glassmorphism cards
 - ✅ **Tailwind CSS v4** — CSS-first configuration, zero legacy CSS modules
-- ✅ **Feature Slices architecture** — code organized by domain (`features/assessment/`, `features/results/`, `features/ai-analysis/`)
+- ✅ **Feature Slices architecture** — code organized by domain
 - ✅ **Framer Motion** — smooth animations on buttons, navbar, and interactive elements
-- ✅ **Ambient background glows** — fixed cyan/purple decorative glows clipped to viewport
-- ✅ **Sticky glassmorphism navbar** — `backdrop-blur-md` with proper scroll offset for all pages
 - ✅ **Responsive design** — works on desktop and mobile
-- ✅ **SurveyJS dark theme** — survey questions inherit the dark palette via CSS variable overrides
-- ✅ **Chart dark theme** — radar, bar, and donut charts styled for dark backgrounds
 
 ### 🛠️ Technical Upgrades
-- ✅ **TypeScript 5.7** - Full codebase migration (62 files: `.ts`/`.tsx`)
-- ✅ **Survey-React-UI 1.12** - Modern survey components
-- ✅ **Custom Gauge Charts** - Built with Chart.js for better compatibility
-- ✅ **Improved Performance** - Faster load times and rendering
-- ✅ **i18n Support** - Multi-language support (English & Portuguese) via next-intl v4
-- ✅ **Unit Tests** - Jest 30 + React Testing Library (123 tests)
-- ✅ **scroll-padding-top** — global CSS offset ensures sticky navbar never overlaps scrollIntoView targets
+- ✅ **TypeScript 5.7** — Full codebase migration
+- ✅ **i18n via next-intl v4** — English & Portuguese (BR)
+- ✅ **Unit Tests** — Jest 30 + React Testing Library (122 tests)
+- ✅ **Docker port aligned** — Dockerfile, docker-compose, and npm scripts all use port **3600**
 
 ### 🤖 AI-Powered Analysis
 - ✅ **Multi-provider LLM** — Anthropic, OpenAI, Gemini, and Ollama support
 - ✅ **Encrypted API keys** — AES-GCM encryption stored only on your device
 - ✅ **Auto or manual analysis** — Toggle automatic analysis per report
-- ✅ **Fresh-completion guard** — AI auto-trigger only fires after completing a new assessment, not on page reload
 - ✅ **Persisted with report** — AI analysis saved inside the JSON report file
 - ✅ **Comparison support** — Analysis reloaded when importing previous reports
-- ✅ **Dark-themed analysis card** — Markdown rendering with proper contrast on dark backgrounds
 
 ## 📋 Prerequisites
 
@@ -67,13 +62,10 @@ This is a **modernized, redesigned, and security-hardened version** of SAMMwise 
 
 ```bash
 # Pull the image
-docker pull z4l1nux/sammwise:latest
+docker pull z4l1nux/AISVSwise:latest
 
-# Run the container with custom name
-docker run -d -p 3500:3500 --name sammwise-app z4l1nux/sammwise:latest
-
-# Or run without custom name (will get random name like "sweet_hugle")
-docker run -d -p 3500:3500 z4l1nux/sammwise:latest
+# Run the container
+docker run -d -p 3600:3600 --name AISVSwise-app z4l1nux/AISVSwise:latest
 ```
 
 ### Using Docker Compose
@@ -100,86 +92,84 @@ npm run build
 npm start
 ```
 
-The application will be available at **http://localhost:3500**
+The application will be available at **http://localhost:3600**
 
 ## 🌍 Internationalization (i18n)
 
-SAMMwise supports multiple languages!
+AISVSwise supports multiple languages via **next-intl v4**.
 
 ### Supported Languages
 - 🇺🇸 **English** (default)
 - 🇧🇷 **Português** (Brazilian Portuguese)
 
 ### Features
-- **Language Switcher** in the navbar with animated dropdown (Framer Motion)
-- **Persistent preference** saved in localStorage
-- **SEO optimized** for each language
-- **Easy to extend** - add new languages by creating a new file in `src/messages/`
-
-See [I18N Documentation](docs/I18N.md) for details on adding new languages.
+- **Language Switcher** in the navbar with animated dropdown
+- **Survey fully translated** — panel names, page titles, and answer choices all localized
+- **SEO optimized** — page titles and meta descriptions per language
+- **Easy to extend** — add new languages by creating `src/messages/<locale>.json` and adding the locale to `next.config.js`
 
 ## 📊 Features
 
 ### Assessment Page (`/assessment`)
-- **Comprehensive Survey** - Evaluate your organization across 5 domains:
-  - 🏛️ **Governance** - Security policies and organization
-  - 🎨 **Design** - Security architecture and threat modeling
-  - 💻 **Implementation** - Secure coding and build practices
-  - ✅ **Verification** - Security testing and reviews
-  - ⚙️ **Operations** - Incident management and environment security
-
-- **Progress Tracking** - Save and resume assessments
-- **Import/Export** - Share results in JSON format
-- **Panel navigation** - Previous/Next Practice buttons within each domain
-- **Domain navigation** - Dot-based navbar to jump between domains with scroll-to-top
+- **14 AISVS Controls** covering the full AI security lifecycle:
+  - C1 Training Data · C2 Input Validation · C3 Model Lifecycle · C4 Infrastructure
+  - C5 Access Control · C6 Supply Chain · C7 Model Behavior · C8 Memory & Vectors
+  - C9 Agentic Actions · C10 MCP Security · C11 Adversarial Robustness · C12 Privacy
+  - C13 Monitoring · C14 Human Oversight
+- **97 sub-control panels** with 454 individual verification questions
+- **4-point scale** per question: No / Yes, for some / Yes, for most / Yes, for all
+- **Progress Tracking** — Save and resume assessments at any time
+- **Import/Export** — Share results in JSON format
+- **Panel navigation** — Previous/Next buttons within each control
 
 ### Results Page (`/results`)
-- **Visual Analytics** - Beautiful charts and graphs:
-  - 🎯 Gauge Chart - Overall maturity score (0–3 scale)
-  - 📊 Bar Charts - Response distribution and domain scores (dark-themed)
-  - 🕸️ Radar Charts - Multi-dimensional analysis (dark-themed, visible grid lines)
-  - 📋 Practice Breakdown Table - Color-coded maturity levels per practice
-
-- **Score Interpretation** - Maturity band legend (Initial / Managed / Defined / Optimized)
-- **Comparison Mode** - Compare current vs. previous assessments
-- **Export Options** - Download results as JSON or PDF
-- **AI Analysis** - Detailed insights and improvement roadmap via LLM
+- **Visual Analytics:**
+  - 🎯 Gauge Chart — Overall maturity score (0–3 scale)
+  - 📊 Bar Charts — Response distribution and control scores
+  - 🕸️ Radar Charts — Multi-dimensional view across all 14 controls
+  - 📋 Practice Breakdown Table — Color-coded maturity levels (Initial / Managed / Defined / Optimized)
+- **Comparison Mode** — Compare current vs. previous assessments
+- **Export Options** — Download results as JSON or PDF
+- **AI Analysis** — Detailed insights and improvement roadmap via LLM
 
 ### AI Settings Page (`/ai`)
-- **Provider Selection** - Choose from Anthropic, OpenAI, Gemini, or Ollama
-- **Dynamic Model Fetching** - Models are fetched live from the provider API
-- **Encrypted Storage** - API keys encrypted with AES-GCM, stored only on device
-- **Auto-Analysis Toggle** - Optionally generate analysis only on fresh assessment completion
+- **Provider Selection** — Anthropic, OpenAI, Gemini, or Ollama (fully local)
+- **Dynamic Model Fetching** — Models fetched live from the provider API
+- **Encrypted Storage** — API keys encrypted with AES-GCM, stored only on device
+- **Auto-Analysis Toggle** — Optionally trigger analysis automatically after completing an assessment
 
 ## 🎯 Usage Guide
 
-1. **Start Assessment** - Navigate to `/assessment`
-2. **Complete Questions** - Answer questions across all 5 domains and Details
-3. **Save Progress** - Use "Save Responses" to backup your work at any time
-4. **View Results** - Navigate to `/results` to see charts and your maturity score
-5. **AI Analysis** - Configure a provider at `/ai`, then click "Analyze Results"
-6. **Compare** - Upload a previous JSON report to visualize improvements
+1. **Start Assessment** — Navigate to `/assessment`
+2. **Complete Questions** — Answer verification questions across all 14 AISVS controls
+3. **Save Progress** — Use "Save Responses" to back up your work at any time
+4. **View Results** — Navigate to `/results` to see charts and your maturity score
+5. **AI Analysis** — Configure a provider at `/ai`, then click "Analyze Results"
+6. **Compare** — Upload a previous JSON report to visualize improvements over time
 
 ## 🏗️ Project Structure
 
 ```
-sammwise/
+AISVSwise/
 ├── src/
 │   ├── pages/                  # Next.js pages (TypeScript)
 │   │   ├── index.tsx           # Home page
 │   │   ├── assessment.tsx      # Assessment survey
 │   │   ├── results.tsx         # Results dashboard
 │   │   ├── ai.tsx              # AI settings
-│   │   ├── about.tsx           # About SAMM
+│   │   ├── about.tsx           # About AISVS
 │   │   └── api/                # API proxy routes (LLM)
 │   ├── features/               # Feature slices (domain logic)
 │   │   ├── assessment/         # Survey engine, panels, navigation
 │   │   │   ├── graphs/         # Chart class definitions (.ts)
-│   │   │   └── surveys/        # Survey JSON (panels, pages, translations)
-│   │   ├── results/            # GaugeChart component (.tsx)
+│   │   │   └── surveys/
+│   │   │       ├── surveypages/    # c01.ts … c14.ts (control pages)
+│   │   │       ├── surveypanels/   # c01/ … c14/ (sub-control panels)
+│   │   │       ├── translations-pt.ts  # PT translations + translateSurvey()
+│   │   │       └── totalsurvey.ts  # Aggregates all 14 controls
+│   │   ├── results/            # GaugeChart component
 │   │   └── ai-analysis/        # LLM integration (settings, analysis, crypto, prompt)
-│   ├── components/             # Shared UI components (TypeScript)
-│   │   ├── layout.tsx          # App shell (navbar + footer + glows)
+│   ├── components/             # Shared UI components
 │   │   ├── navbar.tsx          # Sticky glassmorphism navbar
 │   │   ├── footer.tsx          # OWASP footer
 │   │   ├── LanguageSwitcher.tsx# Animated language dropdown
@@ -188,7 +178,7 @@ sammwise/
 │   ├── types/                  # Shared TypeScript types (index.ts)
 │   ├── messages/               # i18n translation files (en.json, pt.json)
 │   └── styles/                 # Global CSS (Tailwind v4, SurveyJS dark overrides)
-├── __tests__/                  # Jest unit tests (123 tests)
+├── __tests__/                  # Jest unit tests (122 tests)
 └── public/                     # Static assets
 ```
 
@@ -204,75 +194,62 @@ We welcome contributions! Please follow these steps:
 
 ## 📝 License
 
-This project is licensed under the **Apache License 2.0** - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **Apache License 2.0** — see the [LICENSE](LICENSE) file for details.
 
-Copyright 2021-2026 Datacom NZ Ltd.
+Copyright 2021-2026 OWASP Foundation.
 
 ## 🔗 Resources
 
-- **OWASP SAMM Website**: [https://owaspsamm.org](https://owaspsamm.org)
-- **OWASP SAMM Documentation**: [https://owaspsamm.org/about/](https://owaspsamm.org/about/)
+- **OWASP AISVS**: [https://owasp.org/www-project-artificial-intelligence-security-verification-standard/](https://owasp.org/www-project-artificial-intelligence-security-verification-standard/)
+- **OWASP Foundation**: [https://owasp.org](https://owasp.org)
 - **OWASP Slack**: Join the community for support and discussions
 
 ## 🐛 Known Issues
 
-- Some legacy browsers may have compatibility issues
-- Print layout is optimized for A4 paper size
+- Some legacy browsers may have compatibility issues with glassmorphism effects
+- Print/PDF layout is optimized for A4 paper size
 
 ## 🎉 Acknowledgments
 
-- Original project by **Datacom NZ Ltd.**
-- Modernization, redesign and AI integration by the community
-- OWASP Foundation for the SAMM framework
+- OWASP Foundation for the AISVS framework
+- Modernization, redesign, and AI integration by the OWASP community
 
 ## 📈 Version History
 
-- **v2.4.0** (2026) - Full TypeScript Migration
+- **v2.5.0** (2026) — Security, i18n & test hardening
+  - XSS fix: HTML escaping applied to all LLM output before `dangerouslySetInnerHTML`
+  - Portuguese survey fully translated: 14 control pages, 97 panel names, all choice labels
+  - `translateSurvey()` now correctly called in `totalsurvey.ts` (was orphaned)
+  - New `a11y` and `providers` i18n namespaces; alt text and aria-labels fully localized
+  - Initial `navbarState` corrected from `'Governance'` (stale SAMM value) to `'Control 1'`
+  - Docker port unified to **3600** across Dockerfile, docker-compose, and npm scripts
+  - Test suite updated for AISVS structure: 14 controls, 97 panels, real `q_c*` question names
+
+- **v2.4.0** (2026) — Full TypeScript migration
   - Migrated all 62 source files from `.js`/`.jsx` to `.ts`/`.tsx`
-  - Added `tsconfig.json` with `strict: false`, `allowJs: true`, `moduleResolution: bundler`
-  - Created `src/types/index.ts` with shared domain types (LLM, scores, survey, charts)
-  - Expanded test suite from 78 to 123 tests (all `.test.ts`)
-  - Fixed framer-motion, react-dropzone, and next-intl v4 type compatibility issues
+  - Added `src/types/index.ts` with shared domain types
+  - Expanded test suite to 122 tests (Jest 30 + React Testing Library)
 
-- **v2.3.0** (2026) - Framework Upgrade & Turbopack
-  - Upgraded Next.js from 15.5 to 16.2.1 and enabled Turbopack for ultra-fast builds
-  - Bumped ESLint to 9.0 and removed deprecated `next lint` CLI command
-  - Node.js minimum requirement bumped to v20.9.0
-  - Refactored `react-to-print` logic to `useReactToPrint` hook to prevent React #130 client-side crash
+- **v2.3.0** (2026) — Framework upgrade & Turbopack
+  - Upgraded to Next.js 16.2.1 with Turbopack
+  - Node.js minimum bumped to v20.9.0
 
-- **v2.2.0** (2026) - Dark glassmorphism redesign & architecture refactor
-  - Full dark theme with Tailwind CSS v4 across all pages
-  - Feature Slices architecture (`features/assessment/`, `features/results/`, `features/ai-analysis/`)
-  - SurveyJS dark theme via CSS variable overrides (`--sjs-*`)
-  - Radar and bar charts with dark-compatible Chart.js options
-  - AI analysis card migrated from light to dark theme
-  - `scroll-padding-top` for sticky navbar compatibility
-  - Survey domain navigation with automatic scroll-to-top
-  - AI auto-trigger guard (`freshCompletion` flag) — only fires after completing a new assessment
-  - Removed `titleLocation: "left"` from all 90 survey questions (fixes two-column layout)
-  - Ambient background glows clipped to viewport (no extra scroll space below footer)
-  - Global `routeChangeComplete` scroll-to-top for client-side navigation
+- **v2.2.0** (2026) — Dark glassmorphism redesign
+  - Full dark theme with Tailwind CSS v4
+  - Feature Slices architecture
+  - AI auto-trigger guard (`freshCompletion` flag)
 
-- **v2.1.0** (2026) - AI integration and quality improvements
+- **v2.1.0** (2026) — AI integration
   - Multi-provider LLM analysis (Anthropic, OpenAI, Gemini, Ollama)
   - AES-GCM encrypted API key storage
   - Practice breakdown table with maturity bands
-  - Score interpretation legend
-  - Dynamic model fetching from provider APIs
-  - Mobile responsive improvements
-  - 78 unit tests (Jest 30 + React Testing Library)
-  - Panel navigation buttons unified inside survey panels
 
-- **v2.0.0** (2026) - Major modernization update
-  - Updated to Next.js 15, React 18
-  - Security vulnerabilities fixed
-  - Modern UI/UX redesign
-  - i18n support (EN/PT-BR)
-  - Custom chart components
+- **v2.0.0** (2026) — Major modernization
+  - AISVS framework adoption (14 controls replacing SAMM 5-domain model)
+  - Next.js 15, React 18, i18n support (EN/PT-BR)
 
-- **v0.1.0** (2021-2023) - Original release
-  - Next.js 10, React 16
-  - Basic functionality
+- **v0.1.0** (2021–2023) — Original release
+  - Next.js 10, React 16, basic SAMM assessment functionality
 
 ---
 
