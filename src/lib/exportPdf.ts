@@ -185,7 +185,7 @@ export function calculatePageBreaks(
 
 export async function exportReportToPdf(
     element: HTMLElement,
-    filename = 'AISVSwise-Report.pdf'
+    filename = 'SAMMwise-Report.pdf'
 ): Promise<void> {
     const elementW = element.scrollWidth || element.offsetWidth;
     const elementH = element.scrollHeight || element.offsetHeight;

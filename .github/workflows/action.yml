@@ -40,5 +40,5 @@ jobs:
           file: ./docker/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/AISVSwise:latest
-            ghcr.io/${{ github.repository_owner }}/AISVSwise:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/SAMMwise:latest
+            ghcr.io/${{ github.repository_owner }}/SAMMwise:latest

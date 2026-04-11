@@ -18,7 +18,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-3">
                 <Image src="/logo.png" width={40} height={40} alt={tA11y('logoAlt')} priority style={{ width: 'auto', height: 'auto' }} className="drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]" />
                 <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent tracking-wide">
-                    AISVSwise
+                    SAMMwise
                 </span>
             </div>
 

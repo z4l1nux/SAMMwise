@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { encryptApiKey, decryptApiKey } from './llmCrypto';
 import type { LLMProvider, LLMSettingsType } from '../../types';
 
-const SETTINGS_KEY = 'AISVSwise_llm_settings';
+const SETTINGS_KEY = 'SAMMwise_llm_settings';
 
 const PROVIDER_IDS: LLMProvider[] = ['anthropic', 'openai', 'gemini', 'ollama'];
 

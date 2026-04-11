@@ -259,14 +259,14 @@
     "modelsLoaded": "models available",
     "apiKeySaved": "API key saved (click to replace)",
     "infoSecurityTitle": "Your keys stay local",
-    "infoSecurityBody": "API keys are encrypted with AES-GCM and stored only on this device. They are never sent to AISVSwise servers.",
+    "infoSecurityBody": "API keys are encrypted with AES-GCM and stored only on this device. They are never sent to SAMMwise servers.",
     "infoProvidersTitle": "4 providers supported",
     "infoProvidersBody": "Anthropic (Claude), OpenAI (GPT), Google Gemini, and Ollama for fully local inference.",
     "infoPersistTitle": "Analysis saved with report",
     "infoPersistBody": "Generated analysis is embedded in the JSON report file so it reappears when you import the report for comparison."
   },
   "a11y": {
-    "logoAlt": "AISVSwise Logo",
+    "logoAlt": "SAMMwise Logo",
     "owaspLogoAlt": "OWASP Logo",
     "selectLanguage": "Select language",
     "toggleAutoAnalysis": "Toggle auto analysis",

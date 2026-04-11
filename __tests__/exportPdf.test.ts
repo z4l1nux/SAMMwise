@@ -531,7 +531,7 @@ describe('exportReportToPdf', () => {
 
     it('saves with the default filename', async () => {
         await exportReportToPdf(makeElement());
-        expect(pdf.save).toHaveBeenCalledWith('AISVSwise-Report.pdf');
+        expect(pdf.save).toHaveBeenCalledWith('SAMMwise-Report.pdf');
     });
 
     it('saves with the provided filename', async () => {

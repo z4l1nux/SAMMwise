@@ -259,14 +259,14 @@
     "modelsLoaded": "modelos disponíveis",
     "apiKeySaved": "Chave de API salva (clique para substituir)",
     "infoSecurityTitle": "Suas chaves ficam locais",
-    "infoSecurityBody": "As chaves de API são criptografadas com AES-GCM e armazenadas apenas neste dispositivo. Nunca são enviadas para os servidores do AISVSwise.",
+    "infoSecurityBody": "As chaves de API são criptografadas com AES-GCM e armazenadas apenas neste dispositivo. Nunca são enviadas para os servidores do SAMMwise.",
     "infoProvidersTitle": "4 provedores suportados",
     "infoProvidersBody": "Anthropic (Claude), OpenAI (GPT), Google Gemini e Ollama para inferência totalmente local.",
     "infoPersistTitle": "Análise salva com o relatório",
     "infoPersistBody": "A análise gerada é embutida no arquivo JSON do relatório e reaparece ao importar o relatório para comparação."
   },
   "a11y": {
-    "logoAlt": "Logo AISVSwise",
+    "logoAlt": "Logo SAMMwise",
     "owaspLogoAlt": "Logo OWASP",
     "selectLanguage": "Selecionar idioma",
     "toggleAutoAnalysis": "Alternar análise automática",

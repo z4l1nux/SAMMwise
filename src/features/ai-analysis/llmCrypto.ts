@@ -3,7 +3,7 @@
  * A device-specific CryptoKey is generated once and stored as JWK.
  */
 
-const KEY_STORAGE = 'AISVSwise_enc_key';
+const KEY_STORAGE = 'SAMMwise_enc_key';
 
 async function getOrCreateKey(): Promise<CryptoKey> {
     const stored = localStorage.getItem(KEY_STORAGE);
