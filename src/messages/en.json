@@ -7,34 +7,33 @@
     "ai": "AI"
   },
   "home": {
-    "title": "AISVS",
-    "subtitle": "OWASP AI Security Verification Standard Tool",
-    "description": "The AISVS tool provides a browser-based interface to assess your organization's AI security posture across 14 controls. With this tool, you can:",
+    "title": "SAMMwise",
+    "subtitle": "OWASP SAMM Assessment Tool",
+    "description": "SAMMwise provides a convenient, browser-based interface for capturing SAMM assessment responses. With this tool, users can:",
     "features": {
-      "feature1": "Assess your AI security practices across 14 controls",
-      "feature2": "Visualize your AI security maturity with dynamic charts",
-      "feature3": "Compare your results over time and get AI-powered analysis",
-      "feature1Desc": "Evaluate AI security practices from training data to model governance.",
-      "feature2Desc": "Generate radar and bar charts showing your posture across all 14 AISVS controls.",
-      "feature3Desc": "Results are stored locally in JSON – private and never uploaded to any server."
+      "feature1": "Enter responses for a single assessment",
+      "feature2": "Visualize the maturity results based on entered responses",
+      "feature3": "Compare maturity results to those for a previous assessment",
+      "feature1Desc": "Organize and designate Software Security postures in your development lifecycle.",
+      "feature2Desc": "Generate dynamic charts for comprehensive visualization of your maturity and progress.",
+      "feature3Desc": "Smart support for local JSON storage, promoting privacy in all assessments."
     },
     "startAssessment": "Start Assessment",
     "viewResults": "View Results",
     "privacy": "Assessment responses can be saved to the user's local computer, in a JSON-formatted text file. Responses are retained only on the local system and are not shared with any other system or persons.",
-    "aboutSamm": "About AISVS",
-    "sammDescription": "The OWASP Artificial Intelligence Security Verification Standard (AISVS) is an open framework for verifying the security of AI systems — including LLMs, agents, RAG pipelines, and model infrastructure.",
-    "sammPurpose": "AISVS is designed to help organizations:",
+    "aboutSamm": "About SAMM",
+    "sammDescription": "The Open Web Application Security Project's Software Assurance Maturity Model (OWASP SAMM) is an open framework to help organizations formulate and implement a strategy for software security, tailored to the specific risks facing the organization.",
+    "sammPurpose": "The resources provided by SAMM (including this tool) are intended to aid in:",
     "purposes": {
-      "purpose1": "Evaluate current AI security practices against industry standards;",
-      "purpose2": "Build a structured AI security assurance program;",
-      "purpose3": "Demonstrate measurable improvements over time; and",
-      "purpose4": "Define and measure security activities across the AI lifecycle."
+      "purpose1": "Evaluating an organization's existing software security practices;",
+      "purpose2": "Building toward a balanced software security assurance program in well-defined iterations;",
+      "purpose3": "Demonstrating concrete improvements to a security assurance program; and",
+      "purpose4": "Defining and measuring security-related activities throughout an organization."
     },
-    "sammFlexibility": "AISVS is flexible enough to be used by organizations of all sizes, for a single AI product or across an entire AI portfolio.",
-    "badge": "OWASP AI Security Verification Standard"
+    "sammFlexibility": "SAMM was defined with flexibility in mind such that it can be utilized by small, medium, and large organizations using any style of development. Additionally, this model can be applied organization-wide, for a single line-of-business, or even for an individual project."
   },
   "assessment": {
-    "title": "AISVS Assessment",
+    "title": "SAMM Assessment",
     "loadPrevious": "Would you like to use previous results to populate the questionnaire?",
     "loadDescription": "If you have a file of unfinished results that you wish to go back to you can upload them here and the questionnaire will autopopulate with your answers",
     "loadResults": "Load Results",
@@ -52,27 +51,10 @@
       "verification": "Verification",
       "operations": "Operations",
       "details": "Details"
-    },
-    "controls": {
-      "c01": "C1 Training Data",
-      "c02": "C2 Input Validation",
-      "c03": "C3 Model Lifecycle",
-      "c04": "C4 Infrastructure",
-      "c05": "C5 Access Control",
-      "c06": "C6 Supply Chain",
-      "c07": "C7 Model Behavior",
-      "c08": "C8 Memory & Vectors",
-      "c09": "C9 Agentic Actions",
-      "c10": "C10 MCP Security",
-      "c11": "C11 Adversarial Robustness",
-      "c12": "C12 Privacy",
-      "c13": "C13 Monitoring",
-      "c14": "C14 Human Oversight",
-      "details": "Details"
     }
   },
   "results": {
-    "title": "AISVS Assessment Results",
+    "title": "Assessment Results",
     "completionText": "Thank you for completing the questionnaire",
     "mustComplete": "You must first complete the questionnaire to see results",
     "overallScore": "Your overall score is:",
@@ -81,13 +63,13 @@
     "totals": "Totals",
     "responseCount": "Response count by value",
     "businessFunctions": "Business Functions",
-    "maturityByBusiness": "Score by AISVS Control",
-    "maturityByBusinessRadar": "Radar — AISVS Controls",
-    "maturityByBusinessBar": "Bar — AISVS Controls",
+    "maturityByBusiness": "Maturity by Business Function",
+    "maturityByBusinessRadar": "Radar — Business Functions",
+    "maturityByBusinessBar": "Bar — Business Functions",
     "practices": "Practices",
-    "maturityByPractice": "Score by Sub-Control",
-    "maturityByPracticeRadar": "Radar — Sub-Controls",
-    "maturityByPracticeBar": "Bar — Sub-Controls",
+    "maturityByPractice": "Maturity by Practice",
+    "maturityByPracticeRadar": "Radar — Practices",
+    "maturityByPracticeBar": "Bar — Practices",
     "totalsSection": "Totals",
     "saveJson": "Do you wish to save your results file in JSON?",
     "saveFile": "Save file",
@@ -99,9 +81,9 @@
     "projectName": "Project Name",
     "projectDescription": "Project Description",
     "companyName": "Company Name",
-    "scoreInitial": "Control rarely or never implemented.",
+    "scoreInitial": "Practices rarely or never applied.",
     "scoreManaged": "Ad-hoc implementation, no consistency.",
-    "scoreDefined": "Defined processes, consistently applied.",
+    "scoreDefined": "Defined processes, consistent application.",
     "scoreOptimized": "Optimized, measured and continuously improving.",
     "practiceBreakdown": "Practice Breakdown",
     "businessFunction": "Business Function",
@@ -119,8 +101,8 @@
     "currentAssessment": "Current Assessment",
     "previousAssessment": "Previous Assessment",
     "previousDataset": "Previous Dataset",
-    "scoreForEach": "Score per AISVS Control",
-    "practiceScore": "Score per Sub-Control",
+    "scoreForEach": "Score per Business Function",
+    "practiceScore": "Score per Practice",
     "responseLabels": {
       "no": "No",
       "yesForSome": "Yes, for some",
@@ -134,20 +116,11 @@
       "good": "Good"
     },
     "businessFunctions": {
-      "Control 1": "C1 Training Data",
-      "Control 2": "C2 Input Validation",
-      "Control 3": "C3 Model Lifecycle",
-      "Control 4": "C4 Infrastructure",
-      "Control 5": "C5 Access Control",
-      "Control 6": "C6 Supply Chain",
-      "Control 7": "C7 Model Behavior",
-      "Control 8": "C8 Memory & Vectors",
-      "Control 9": "C9 Agentic Actions",
-      "Control 10": "C10 MCP Security",
-      "Control 11": "C11 Adversarial",
-      "Control 12": "C12 Privacy",
-      "Control 13": "C13 Monitoring",
-      "Control 14": "C14 Human Oversight"
+      "Governance": "Governance",
+      "Design": "Design",
+      "Implementation": "Implementation",
+      "Verification": "Verification",
+      "Operations": "Operations"
     },
     "practices": {
       "Strategy and Metrics": "Strategy & Metrics",
@@ -177,7 +150,7 @@
     "redirect": "Going back to the"
   },
   "footer": {
-    "copyright": "© 2026 AISVS - OWASP Foundation",
+    "copyright": "© 2026 SAMMwise - OWASP Foundation",
     "madeWith": "Made with ❤️ by the OWASP Community"
   },
   "buttons": {
@@ -239,7 +212,7 @@
     "settingsCleared": "Settings cleared.",
     "settingsError": "Error saving settings.",
     "analysisTitle": "AI-Powered Analysis",
-    "analyzePrompt": "Click below to get a detailed AI analysis of your AISVS results with improvement suggestions.",
+    "analyzePrompt": "Click below to get a detailed AI analysis of your SAMM results with improvement suggestions.",
     "analyze": "Analyze Results",
     "reanalyze": "Re-analyze",
     "analyzing": "Analyzing your results…",
@@ -247,11 +220,11 @@
     "decryptError": "Could not decrypt API key. Please re-enter it in settings.",
     "genericError": "An error occurred during analysis.",
     "configureButton": "Configure AI",
-    "comparisonNote": "Analysis includes comparison with your previous AISVS assessment.",
+    "comparisonNote": "Analysis includes comparison with your previous assessment.",
     "providerChanged": "new provider active — re-analyze to update",
     "pageTitle": "AI Analysis Settings",
-    "pageSubtitle": "Connect an LLM provider to get detailed analysis and improvement suggestions for your AISVS assessment results.",
-    "pageDescription": "Configure your LLM provider for AI-powered AISVS assessment analysis.",
+    "pageSubtitle": "Connect an LLM provider to get detailed analysis and improvement suggestions for your SAMM results.",
+    "pageDescription": "Configure your LLM provider for AI-powered SAMM assessment analysis.",
     "fetchModels": "Fetch Models",
     "fetchingModels": "Loading…",
     "modelFetchFirst": "— enter key and fetch models —",
@@ -265,29 +238,13 @@
     "infoPersistTitle": "Analysis saved with report",
     "infoPersistBody": "Generated analysis is embedded in the JSON report file so it reappears when you import the report for comparison."
   },
-  "a11y": {
-    "logoAlt": "SAMMwise Logo",
-    "owaspLogoAlt": "OWASP Logo",
-    "selectLanguage": "Select language",
-    "toggleAutoAnalysis": "Toggle auto analysis",
-    "collapse": "Collapse",
-    "expand": "Expand",
-    "uploadSuccess": "Upload successful",
-    "dragAndDrop": "Drag and drop file"
-  },
-  "providers": {
-    "anthropic": "Anthropic (Claude)",
-    "openai": "OpenAI (GPT)",
-    "gemini": "Google Gemini",
-    "ollama": "Ollama (local)"
-  },
   "meta": {
-    "homeTitle": "AISVS | Home",
-    "assessmentTitle": "AISVS | Assessment",
-    "resultsTitle": "AISVS | Results",
-    "aboutTitle": "AISVS | About",
-    "aiTitle": "AISVS | AI Settings",
-    "description": "OWASP AISVS Assessment Tool - Evaluate your organization's AI security posture across 14 controls",
-    "keywords": "owasp, aisvs, ai security, llm security, assessment, verification standard, artificial intelligence"
+    "homeTitle": "SAMMwise | Home",
+    "assessmentTitle": "SAMMwise | Assessment",
+    "resultsTitle": "SAMMwise | Results",
+    "aboutTitle": "SAMMwise | About",
+    "aiTitle": "SAMMwise | AI Settings",
+    "description": "OWASP SAMM Assessment Tool - Evaluate your organization's software security maturity",
+    "keywords": "owasp, samm, security, assessment, maturity model, software security"
   }
 }

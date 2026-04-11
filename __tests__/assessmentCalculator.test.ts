@@ -1,53 +1,26 @@
 import assessmentCalculator from '../src/features/assessment/graphs/testCalculator'
-import getSurvey from '../src/features/assessment/surveys/totalsurvey'
 
-// Build a complete assessment state using the real survey question names
-function buildAnswerValues(defaultValue: number | null = 0): Record<string, number | null> {
-  const survey = getSurvey()
-  const values: Record<string, number | null> = {}
-  survey.pages.forEach((page: any) => {
-    ;(page.elements || []).forEach((panel: any) => {
-      ;(panel.elements || []).forEach((q: any) => {
-        values[q.name] = defaultValue
-      })
-    })
-  })
+// Build a complete assessment state with all 90 questions answered
+function buildAnswerValues(defaultValue = 0) {
+  const values = {}
+  for (let i = 1; i <= 90; i++) {
+    values[`question${i}`] = defaultValue
+  }
   return values
 }
 
-const SURVEY = getSurvey()
-const TOTAL_QUESTIONS = (() => {
-  let n = 0
-  SURVEY.pages.forEach((p: any) =>
-    (p.elements || []).forEach((panel: any) =>
-      (panel.elements || []).forEach(() => n++)
-    )
-  )
-  return n
-})()
-const TOTAL_PANELS = SURVEY.pages.reduce(
-  (acc: number, p: any) => acc + (p.elements || []).length,
-  0
-)
-const TOTAL_PAGES = SURVEY.pages.length
-
 describe('assessmentCalculator', () => {
   describe('constructor', () => {
-    it('initialises with correct number of business function names', () => {
+    it('initialises with correct business function names', () => {
       const calc = new assessmentCalculator(buildAnswerValues())
-      expect(calc.businessFunctionNames).toHaveLength(TOTAL_PAGES)
+      expect(calc.businessFunctionNames).toEqual([
+        'Governance', 'Design', 'Implementation', 'Verification', 'Operations'
+      ])
     })
 
-    it('initialises with AISVS control names (Control 1 … Control 14)', () => {
+    it('initialises overall score as null', () => {
       const calc = new assessmentCalculator(buildAnswerValues())
-      expect(calc.businessFunctionNames[0]).toBe('Control 1')
-      expect(calc.businessFunctionNames[TOTAL_PAGES - 1]).toBe(`Control ${TOTAL_PAGES}`)
-    })
-
-    it('initialises overall score as 0 before computeResults', () => {
-      const calc = new assessmentCalculator(buildAnswerValues())
-      // overallScore starts at 0 (set in constructor before computeResults)
-      expect(typeof calc.overallScore).toBe('number')
+      expect(calc.overallScore).toBeNull()
     })
 
     it('initialises response count keys', () => {
@@ -55,6 +28,26 @@ describe('assessmentCalculator', () => {
       expect(Object.keys(calc.responseCount)).toEqual([
         'No', 'Yes, for some', 'Yes, for most', 'Yes, for all'
       ])
+    })
+  })
+
+  describe('getAnswerMap', () => {
+    it('returns a Map with 6 entries starting at the given question number', () => {
+      const values = buildAnswerValues(0.5)
+      const calc = new assessmentCalculator(values)
+      const map = calc.getAnswerMap(1)
+      expect(map.size).toBe(6)
+      expect(map.has('question1')).toBe(true)
+      expect(map.has('question6')).toBe(true)
+      expect(map.has('question7')).toBe(false)
+    })
+
+    it('maps to the correct answer values', () => {
+      const values = buildAnswerValues()
+      values['question7'] = 1
+      const calc = new assessmentCalculator(values)
+      const map = calc.getAnswerMap(7)
+      expect(map.get('question7')).toBe(1)
     })
   })
 
@@ -109,23 +102,24 @@ describe('assessmentCalculator', () => {
       expect(calc.overallScore).toBeGreaterThan(0)
     })
 
-    it('produces the correct number of practice scores (one per panel)', () => {
+    it('produces exactly 15 practice scores', () => {
       const calc = new assessmentCalculator(buildAnswerValues(0.5))
       calc.computeResults()
-      expect(calc.practiceScores).toHaveLength(TOTAL_PANELS)
+      expect(calc.practiceScores).toHaveLength(15)
     })
 
-    it('produces exactly 14 business function scores (one per AISVS control)', () => {
+    it('produces exactly 5 business function scores', () => {
       const calc = new assessmentCalculator(buildAnswerValues(0.5))
       calc.computeResults()
-      expect(calc.businessFunctionScores).toHaveLength(TOTAL_PAGES)
+      expect(calc.businessFunctionScores).toHaveLength(5)
     })
 
-    it('populates practice names from sammModel (AISVS panel names)', () => {
+    it('populates practice names from sammModel', () => {
       const calc = new assessmentCalculator(buildAnswerValues(1))
       calc.computeResults()
-      expect(calc.practiceNames).toContain('C1.1 Training Data Origin & Traceability')
-      expect(calc.practiceNames).toContain('C14.1 Kill-Switch & Override Mechanisms')
+      expect(calc.practiceNames).toContain('Strategy and Metrics')
+      expect(calc.practiceNames).toContain('Threat Assessment')
+      expect(calc.practiceNames).toContain('Incident Management')
     })
 
     it('maximum overall score is 3 when all questions answered with 1', () => {
@@ -137,7 +131,8 @@ describe('assessmentCalculator', () => {
     it('accumulates response counts correctly for all-zero answers', () => {
       const calc = new assessmentCalculator(buildAnswerValues(0))
       calc.computeResults()
-      expect(calc.responseCount['No']).toBe(TOTAL_QUESTIONS)
+      // 90 questions, all zero → all 90 should count as "No"
+      expect(calc.responseCount['No']).toBe(90)
       expect(calc.responseCount['Yes, for all']).toBe(0)
     })
 

@@ -10,21 +10,21 @@ import {
 // ── Mocks ────────────────────────────────────────────────────────────────────
 
 jest.mock('html-to-image', () => ({ toCanvas: jest.fn() }));
-jest.mock('jspdf', () => ({ jsPDF: jest.fn() }));
+jest.mock('jspdf',         () => ({ jsPDF:    jest.fn() }));
 
 import { toCanvas } from 'html-to-image';
-import { jsPDF } from 'jspdf';
+import { jsPDF }    from 'jspdf';
 
 // ── DOM helpers ───────────────────────────────────────────────────────────────
 
-const DATA_URL = 'data:image/jpeg;base64,TESTPDF';
-const CANVAS_PNG = 'data:image/png;base64,CHARTPNG';
+const DATA_URL    = 'data:image/jpeg;base64,TESTPDF';
+const CANVAS_PNG  = 'data:image/png;base64,CHARTPNG';
 
 /** Background-colour pixel data (r=15 g=17 b=26 a=255) for `width` pixels. */
 function bgPixels(width) {
     const data = new Uint8ClampedArray(width * 4);
     for (let i = 0; i < data.length; i += 4) {
-        data[i] = 15; data[i + 1] = 17; data[i + 2] = 26; data[i + 3] = 255;
+        data[i] = 15; data[i+1] = 17; data[i+2] = 26; data[i+3] = 255;
     }
     return { data };
 }
@@ -39,7 +39,7 @@ function fgPixels(width) {
  */
 function makeElement(scrollWidth = 1000, scrollHeight = 2000) {
     const el = document.createElement('div');
-    Object.defineProperty(el, 'scrollWidth', { value: scrollWidth, configurable: true });
+    Object.defineProperty(el, 'scrollWidth',  { value: scrollWidth,  configurable: true });
     Object.defineProperty(el, 'scrollHeight', { value: scrollHeight, configurable: true });
     el.getBoundingClientRect = () => ({ left: 50, top: 100, width: scrollWidth, height: scrollHeight });
     return el;
@@ -52,7 +52,7 @@ function makeCanvas({ left = 100, top = 200, width = 400, height = 300 } = {}) {
     const canvas = document.createElement('canvas');
     canvas.toDataURL = jest.fn(() => CANVAS_PNG);
     canvas.getBoundingClientRect = () => ({ left, top, width, height });
-    Object.defineProperty(canvas, 'offsetWidth', { value: width, configurable: true });
+    Object.defineProperty(canvas, 'offsetWidth',  { value: width,  configurable: true });
     Object.defineProperty(canvas, 'offsetHeight', { value: height, configurable: true });
     return canvas;
 }
@@ -61,21 +61,21 @@ function makePdfInstance() {
     return {
         internal: { pageSize: { getWidth: () => 210, getHeight: () => 297 } },
         addImage: jest.fn(),
-        addPage: jest.fn(),
-        save: jest.fn(),
+        addPage:  jest.fn(),
+        save:     jest.fn(),
     };
 }
 
 /** A <canvas>-like object with a 2D context spy. */
 function makePageCanvas(width = 2000, height = 4000) {
-    const drawImage = jest.fn();
+    const drawImage  = jest.fn();
     const getImageData = jest.fn(() => bgPixels(width));   // returns background rows
     return {
         width,
         height,
         getContext: jest.fn(() => ({ drawImage, getImageData })),
-        toDataURL: jest.fn(() => DATA_URL),
-        _drawImage: drawImage,
+        toDataURL:  jest.fn(() => DATA_URL),
+        _drawImage:   drawImage,
         _getImageData: getImageData,
     };
 }
@@ -139,7 +139,7 @@ describe('prepareForCapture', () => {
 
     it('processes child elements as well as the root', () => {
         const parent = document.createElement('div');
-        const child = document.createElement('span');
+        const child  = document.createElement('span');
         parent.appendChild(child);
 
         const orig = window.getComputedStyle;
@@ -172,7 +172,7 @@ describe('hidePrintExcluded', () => {
     });
 
     it('sets display:none on .no-print elements', () => {
-        const el = document.createElement('div');
+        const el  = document.createElement('div');
         const btn = document.createElement('button');
         btn.className = 'no-print';
         el.appendChild(btn);
@@ -182,9 +182,9 @@ describe('hidePrintExcluded', () => {
     });
 
     it('restores the original display value after calling restore', () => {
-        const el = document.createElement('div');
+        const el  = document.createElement('div');
         const btn = document.createElement('button');
-        btn.className = 'no-print';
+        btn.className     = 'no-print';
         btn.style.display = 'inline-block';
         el.appendChild(btn);
 
@@ -195,7 +195,7 @@ describe('hidePrintExcluded', () => {
     });
 
     it('restores empty display string when element had no inline display', () => {
-        const el = document.createElement('div');
+        const el  = document.createElement('div');
         const btn = document.createElement('button');
         btn.className = 'no-print';
         el.appendChild(btn);
@@ -206,7 +206,7 @@ describe('hidePrintExcluded', () => {
     });
 
     it('hides multiple .no-print elements', () => {
-        const el = document.createElement('div');
+        const el   = document.createElement('div');
         const btn1 = document.createElement('button');
         const btn2 = document.createElement('button');
         btn1.className = 'no-print';
@@ -220,7 +220,7 @@ describe('hidePrintExcluded', () => {
     });
 
     it('does not hide elements without .no-print class', () => {
-        const el = document.createElement('div');
+        const el      = document.createElement('div');
         const visible = document.createElement('button');
         visible.className = 'some-other-class';
         el.appendChild(visible);
@@ -246,7 +246,7 @@ describe('collectChartSnapshots', () => {
     });
 
     it('records the canvas dataUrl', () => {
-        const el = makeElement();
+        const el     = makeElement();
         const canvas = makeCanvas();
         el.appendChild(canvas);
         const [snap] = collectChartSnapshots(el);
@@ -255,7 +255,7 @@ describe('collectChartSnapshots', () => {
 
     it('calculates position relative to the parent element', () => {
         // parent left=50, top=100  |  canvas left=100, top=200  → rel=(50,100)
-        const el = makeElement(); // getBoundingClientRect → left:50, top:100
+        const el     = makeElement(); // getBoundingClientRect → left:50, top:100
         const canvas = makeCanvas({ left: 100, top: 200, width: 400, height: 300 });
         el.appendChild(canvas);
 
@@ -266,7 +266,7 @@ describe('collectChartSnapshots', () => {
     });
 
     it('scales width and height by PIXEL_RATIO (×2)', () => {
-        const el = makeElement();
+        const el     = makeElement();
         const canvas = makeCanvas({ left: 50, top: 100, width: 400, height: 300 });
         el.appendChild(canvas);
 
@@ -276,7 +276,7 @@ describe('collectChartSnapshots', () => {
     });
 
     it('skips tainted canvases (toDataURL throws)', () => {
-        const el = makeElement();
+        const el     = makeElement();
         const canvas = makeCanvas();
         canvas.toDataURL = jest.fn(() => { throw new Error('tainted'); });
         el.appendChild(canvas);
@@ -285,10 +285,10 @@ describe('collectChartSnapshots', () => {
     });
 
     it('skips the tainted canvas but keeps valid ones', () => {
-        const el = makeElement();
-        const bad = makeCanvas();
+        const el      = makeElement();
+        const bad     = makeCanvas();
         bad.toDataURL = jest.fn(() => { throw new Error('tainted'); });
-        const good = makeCanvas();
+        const good    = makeCanvas();
         el.appendChild(bad);
         el.appendChild(good);
 
@@ -318,17 +318,17 @@ describe('compositeCharts', () => {
     });
 
     it('calls drawImage for each snapshot', async () => {
-        const pc = makePageCanvas();
+        const pc        = makePageCanvas();
         const snapshots = [
-            { dataUrl: CANVAS_PNG, x: 0, y: 0, w: 100, h: 100 },
-            { dataUrl: CANVAS_PNG, x: 200, y: 300, w: 50, h: 50 },
+            { dataUrl: CANVAS_PNG, x: 0,   y: 0,   w: 100, h: 100 },
+            { dataUrl: CANVAS_PNG, x: 200, y: 300, w: 50,  h: 50  },
         ];
         await compositeCharts(pc, snapshots);
         expect(pc._drawImage).toHaveBeenCalledTimes(2);
     });
 
     it('passes correct coordinates to drawImage', async () => {
-        const pc = makePageCanvas();
+        const pc   = makePageCanvas();
         const snap = { dataUrl: CANVAS_PNG, x: 10, y: 20, w: 400, h: 300 };
         await compositeCharts(pc, [snap]);
 
@@ -374,7 +374,7 @@ describe('calculatePageBreaks', () => {
         // All pixels are foreground (white)
         const getImageData = jest.fn(() => fgPixels(2000));
         const pc = {
-            width: 2000,
+            width:  2000,
             height: 6000,
             getContext: jest.fn(() => ({ getImageData })),
         };
@@ -384,8 +384,8 @@ describe('calculatePageBreaks', () => {
     });
 
     it('each subsequent break is spaced approximately one page height apart', () => {
-        const pc = makePageCanvas(2000, 10000);
-        const pgH = 2916;
+        const pc     = makePageCanvas(2000, 10000);
+        const pgH    = 2916;
         const breaks = calculatePageBreaks(pc, pgH);
         for (let i = 1; i < breaks.length; i++) {
             const gap = breaks[i] - breaks[i - 1];
@@ -404,7 +404,7 @@ describe('exportReportToPdf', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        pdf = makePdfInstance();
+        pdf        = makePdfInstance();
         pageCanvas = makePageCanvas(2000, 4000);
         jsPDF.mockImplementation(() => pdf);
         toCanvas.mockResolvedValue(pageCanvas);
@@ -415,10 +415,10 @@ describe('exportReportToPdf', () => {
         jest.spyOn(document, 'createElement').mockImplementation(tag => {
             if (tag === 'canvas') {
                 return {
-                    width: 0,
-                    height: 0,
+                    width:      0,
+                    height:     0,
                     getContext: jest.fn(() => sliceCtx),
-                    toDataURL: jest.fn(() => DATA_URL),
+                    toDataURL:  jest.fn(() => DATA_URL),
                 };
             }
             return origCreate(tag);

@@ -83,7 +83,7 @@ const Mysurvey: React.FC<MySurveyProps> = (prop) => {
 
     const [surveyState, setSurvey]         = useState<Model>(survey);
     const [display, setDisplay]             = useState(false);
-    const [pageState, setPageState]         = useState('Control 1');
+    const [pageState, setPageState]         = useState('Governance');
     const [dropDownState, setDropDownState] = useState(false);
     const [isDetailsPage, setDetailsPage]   = useState(false);
     const registeredSurveyRef = useRef<Model | null>(null);
@@ -140,8 +140,6 @@ const Mysurvey: React.FC<MySurveyProps> = (prop) => {
         const userStateData = JSON.parse(sessionStorage.getItem('userState')!);
         if (navbar === 'Details') {
             setDetailsPage(true);
-        } else if (!navbar) {
-            sessionStorage.setItem('navbarState', 'Control 1');
         }
 
         if (isChangedPage(userStateData['page'])) {
@@ -166,7 +164,7 @@ const Mysurvey: React.FC<MySurveyProps> = (prop) => {
                 fileName = data['Company Name'] + '-' + ts + '.json';
             }
         } else {
-            fileName = 'AISeVS-Assessment-' + ts + '.json';
+            fileName = 'SAMMAssessmentResponses-' + ts + '.json';
         }
         a.setAttribute('download', fileName);
         a.click();
@@ -184,31 +182,29 @@ const Mysurvey: React.FC<MySurveyProps> = (prop) => {
         setSurvey(survey);
     }
 
-    const AISVS_PAGES = [
-        'Control 1', 'Control 2', 'Control 3', 'Control 4', 'Control 5',
-        'Control 6', 'Control 7', 'Control 8', 'Control 9', 'Control 10',
-        'Control 11', 'Control 12', 'Control 13', 'Control 14', 'Details'
-    ];
-
     function changePage(pageName: string) {
         if (pageName !== 'next') {
             survey.currentPage = survey.getPageByName(pageName);
         } else {
             const currentPageName = pageStateRef.current;
-            const currentIdx = AISVS_PAGES.indexOf(currentPageName);
-
-            if (currentPageName === 'Details') {
-                sessionStorage.setItem('freshCompletion', 'true');
-                router.push('/results');
-                return;
+            let nextPageName: string;
+            switch (currentPageName) {
+                case 'Governance':     nextPageName = 'Design';         break;
+                case 'Design':         nextPageName = 'Implementation'; break;
+                case 'Implementation': nextPageName = 'Verification';   break;
+                case 'Verification':   nextPageName = 'Operations';     break;
+                case 'Operations':
+                    nextPageName = 'Details';
+                    setDetailsPage(true);
+                    break;
+                case 'Details':
+                    sessionStorage.setItem('freshCompletion', 'true');
+                    router.push('/results');
+                    return;
+                default:
+                    console.log('Unknown page:', currentPageName);
+                    return;
             }
-
-            const nextPageName = currentIdx >= 0 && currentIdx < AISVS_PAGES.length - 1
-                ? AISVS_PAGES[currentIdx + 1]
-                : 'Details';
-
-            if (nextPageName === 'Details') setDetailsPage(true);
-
             survey.currentPage = survey.getPageByName(nextPageName);
             setPageState(nextPageName);
             sessionStorage.setItem('navbarState', nextPageName);
@@ -418,6 +414,7 @@ const Mysurvey: React.FC<MySurveyProps> = (prop) => {
         const answer_value = options.value;
         assessmentStateData[question_answered] = answer_value;
         sessionStorage.setItem('assessmentState', JSON.stringify(assessmentStateData));
+        console.log(`Saved: ${question_answered} = ${answer_value}`);
     });
 
     function clearAnswers() {

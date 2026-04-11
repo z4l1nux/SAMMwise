@@ -14,7 +14,7 @@ interface SurveyNavProps {
 }
 
 const SurveyNav: React.FC<SurveyNavProps> = (props) => {
-  const t = useTranslations('assessment.controls');
+  const t = useTranslations('assessment.domains');
   const [display, setDisplay] = useState(false);
 
   useEffect(() => {
@@ -29,21 +29,12 @@ const SurveyNav: React.FC<SurveyNavProps> = (props) => {
   }, [display]);
 
   const buttonState: ButtonItem[] = [
-    { name: 'Control 1',  displayName: t('c01'), state: true  },
-    { name: 'Control 2',  displayName: t('c02'), state: false },
-    { name: 'Control 3',  displayName: t('c03'), state: false },
-    { name: 'Control 4',  displayName: t('c04'), state: false },
-    { name: 'Control 5',  displayName: t('c05'), state: false },
-    { name: 'Control 6',  displayName: t('c06'), state: false },
-    { name: 'Control 7',  displayName: t('c07'), state: false },
-    { name: 'Control 8',  displayName: t('c08'), state: false },
-    { name: 'Control 9',  displayName: t('c09'), state: false },
-    { name: 'Control 10', displayName: t('c10'), state: false },
-    { name: 'Control 11', displayName: t('c11'), state: false },
-    { name: 'Control 12', displayName: t('c12'), state: false },
-    { name: 'Control 13', displayName: t('c13'), state: false },
-    { name: 'Control 14', displayName: t('c14'), state: false },
-    { name: 'Details',    displayName: t('details'), state: false },
+    { name: 'Governance',     displayName: t('governance'),     state: true },
+    { name: 'Design',         displayName: t('design'),         state: false },
+    { name: 'Implementation', displayName: t('implementation'), state: false },
+    { name: 'Verification',   displayName: t('verification'),   state: false },
+    { name: 'Operations',     displayName: t('operations'),     state: false },
+    { name: 'Details',        displayName: t('details'),        state: false },
   ];
 
   function updateButtonState(index: number) {
@@ -73,7 +64,7 @@ const SurveyNav: React.FC<SurveyNavProps> = (props) => {
 
   return (
     <>
-      <nav className="flex justify-center items-center gap-2 py-5 px-5 flex-wrap">
+      <nav className="flex justify-center items-center gap-4 py-5 px-5 flex-wrap">
         {buttonState.map((btn, i) => (
           <NavButton key={btn.name} name={btn.displayName} state={btn.state} onClick={() => updateButtonState(i)} />
         ))}

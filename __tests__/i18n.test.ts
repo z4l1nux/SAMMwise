@@ -82,12 +82,12 @@ describe('i18n message files', () => {
       })
     })
 
-    it('has all 14 AISVS control labels', () => {
-      for (let i = 1; i <= 14; i++) {
-        const key = `Control ${i}`
-        expect(en.charts.businessFunctions[key]).toBeDefined()
-        expect(pt.charts.businessFunctions[key]).toBeDefined()
-      }
+    it('has all five business function labels', () => {
+      const bfs = ['Governance', 'Design', 'Implementation', 'Verification', 'Operations']
+      bfs.forEach(bf => {
+        expect(en.charts.businessFunctions[bf]).toBeDefined()
+        expect(pt.charts.businessFunctions[bf]).toBeDefined()
+      })
     })
 
     it('has all 15 practice labels', () => {
