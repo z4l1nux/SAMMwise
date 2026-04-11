@@ -1,7 +1,7 @@
 
 services:
     nextjs:
-        container_name: SAMMwise-app
+        container_name: sammwise-app
         build:
             context: .
             dockerfile: docker/Dockerfile
