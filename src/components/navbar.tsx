@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 
 const Navbar = () => {
     const t = useTranslations('nav');
-    const tA11y = useTranslations('a11y');
 
     return (
         <motion.nav
@@ -16,7 +15,7 @@ const Navbar = () => {
             className="sticky top-6 z-50 mx-auto w-11/12 max-w-7xl rounded-2xl border border-white/10 bg-white/5 px-6 py-4 backdrop-blur-md shadow-2xl flex justify-between items-center"
         >
             <div className="flex items-center space-x-3">
-                <Image src="/logo.png" width={40} height={40} alt={tA11y('logoAlt')} priority style={{ width: 'auto', height: 'auto' }} className="drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]" />
+                <Image src="/logo.png" width={40} height={40} alt="SAMMwise Logo" priority style={{ width: 'auto', height: 'auto' }} className="drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]"/>
                 <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent tracking-wide">
                     SAMMwise
                 </span>

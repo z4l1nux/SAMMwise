@@ -11,7 +11,6 @@ interface InputFileProps {
 
 const InputFile = (props: InputFileProps) => {
     const t = useTranslations('upload');
-    const tA11y = useTranslations('a11y');
     const [uploadState,   setUploadState]   = useState(false);
     const [uploadMessage, setUploadMessage] = useState('');
     const [uploadColour,  setUploadColour]  = useState<'default' | 'red'>('default');
@@ -78,7 +77,7 @@ const InputFile = (props: InputFileProps) => {
                             src={uploadState ? '/uploadSuccessful.png' : '/dragndrop.png'}
                             width={75}
                             height={75}
-                            alt={uploadState ? tA11y('uploadSuccess') : tA11y('dragAndDrop')}
+                            alt={uploadState ? 'Upload successful' : 'Drag and drop file'}
                         />
                     </div>
                 </div>
