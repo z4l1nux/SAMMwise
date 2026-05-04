@@ -15,6 +15,9 @@ jest.mock('jspdf',         () => ({ jsPDF:    jest.fn() }));
 import { toCanvas } from 'html-to-image';
 import { jsPDF }    from 'jspdf';
 
+const mockedToCanvas = jest.mocked(toCanvas);
+const mockedJsPDF    = jest.mocked(jsPDF);
+
 // ── DOM helpers ───────────────────────────────────────────────────────────────
 
 const DATA_URL    = 'data:image/jpeg;base64,TESTPDF';
@@ -41,7 +44,7 @@ function makeElement(scrollWidth = 1000, scrollHeight = 2000) {
     const el = document.createElement('div');
     Object.defineProperty(el, 'scrollWidth',  { value: scrollWidth,  configurable: true });
     Object.defineProperty(el, 'scrollHeight', { value: scrollHeight, configurable: true });
-    el.getBoundingClientRect = () => ({ left: 50, top: 100, width: scrollWidth, height: scrollHeight });
+    el.getBoundingClientRect = () => ({ left: 50, top: 100, width: scrollWidth, height: scrollHeight }) as DOMRect;
     return el;
 }
 
@@ -51,7 +54,7 @@ function makeElement(scrollWidth = 1000, scrollHeight = 2000) {
 function makeCanvas({ left = 100, top = 200, width = 400, height = 300 } = {}) {
     const canvas = document.createElement('canvas');
     canvas.toDataURL = jest.fn(() => CANVAS_PNG);
-    canvas.getBoundingClientRect = () => ({ left, top, width, height });
+    canvas.getBoundingClientRect = () => ({ left, top, width, height }) as DOMRect;
     Object.defineProperty(canvas, 'offsetWidth',  { value: width,  configurable: true });
     Object.defineProperty(canvas, 'offsetHeight', { value: height, configurable: true });
     return canvas;
@@ -77,6 +80,9 @@ function makePageCanvas(width = 2000, height = 4000) {
         toDataURL:  jest.fn(() => DATA_URL),
         _drawImage:   drawImage,
         _getImageData: getImageData,
+    } as unknown as HTMLCanvasElement & {
+        _drawImage: jest.Mock;
+        _getImageData: jest.Mock;
     };
 }
 
@@ -108,14 +114,14 @@ describe('prepareForCapture', () => {
         const orig = window.getComputedStyle;
         jest.spyOn(window, 'getComputedStyle').mockImplementation(target => {
             if (target === el) {
-                return { color: 'rgb(0,0,0)', backdropFilter: 'blur(8px)', webkitBackdropFilter: 'blur(8px)' };
+                return { color: 'rgb(0,0,0)', backdropFilter: 'blur(8px)', webkitBackdropFilter: 'blur(8px)' } as unknown as CSSStyleDeclaration;
             }
             return orig(target);
         });
 
         prepareForCapture(el);
         expect(el.style.backdropFilter).toBe('none');
-        expect(el.style.webkitBackdropFilter).toBe('none');
+        expect((el.style as any).webkitBackdropFilter).toBe('none');
         jest.restoreAllMocks();
     });
 
@@ -126,7 +132,7 @@ describe('prepareForCapture', () => {
         const orig = window.getComputedStyle;
         jest.spyOn(window, 'getComputedStyle').mockImplementation(target => {
             if (target === el) {
-                return { color: 'rgb(0,0,0)', backdropFilter: 'blur(4px)', webkitBackdropFilter: '' };
+                return { color: 'rgb(0,0,0)', backdropFilter: 'blur(4px)', webkitBackdropFilter: '' } as unknown as CSSStyleDeclaration;
             }
             return orig(target);
         });
@@ -145,7 +151,7 @@ describe('prepareForCapture', () => {
         const orig = window.getComputedStyle;
         jest.spyOn(window, 'getComputedStyle').mockImplementation(target => {
             if (target === child) {
-                return { color: 'rgb(200,200,200)', backdropFilter: 'none', webkitBackdropFilter: 'none' };
+                return { color: 'rgb(200,200,200)', backdropFilter: 'none', webkitBackdropFilter: 'none' } as unknown as CSSStyleDeclaration;
             }
             return orig(target);
         });
@@ -304,9 +310,9 @@ describe('compositeCharts', () => {
     beforeEach(() => {
         // Make Image load synchronously in jsdom
         jest.spyOn(global, 'Image').mockImplementation(() => {
-            const img = {};
+            const img: { onload?: () => void } = {};
             setTimeout(() => img.onload && img.onload(), 0);
-            return img;
+            return img as unknown as HTMLImageElement;
         });
     });
 
@@ -377,7 +383,7 @@ describe('calculatePageBreaks', () => {
             width:  2000,
             height: 6000,
             getContext: jest.fn(() => ({ getImageData })),
-        };
+        } as unknown as HTMLCanvasElement;
         const [bp] = calculatePageBreaks(pc, 2916);
         // Should fall back to targetY (2916) since no bg row exists
         expect(bp).toBe(2916);
@@ -406,8 +412,8 @@ describe('exportReportToPdf', () => {
         jest.clearAllMocks();
         pdf        = makePdfInstance();
         pageCanvas = makePageCanvas(2000, 4000);
-        jsPDF.mockImplementation(() => pdf);
-        toCanvas.mockResolvedValue(pageCanvas);
+        mockedJsPDF.mockImplementation(() => pdf);
+        mockedToCanvas.mockResolvedValue(pageCanvas);
 
         // Mock slice canvases created inside exportReportToPdf
         sliceCtx = { drawImage: jest.fn() };
@@ -467,7 +473,7 @@ describe('exportReportToPdf', () => {
     it('does not call addPage when content fits one page', async () => {
         // pageCanvas: 2000×500px → fits within one A4 page
         pageCanvas = makePageCanvas(2000, 500);
-        toCanvas.mockResolvedValue(pageCanvas);
+        mockedToCanvas.mockResolvedValue(pageCanvas);
 
         await exportReportToPdf(makeElement());
         expect(pdf.addPage).not.toHaveBeenCalled();
@@ -502,7 +508,7 @@ describe('exportReportToPdf', () => {
 
     it('adds extra pages for a tall canvas', async () => {
         pageCanvas = makePageCanvas(2000, 16000);
-        toCanvas.mockResolvedValue(pageCanvas);
+        mockedToCanvas.mockResolvedValue(pageCanvas);
 
         await exportReportToPdf(makeElement());
         expect(pdf.addPage).toHaveBeenCalled();
@@ -510,7 +516,7 @@ describe('exportReportToPdf', () => {
 
     it('calls addImage once per page', async () => {
         pageCanvas = makePageCanvas(2000, 16000);
-        toCanvas.mockResolvedValue(pageCanvas);
+        mockedToCanvas.mockResolvedValue(pageCanvas);
 
         await exportReportToPdf(makeElement());
         const total = pdf.addPage.mock.calls.length + 1;
@@ -519,7 +525,7 @@ describe('exportReportToPdf', () => {
 
     it('each page section starts at PAGE_MARGIN_MM from the top', async () => {
         pageCanvas = makePageCanvas(2000, 16000);
-        toCanvas.mockResolvedValue(pageCanvas);
+        mockedToCanvas.mockResolvedValue(pageCanvas);
 
         await exportReportToPdf(makeElement());
         pdf.addImage.mock.calls.forEach(call => {
@@ -547,7 +553,7 @@ describe('exportReportToPdf', () => {
     // ── Error propagation ─────────────────────────────────────────────────────
 
     it('propagates toCanvas errors to the caller', async () => {
-        toCanvas.mockRejectedValue(new Error('layout capture failed'));
+        mockedToCanvas.mockRejectedValue(new Error('layout capture failed'));
         await expect(exportReportToPdf(makeElement())).rejects.toThrow('layout capture failed');
     });
 });

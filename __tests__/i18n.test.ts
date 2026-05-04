@@ -2,6 +2,7 @@
  * i18n completeness tests — ensures every key in en.json has a Portuguese counterpart
  * and validates critical translation keys exist.
  */
+export {}
 
 const en = require('../src/messages/en.json')
 const pt = require('../src/messages/pt.json')

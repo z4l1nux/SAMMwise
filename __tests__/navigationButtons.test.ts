@@ -3,6 +3,7 @@
  * Validates that panel navigation button text comes from i18n keys
  * and that the page-level "Next Page" / "Complete" buttons toggle correctly.
  */
+export {}
 
 // surveytypeone.js uses DOM manipulation via survey.onAfterRenderPanel.
 // We test the logic in isolation rather than rendering the full component.
