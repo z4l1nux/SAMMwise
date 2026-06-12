@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-12
+- feat(maturity): per-practice **Maturity Targets** page (`/targets`) — set a 0–3 goal per SAMM practice, stored in `localStorage`, cross-assessment
+- feat(maturity): **Gap Analysis** on the results page — overall KPIs, current-vs-target radar, "largest gaps" bar chart, and a shortfall table (exports with the PDF)
+- feat(maturity): **Action Plans** page (`/action-plans`) — CRUD remediation tasks (practice, owner, due date, status, priority, description) with overdue highlighting and filters
+- feat(ai): LLM analysis prompt now incorporates the targets/gap summary, re-framing "Priority Improvements" around the largest gaps
+- feat(i18n): new `maturity` namespace + `nav`/`meta` keys in EN and PT (parity preserved)
+- test: +45 unit tests for catalogue / targets / gap analysis / action plans (123 → 168)
+- docs: SDSD spec `specs/2026-06-12-maturity-targets-gap-plans/`
+
 ## 2026-04-16
 - chore(deps): bump dompurify from 3.3.3 to 3.4.0
 

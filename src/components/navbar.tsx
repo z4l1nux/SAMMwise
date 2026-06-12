@@ -26,6 +26,8 @@ const Navbar = () => {
                 <Link href="/about" className="text-slate-300 hover:text-cyan-400 transition-colors">{t('about')}</Link>
                 <Link href="/assessment" className="text-slate-300 hover:text-cyan-400 transition-colors">{t('assessment')}</Link>
                 <Link href="/results" className="text-slate-300 hover:text-cyan-400 transition-colors">{t('results')}</Link>
+                <Link href="/targets" className="text-slate-300 hover:text-cyan-400 transition-colors">{t('targets')}</Link>
+                <Link href="/action-plans" className="text-slate-300 hover:text-cyan-400 transition-colors">{t('plans')}</Link>
                 <Link href="/ai" className="text-slate-300 hover:text-cyan-400 transition-colors">{t('ai')}</Link>
             </div>
 

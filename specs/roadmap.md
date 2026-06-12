@@ -61,6 +61,16 @@ Próxima fase a ser definida em sessão futura.
 - [x] AGENTS.md (fonte única de regras) + CLAUDE.md (export)
 - [x] CHANGELOG.md inicial
 
+## Phase 10 — Maturity Targets, Gap Analysis & Action Plans ✅
+- [x] Camada de domínio em `features/maturity/`: `practiceCatalog.ts` (fonte única das 5 BF × 3 práticas), `targets.ts`, `gapAnalysis.ts`, `actionPlans.ts`
+- [x] Página `/targets` — meta 0–3 por prática (slider + notes + presets), persistida em `localStorage` (`sammwise_targets`)
+- [x] Gap analysis em `/results` — KPIs, radar atual×meta, barras dos maiores gaps, tabela; entra no export PDF
+- [x] Página `/action-plans` — CRUD de tarefas de remediação (status/prioridade/owner/prazo), badge de atraso e filtros (`sammwise_action_plans`)
+- [x] Prompt de IA enriquecido com targets/gaps (prioriza os maiores gaps)
+- [x] i18n: namespace `maturity` + chaves `nav`/`meta` (paridade EN/PT)
+- [x] +45 testes unitários (123 → 168); guard de drift do catálogo vs `assessmentCalculator`
+- [x] Spec `specs/2026-06-12-maturity-targets-gap-plans/`
+
 ## Próximas Fases
 
 Definidas em sessão futura. Candidatas levantadas mas não priorizadas:

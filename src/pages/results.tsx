@@ -19,6 +19,7 @@ import DonutGraph from '../features/assessment/graphs/donutgraph';
 import SpiderGraph from '../features/assessment/graphs/spidergraph';
 import Bargraph from '../features/assessment/graphs/bargraph';
 import InputFile from '../components/inputfile';
+import GapAnalysisSection from '../features/maturity/GapAnalysisSection';
 import Dataset from '../features/assessment/graphs/datasetprops';
 import assessmentCalculator from '../features/assessment/graphs/testCalculator';
 import SurveyButton from '../components/buttons/surveybuttons';
@@ -430,6 +431,10 @@ const Results = () => {
                             </div>
                         </div>
                     </SectionCard>
+                )}
+
+                {display && scorePayload && (
+                    <GapAnalysisSection scorePayload={scorePayload} />
                 )}
 
                 {display && scorePayload && (

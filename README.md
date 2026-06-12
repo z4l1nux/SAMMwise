@@ -142,8 +142,19 @@ See [I18N Documentation](docs/I18N.md) for details on adding new languages.
 
 - **Score Interpretation** - Maturity band legend (Initial / Managed / Defined / Optimized)
 - **Comparison Mode** - Compare current vs. previous assessments
-- **Export Options** - Download results as JSON or PDF
-- **AI Analysis** - Detailed insights and improvement roadmap via LLM
+- **Gap Analysis** - Current-vs-target radar, "largest gaps" bar chart, shortfall table and overall KPIs (shown once you set targets)
+- **Export Options** - Download results as JSON or PDF (gap analysis is included in the PDF)
+- **AI Analysis** - Detailed insights and improvement roadmap via LLM (prioritised around your gaps when targets are set)
+
+### Targets Page (`/targets`)
+- **Per-practice maturity goals** - Set a desired level (0–3, in 0.25 steps) for each of the 15 SAMM practices
+- **Grouped by business function** with sliders, optional rationale notes, and quick presets ("set all to 1/2/3")
+- **Device-local & durable** - Stored in `localStorage` (`sammwise_targets`), shared across assessments — never leaves your device
+
+### Action Plans Page (`/action-plans`)
+- **Remediation tracking** - Create tasks tied to a practice with owner, due date, status and priority
+- **Inline status editing**, overdue highlighting, and filters by practice / status / priority
+- **Device-local & durable** - Stored in `localStorage` (`sammwise_action_plans`)
 
 ### AI Settings Page (`/ai`)
 - **Provider Selection** - Choose from Anthropic, OpenAI, Gemini, or Ollama
@@ -156,9 +167,11 @@ See [I18N Documentation](docs/I18N.md) for details on adding new languages.
 1. **Start Assessment** - Navigate to `/assessment`
 2. **Complete Questions** - Answer questions across all 5 domains and Details
 3. **Save Progress** - Use "Save Responses" to backup your work at any time
-4. **View Results** - Navigate to `/results` to see charts and your maturity score
-5. **AI Analysis** - Configure a provider at `/ai`, then click "Analyze Results"
-6. **Compare** - Upload a previous JSON report to visualize improvements
+4. **Set Targets** - Define your desired maturity per practice at `/targets`
+5. **View Results** - Navigate to `/results` to see charts, your maturity score and the gap to target
+6. **Plan Remediation** - Track the work to close gaps at `/action-plans`
+7. **AI Analysis** - Configure a provider at `/ai`, then click "Analyze Results"
+8. **Compare** - Upload a previous JSON report to visualize improvements
 
 ## 🏗️ Project Structure
 
@@ -168,7 +181,9 @@ sammwise/
 │   ├── pages/                  # Next.js pages (TypeScript)
 │   │   ├── index.tsx           # Home page
 │   │   ├── assessment.tsx      # Assessment survey
-│   │   ├── results.tsx         # Results dashboard
+│   │   ├── results.tsx         # Results dashboard (+ gap analysis)
+│   │   ├── targets.tsx         # Per-practice maturity targets
+│   │   ├── action-plans.tsx    # Remediation action plans
 │   │   ├── ai.tsx              # AI settings
 │   │   ├── about.tsx           # About SAMM
 │   │   └── api/                # API proxy routes (LLM)
@@ -176,6 +191,7 @@ sammwise/
 │   │   ├── assessment/         # Survey engine, panels, navigation
 │   │   │   ├── graphs/         # Chart class definitions (.ts)
 │   │   │   └── surveys/        # Survey JSON (panels, pages, translations)
+│   │   ├── maturity/           # Targets, gap analysis & action plans (catalogue + localStorage)
 │   │   ├── results/            # GaugeChart component (.tsx)
 │   │   └── ai-analysis/        # LLM integration (settings, analysis, crypto, prompt)
 │   ├── components/             # Shared UI components (TypeScript)
@@ -188,7 +204,7 @@ sammwise/
 │   ├── types/                  # Shared TypeScript types (index.ts)
 │   ├── messages/               # i18n translation files (en.json, pt.json)
 │   └── styles/                 # Global CSS (Tailwind v4, SurveyJS dark overrides)
-├── __tests__/                  # Jest unit tests (123 tests)
+├── __tests__/                  # Jest unit tests (168 tests)
 └── public/                     # Static assets
 ```
 

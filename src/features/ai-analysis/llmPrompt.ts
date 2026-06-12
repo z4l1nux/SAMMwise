@@ -3,6 +3,8 @@
  */
 
 import type { ScorePayload, PreviousPayload } from '../../types';
+import type { GapSummary } from '../maturity/gapAnalysis';
+import { topGaps } from '../maturity/gapAnalysis';
 
 const PRACTICE_DESCRIPTIONS: Record<string, string> = {
     'Strategy and Metrics':    'Defining security strategy, goals, and metrics to measure progress.',
@@ -25,6 +27,7 @@ const PRACTICE_DESCRIPTIONS: Record<string, string> = {
 interface BuildPromptParams extends ScorePayload {
     previous: PreviousPayload | null;
     locale: string;
+    gaps?: GapSummary | null;
 }
 
 export function buildPrompt({
@@ -38,6 +41,7 @@ export function buildPrompt({
     project,
     previous,
     locale,
+    gaps,
 }: BuildPromptParams): string {
     const lang = locale === 'pt'
         ? 'Respond entirely in Brazilian Portuguese (pt-BR).'
@@ -73,6 +77,22 @@ ${prevBfLines}
 `;
     }
 
+    let gapSection = '';
+    const hasTargets = !!gaps && gaps.coverage.practicesWithTarget > 0;
+    if (hasTargets && gaps) {
+        const gapLines = topGaps(gaps, 10)
+            .map(g => `  • ${g.practice} (${g.bf}): ${g.current.toFixed(2)} → target ${g.target.toFixed(2)} (gap +${g.gap.toFixed(2)})`)
+            .join('\n');
+        gapSection = `
+## Maturity Targets & Gaps
+The organization has set explicit maturity targets for ${gaps.coverage.practicesWithTarget} of ${gaps.coverage.totalPractices} practices.
+Overall: current ${gaps.overall.current.toFixed(2)}/3 → target ${gaps.overall.target.toFixed(2)}/3 (gap ${gaps.overall.gap >= 0 ? '+' : ''}${gaps.overall.gap.toFixed(2)})
+
+Largest shortfalls against target (prioritise these):
+${gapLines || '  • (current scores already meet or exceed every target)'}
+`;
+    }
+
     return `You are an expert OWASP SAMM (Software Assurance Maturity Model) security advisor.
 ${lang}
 
@@ -80,9 +100,9 @@ Analyze the following SAMM assessment results${projectLine ? ` for "${projectLin
 
 1. **Executive Summary** — What the overall score means in practical terms (2–3 sentences).
 2. **Strengths** — Top 3 practices where the organization is doing well and why that matters.
-3. **Priority Improvements** — Top 5 practices with the lowest scores. For each: explain what the low score implies, provide 2–3 concrete actionable improvement steps, and reference industry best practices (NIST, ISO 27001, OWASP, etc.) where relevant.
+3. **Priority Improvements** — ${hasTargets ? 'Focus on the practices with the largest gap to their target (listed below). For each' : 'Top 5 practices with the lowest scores. For each'}: explain what the gap implies, provide 2–3 concrete actionable improvement steps, and reference industry best practices (NIST, ISO 27001, OWASP, etc.) where relevant.
 4. **Quick Wins** — 2–3 actions that could raise the score significantly in the short term.
-5. **Roadmap Suggestion** — A brief 3-phase improvement roadmap (immediate / 3 months / 6 months).
+5. **Roadmap Suggestion** — A brief 3-phase improvement roadmap (immediate / 3 months / 6 months)${hasTargets ? ', sequenced to close the highest-priority gaps first' : ''}.
 ${previous ? '6. **Trend Analysis** — Comment on what improved, what regressed, and what remains stagnant.' : ''}
 
 ---
@@ -99,7 +119,7 @@ ${practiceLines}
 
 ### Response Distribution (${totalAnswers} answers):
 ${distributionLines}
-${comparisonSection}
+${comparisonSection}${gapSection}
 ---
 Keep the response structured with clear headings. Be specific and actionable.`;
 }

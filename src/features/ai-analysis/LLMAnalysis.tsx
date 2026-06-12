@@ -4,6 +4,8 @@ import { Bot, ChevronDown, ChevronUp, Loader } from 'lucide-react';
 import { decryptApiKey } from './llmCrypto';
 import { loadLLMSettings } from './LLMSettings';
 import { buildPrompt } from './llmPrompt';
+import { loadTargets } from '../maturity/targets';
+import { computeGap } from '../maturity/gapAnalysis';
 import type { ScorePayload, PreviousPayload, AnalysisResult } from '../../types';
 
 interface LLMAnalysisProps {
@@ -54,7 +56,13 @@ export default function LLMAnalysis({
                 if (!apiKey) { setError(t('decryptError')); setLoading(false); return; }
             }
 
-            const prompt = buildPrompt({ ...scorePayload, previous, locale });
+            const gaps = computeGap({
+                practiceNames: scorePayload.practiceNames,
+                practiceScores: scorePayload.practiceScores,
+                overallScore: scorePayload.overallScore,
+                targets: loadTargets(),
+            });
+            const prompt = buildPrompt({ ...scorePayload, previous, locale, gaps });
 
             const res = await fetch('/api/llm', {
                 method: 'POST',
