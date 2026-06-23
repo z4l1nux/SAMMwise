@@ -142,16 +142,19 @@ export default function LLMSettings({ onSaved }: LLMSettingsProps) {
 
     const inputStyle: React.CSSProperties = {
         width: '100%', padding: '10px 14px',
-        border: '1px solid #e2e8f0', borderRadius: '8px',
+        background: 'rgba(255,255,255,0.05)',
+        border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px',
+        color: '#e2e8f0',
         fontSize: '14px', boxSizing: 'border-box', outline: 'none',
         fontFamily: 'Poppins, sans-serif',
     };
     const labelStyle: React.CSSProperties = {
         display: 'block', fontWeight: 600, fontSize: '13px',
-        color: '#4a5568', marginBottom: '6px',
+        color: '#a0aec0', marginBottom: '6px',
     };
     const sectionStyle: React.CSSProperties = { marginBottom: '22px' };
     const rowStyle: React.CSSProperties = { display: 'flex', gap: '10px', alignItems: 'flex-end' };
+    const optionStyle: React.CSSProperties = { color: '#e2e8f0', background: '#1e212b' };
 
     return (
         <div style={{ maxWidth: '560px', margin: '0 auto', fontFamily: 'Poppins, sans-serif' }}>
@@ -192,7 +195,7 @@ export default function LLMSettings({ onSaved }: LLMSettingsProps) {
             <div style={sectionStyle}>
                 <label style={labelStyle}>{t('provider')}</label>
                 <select style={inputStyle} value={provider} onChange={e => handleProviderChange(e.target.value as LLMProvider)}>
-                    {PROVIDERS.map(p => <option key={p.id} value={p.id}>{p.label}</option>)}
+                    {PROVIDERS.map(p => <option key={p.id} value={p.id} style={optionStyle}>{p.label}</option>)}
                 </select>
             </div>
 
@@ -237,8 +240,8 @@ export default function LLMSettings({ onSaved }: LLMSettingsProps) {
                         disabled={models.length === 0}
                     >
                         {models.length === 0
-                            ? <option value="">{t('modelFetchFirst')}</option>
-                            : models.map(m => <option key={m} value={m}>{m}</option>)
+                            ? <option value="" style={optionStyle}>{t('modelFetchFirst')}</option>
+                            : models.map(m => <option key={m} value={m} style={optionStyle}>{m}</option>)
                         }
                     </select>
                     <button
