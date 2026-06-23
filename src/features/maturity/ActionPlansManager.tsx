@@ -34,6 +34,8 @@ const STATUS_COLOR: Record<ActionStatus, string> = {
     cancelled: '#64748b',
 };
 
+const OPTION_STYLE: React.CSSProperties = { color: '#e2e8f0', background: '#1e212b' };
+
 const EMPTY_FORM: ActionPlanInput = {
     practice: PRACTICE_CATALOG[0].name,
     title: '',
@@ -106,11 +108,11 @@ export default function ActionPlansManager() {
             onChange={e => onChange(e.target.value)}
             className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-400/40"
         >
-            {includeAll && <option value="">{t('filterAllPractices')}</option>}
+            {includeAll && <option value="" style={OPTION_STYLE}>{t('filterAllPractices')}</option>}
             {BUSINESS_FUNCTIONS.map(bf => (
-                <optgroup key={bf} label={bfLabel(bf)}>
+                <optgroup key={bf} label={bfLabel(bf)} style={OPTION_STYLE}>
                     {PRACTICE_CATALOG.filter(p => p.bf === bf).map(p => (
-                        <option key={p.name} value={p.name}>{practiceLabel(p.name)}</option>
+                        <option key={p.name} value={p.name} style={OPTION_STYLE}>{practiceLabel(p.name)}</option>
                     ))}
                 </optgroup>
             ))}
@@ -127,16 +129,16 @@ export default function ActionPlansManager() {
                         onChange={e => setFilterStatus(e.target.value)}
                         className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-400/40"
                     >
-                        <option value="">{t('filterAllStatuses')}</option>
-                        {ACTION_STATUSES.map(s => <option key={s} value={s}>{t(`status.${s}`)}</option>)}
+                        <option value="" style={OPTION_STYLE}>{t('filterAllStatuses')}</option>
+                        {ACTION_STATUSES.map(s => <option key={s} value={s} style={OPTION_STYLE}>{t(`status.${s}`)}</option>)}
                     </select>
                     <select
                         value={filterPriority}
                         onChange={e => setFilterPriority(e.target.value)}
                         className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-400/40"
                     >
-                        <option value="">{t('filterAllPriorities')}</option>
-                        {ACTION_PRIORITIES.map(p => <option key={p} value={p}>{t(`priority.${p}`)}</option>)}
+                        <option value="" style={OPTION_STYLE}>{t('filterAllPriorities')}</option>
+                        {ACTION_PRIORITIES.map(p => <option key={p} value={p} style={OPTION_STYLE}>{t(`priority.${p}`)}</option>)}
                     </select>
                 </div>
                 <button
@@ -192,7 +194,7 @@ export default function ActionPlansManager() {
                                 onChange={e => setForm(f => ({ ...f, status: e.target.value as ActionStatus }))}
                                 className="mt-1 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-400/40"
                             >
-                                {ACTION_STATUSES.map(s => <option key={s} value={s}>{t(`status.${s}`)}</option>)}
+                                {ACTION_STATUSES.map(s => <option key={s} value={s} style={OPTION_STYLE}>{t(`status.${s}`)}</option>)}
                             </select>
                         </label>
                         <label className="block">
@@ -202,7 +204,7 @@ export default function ActionPlansManager() {
                                 onChange={e => setForm(f => ({ ...f, priority: e.target.value as ActionPriority }))}
                                 className="mt-1 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-400/40"
                             >
-                                {ACTION_PRIORITIES.map(p => <option key={p} value={p}>{t(`priority.${p}`)}</option>)}
+                                {ACTION_PRIORITIES.map(p => <option key={p} value={p} style={OPTION_STYLE}>{t(`priority.${p}`)}</option>)}
                             </select>
                         </label>
                     </div>
@@ -262,7 +264,7 @@ export default function ActionPlansManager() {
                                             className="bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs font-semibold focus:outline-none focus:border-cyan-400/40"
                                             style={{ color: STATUS_COLOR[plan.status] }}
                                         >
-                                            {ACTION_STATUSES.map(s => <option key={s} value={s} style={{ color: '#e2e8f0', background: '#1e212b' }}>{t(`status.${s}`)}</option>)}
+                                            {ACTION_STATUSES.map(s => <option key={s} value={s} style={OPTION_STYLE}>{t(`status.${s}`)}</option>)}
                                         </select>
                                         <button
                                             onClick={() => remove(plan.id)}
