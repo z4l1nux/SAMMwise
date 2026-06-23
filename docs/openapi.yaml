@@ -1,0 +1,285 @@
+openapi: 3.0.3
+
+info:
+  title: SAMMwise LLM Proxy API
+  version: 1.0.0
+  description: |
+    Proxy HTTP expostos pelo SAMMwise (Next.js Pages Router) para chamar
+    provedores de LLM a partir do navegador sem problemas de CORS.
+
+    Estes são os ÚNICOS endpoints HTTP do SAMMwise. Todos os dados de domínio
+    (assessments, targets, action plans, configurações) vivem client-side
+    (`sessionStorage`/`localStorage`) — o app é zero-server/privacy-first.
+    Estas rotas existem apenas como pass-through fino para as APIs dos
+    provedores de LLM.
+
+    Fonte:
+      - `src/pages/api/llm.ts`
+      - `src/pages/api/llm-models.ts`
+
+    Observações de segurança:
+      - A `apiKey` trafega no corpo da requisição do cliente para este proxy
+        e é repassada ao provedor. Em produção sirva somente sobre HTTPS.
+      - A chave nunca é persistida no servidor; o proxy é stateless.
+  license:
+    name: UNLICENSED
+
+servers:
+  - url: http://localhost:3600
+    description: Desenvolvimento local (npm run dev)
+
+tags:
+  - name: LLM
+    description: Rotas proxy para provedores de LLM (anthropic, openai, gemini, ollama)
+
+# O proxy em si NÃO autentica suas próprias chamadas — a `apiKey` é um campo
+# de payload repassado ao provedor upstream (não um esquema de auth deste API.
+# `security: []` declara explicitamente "sem auth no contorno do proxy".
+security: []
+
+paths:
+  /api/llm:
+    post:
+      tags: [LLM]
+      operationId: generateAnalysis
+      summary: Gera uma análise via provedor de LLM configurado
+      description: |
+        Encaminha um prompt ao provedor selecionado e devolve o texto gerado.
+        A `apiKey` é enviada pelo cliente (armazenada localmente e cifrada).
+
+        Quando `model` é omitido, o proxy aplica um default por provedor:
+        `claude-haiku-4-5-20251001` (anthropic), `gpt-4o-mini` (openai),
+        `gemini-1.5-flash` (gemini), `llama3` (ollama).
+
+        Em caso de erro upstream (ex.: chave inválida, rate limit), o código
+        HTTP do provedor é repassado inalterado, com o corpo do erro em `error`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LlmRequest'
+            examples:
+              openai:
+                summary: OpenAI
+                value:
+                  provider: openai
+                  apiKey: sk-xxxxxxxxxxxxxxxx
+                  model: gpt-4o-mini
+                  prompt: "Analise este assessment OWASP SAMM..."
+              anthropic:
+                summary: Anthropic
+                value:
+                  provider: anthropic
+                  apiKey: sk-ant-xxxxxxxxxxxxxxxx
+                  model: claude-haiku-4-5-20251001
+                  prompt: "Analise este assessment OWASP SAMM..."
+              gemini:
+                summary: Gemini
+                value:
+                  provider: gemini
+                  apiKey: AIzaXXXXXXXXXXXXXXXX
+                  model: gemini-1.5-flash
+                  prompt: "Analise este assessment OWASP SAMM..."
+              ollama:
+                summary: Ollama (local, sem chave)
+                value:
+                  provider: ollama
+                  ollamaUrl: http://localhost:11434
+                  model: llama3
+                  prompt: "Analise este assessment OWASP SAMM..."
+      responses:
+        '200':
+          description: Análise gerada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmAnalysisResponse'
+              example:
+                analysis: "## Visão geral\nO score geral de 1.53/3 indica..."
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          description: |
+            Repassado do provedor upstream (apiKey inválida/não autorizada).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          description: Repassado do provedor upstream (rate limit / cota).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: "Erro interno do proxy (ex.: falha de rede não tratada)."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/llm-models:
+    post:
+      tags: [LLM]
+      operationId: listModels
+      summary: Lista os modelos disponíveis para um provedor
+      description: |
+        Lista os modelos acessíveis com a credencial informada. Usado para
+        popular o dropdown de modelos nas configurações de IA.
+
+        Filtros aplicados pelo proxy por provedor:
+          - anthropic: apenas `claude*`
+          - openai: apenas `gpt-*` (ordenados)
+          - gemini: apenas `gemini*` que suportam `generateContent`
+          - ollama: todos os modelos instalados localmente
+
+        Em caso de erro upstream, o código HTTP do provedor é repassado.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModelsRequest'
+            examples:
+              openai:
+                value: { provider: openai, apiKey: sk-xxxxxxxxxxxxxxxx }
+              ollama:
+                value: { provider: ollama, ollamaUrl: http://localhost:11434 }
+      responses:
+        '200':
+          description: Lista de modelos retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelsResponse'
+              example:
+                models: [gpt-4o-mini, gpt-4o, gpt-4-turbo]
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          description: Repassado do provedor upstream (apiKey inválida/não autorizada).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          description: Repassado do provedor upstream (rate limit / cota).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno do proxy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  responses:
+    BadRequest:
+      description: |
+        Campos obrigatórios ausentes (`provider` e/ou `prompt`/`apiKey`) ou
+        provedor desconhecido.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            missingPrompt:
+              value: { error: "provider and prompt are required" }
+            missingProvider:
+              value: { error: "provider is required" }
+            unknownProvider:
+              value: { error: "Unknown provider: grok" }
+    MethodNotAllowed:
+      description: Método não permitido (apenas `POST` é aceito).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: Method not allowed
+
+  schemas:
+    LLMProvider:
+      type: string
+      enum: [anthropic, openai, gemini, ollama]
+      description: Identificador do provedor de LLM.
+
+    LlmRequest:
+      type: object
+      required: [provider, prompt]
+      additionalProperties: false
+      properties:
+        provider:
+          $ref: '#/components/schemas/LLMProvider'
+        apiKey:
+          type: string
+          description: Chave de API do provedor (não exigida para `ollama`).
+          format: password
+        model:
+          type: string
+          description: ID do modelo. Se omitido, usa o default do provedor.
+        prompt:
+          type: string
+          description: Texto/prompt enviado ao modelo.
+          minLength: 1
+        ollamaUrl:
+          type: string
+          description: URL base da instância Ollama (default `http://localhost:11434`).
+          default: http://localhost:11434
+
+    LlmAnalysisResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        analysis:
+          type: string
+          description: Texto gerado pelo modelo.
+      example:
+        analysis: "## Visão geral\n..."
+
+    ModelsRequest:
+      type: object
+      required: [provider]
+      additionalProperties: false
+      properties:
+        provider:
+          $ref: '#/components/schemas/LLMProvider'
+        apiKey:
+          type: string
+          description: Chave de API do provedor (não exigida para `ollama`).
+          format: password
+        ollamaUrl:
+          type: string
+          description: URL base da instância Ollama (default `http://localhost:11434`).
+          default: http://localhost:11434
+
+    ModelsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        models:
+          type: array
+          items:
+            type: string
+          description: IDs de modelos disponíveis (já filtrados por provedor).
+      example:
+        models: [gpt-4o-mini, gpt-4o]
+
+    ErrorResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        error:
+          type: string
+          description: Mensagem de erro (texto livre do proxy ou do provedor).
+      required: [error]
+      example:
+        error: "provider and prompt are required"
