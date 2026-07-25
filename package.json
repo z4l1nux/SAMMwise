@@ -31,7 +31,7 @@
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.3.5",
     "react-to-print": "^3.0.4",
-    "sharp": "^0.34.4",
+    "sharp": "^0.35.0",
     "survey-core": "^1.12.16",
     "survey-react-ui": "^1.12.16",
     "tailwind-merge": "^3.5.0"
