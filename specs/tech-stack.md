@@ -55,7 +55,7 @@ Sem store global. Estado vive em `sessionStorage` com chaves:
 
 | Categoria | Ferramenta | Workflow |
 |---|---|---|
-| **SAST** | Semgrep (`--config auto`, PARANOIA_LEVEL configurável) | `.github/workflows/cicd.semgrep-reusable.yml` |
+| **SAST** | Semgrep (`--config auto`, Python 3.12, `--jobs 1`, PARANOIA_LEVEL configurável) | `.github/workflows/cicd.semgrep-reusable.yml` |
 | **SCA** | safedep/vet-action | `.github/workflows/vet-sca-reusable.yml` |
 | **Secrets** | TruffleHog (`--results=verified,unknown,unverified`) | `.github/workflows/trufflehog.yml` |
 | **Container** | Docker build + push (Hub + GHCR) | `.github/workflows/action.yml` |
@@ -81,6 +81,7 @@ trufflehog git file://. --since-commit HEAD~10
 - Lockfile (`package-lock.json`) commitado obrigatoriamente
 - Atualizações via Dependabot — PRs revisados manualmente, não merge automático
 - Versões com `^` aceitáveis em devDependencies; produção monitorada por SCA
+- Overrides de segurança mantêm PostCSS ≥ 8.5.23, glob ≥ 14.0.2, minimatch ≥ 11.0.1 nos ramos afetados e zod ≥ 4.6.6
 
 ## Deploy
 

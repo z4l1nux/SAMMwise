@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-27
+- fix(security): update vulnerable PostCSS, glob, minimatch, and zod dependency resolutions
+- fix(ci): run Semgrep on Python 3.12 with a single worker to avoid `semgrep-core` crashes
+
 ## 2026-06-12
 - feat(maturity): per-practice **Maturity Targets** page (`/targets`) — set a 0–3 goal per SAMM practice, stored in `localStorage`, cross-assessment
 - feat(maturity): **Gap Analysis** on the results page — overall KPIs, current-vs-target radar, "largest gaps" bar chart, and a shortfall table (exports with the PDF)

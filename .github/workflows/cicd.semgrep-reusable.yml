@@ -22,7 +22,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.12"
 
       - name: Install Semgrep
         run: |
@@ -35,11 +35,11 @@ jobs:
 
           if [ "$PARANOIA_LEVEL" -eq 1 ]; then
             echo "Rodando em modo PARANOIA 1 (trava apenas ERROR)"
-            semgrep --config auto --severity=ERROR --error
+            semgrep --config auto --severity=ERROR --error --jobs 1
           elif [ "$PARANOIA_LEVEL" -eq 2 ]; then
             echo "Rodando em modo PARANOIA 2 (trava WARNING e acima)"
-            semgrep --config auto --severity=WARNING --error
+            semgrep --config auto --severity=WARNING --error --jobs 1
           else
             echo "Rodando em modo PARANOIA 3 (trava INFO e acima)"
-            semgrep --config auto --severity=INFO --error
+            semgrep --config auto --severity=INFO --error --jobs 1
           fi
