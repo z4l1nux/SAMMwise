@@ -7,7 +7,7 @@ on:
       - main
 
 permissions:
-  # Required for actions/checkout@v4
+  # Required for actions/checkout
   contents: read
 
   # Required for writing pull request comment
@@ -28,11 +28,11 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Run vet
         id: vet
-        uses: safedep/vet-action@v1.1.11
+        uses: safedep/vet-action@481d7f3963cd539d9ae2bb32777c1cff70ca3e1a
         with:
           # Path to the policy file.
           # Remove following line to use the default policy

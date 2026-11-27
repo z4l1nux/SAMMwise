@@ -82,6 +82,7 @@ trufflehog git file://. --since-commit HEAD~10
 - Atualizações via Dependabot — PRs revisados manualmente, não merge automático
 - Versões com `^` aceitáveis em devDependencies; produção monitorada por SCA
 - Overrides de segurança mantêm PostCSS ≥ 8.5.23, glob ≥ 14.0.2, minimatch ≥ 11.0.1 nos ramos afetados e zod ≥ 4.6.6
+- GitHub Actions referenciadas por SHA completo imutável; scans rodam em PRs e em pushes para `main`
 
 ## Deploy
 
